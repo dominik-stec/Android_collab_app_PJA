@@ -1,30 +1,28 @@
-# Aplikacja Moje LEGO
-Aplikacja pozwalająca na zarządzanie zestawami klocków LEGO
+# My LEGO App
+Application that allows you to create and manage your LEGO sets and bricks
 
-Postęp prac będzie śledzony w aplikacji Trello:
-(tu będzie link)
+Work progress tracking in Trello
 
-## Opis problemów:  
+## Description of the problem:  
 
-> Jakie mam zestawy?
+> Which sets do I have in my inventory?
 > 
-> Czy mam wystarczającą ilość klocków żeby zbudować zestaw na podstawie ogólnodostępnej instrukcji, czy muszę kupić dany zestaw, czy tylko dokupić kilka klocków.
+> Do I have enough specific bricks to be able to build desired set with proper schematics, do I need to buy a new set or just few specific bricks?
 > 
-> Mam kilka starych zestawów, które chciałabym skatalogować na swoje potrzeby - czy zestaw jest kompletny i czy nie muszę dokupić jakiś klocków żeby był kompletny
+> I have a few old sets that need to be described and cataloged for my own needs - is the set complete or do I have to buy some missing bricks?
 > 
-> Mam kolekcję unikalnych klocków np ludzików, chcielibyśmy stworzyć katalog posiadanych unikalnych klocków i listę klocków, których nam brakuje z danej kategorii z sugestią, w których zestawach brakujące klocki możemy odnaleźć
+> I have a collection of unique set and bricks ex. minifigures. I want to create a catalog consisting of unique bricks and also those I do not have, preferably with suggestions in which official LEGO sets I can find them.
 
-## Funkcjonalności:
-- **Wyświetlanie zestawów możliwych do ułożenia z danych klocków**
-- **Dodawanie nowych zestawów do katalogu**
-- **Przeszukiwanie katalogu wewnętrznego**
-- **Lista posiadanych klocków**
-- **Przeszukiwanie zewnętrznej bazy zestawów??**
-- Tworzenie swoich zestawów (zdjęcie plus lista klocków) (1)
-- Tworzenie list potrzebnych/brakujących klocków (1)
-- Wybieranie elementów z listy klocków (katalog dostępnych klocków) (2)
-- Statusy zestawów: kompletny, niekompletny/brakuje (2)
-- Statystyki posiadanych klocków?? (2)
-- Tagowanie zestawów po kategoriach (3)
-- Dodawanie zdjęć poglądowych gotowych zestawów (3)
-- Generowanie/export csv/xml/json ze składem zestawu. (3)
+## App functionalities:
+- **Display sets available to build with desired bricks**
+- **Add new sets to catalog**
+- **Search internal catalog**
+- **Display list of owned bricks**
+- **Search external sets catalog??**
+- Create custom sets (1)
+- Create lists of needed/missing bricks (1)
+- Display set status: complete, incomplete/missing parts, favorite (2)
+- Statistics of bricks already in collection (2)
+- Category tags (2)
+- Add pictures of completed sets (3)
+- Generate/export csv/xml/json with bricks needed to build desired set (3)
