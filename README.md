@@ -26,3 +26,7 @@ Work progress tracking in Trello
 - Category tags (2)
 - Add pictures of completed sets (3)
 - Generate/export csv/xml/json with bricks needed to build desired set (3)
+
+## Project prequisites
+Rebrickable API key: `cae9480418c5c7f7ef9a76142f8f5f48`  
+[Rebrickable API docs](https://rebrickable.com/api/v3/docs/?key=)  
