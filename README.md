@@ -30,3 +30,13 @@ Work progress tracking in Trello
 ## Project prequisites
 Rebrickable API key: `cae9480418c5c7f7ef9a76142f8f5f48`  
 [Rebrickable API docs](https://rebrickable.com/api/v3/docs/?key=)  
+
+### Project dependencies
+[MVNREPOSITORY](https://mvnrepository.com/) - select gradle tab for correct latest version
+REST:
+- [Retrofit2](https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit) - v.2.9.0
+- [Retrofit2:converter-gson](https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson) - v.2.9.0
+- [Okhttp3](https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp) - v.4.9.1
+- [Okhttp3:logging-interceptor](https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor) - v.4.9.1
+- [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) - v.2.8.6
+- [json API](https://mvnrepository.com/artifact/javax.json/javax.json-api) - v.1.1.4
