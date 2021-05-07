@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Log.d("service", "Download pass");
                     //System.out.println("name set: " + bricksSingleSet.getName());
-                    System.out.println("name set: \n" + bricksSingleSet);
+                    System.out.println("name set from activity: \n" + bricksSingleSet);
                 } else {
                     Log.d("service", "Download failed");
                 }

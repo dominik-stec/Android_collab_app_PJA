@@ -37,6 +37,12 @@ public class RestService extends IntentService {
             @Override
             public void onSucess(BricksSingleSet value) {
                 System.out.println("name was read " + value.getName());
+                //////////////////////////////////////
+                int result = Activity.RESULT_OK;
+
+                publishResults(value.getName(), result);
+                //////////////////////////////////////
+
             }
 
             @Override
@@ -61,9 +67,9 @@ public class RestService extends IntentService {
         //bundle.putString("111", "test");
         //receiver.send(111, bundle);
 
-        int result = Activity.RESULT_OK;
+//        int result = Activity.RESULT_OK;
 
-        publishResults(bricksSingleSet.getName(), result);
+        //publishResults(bricksSingleSet.getName(), result);
     }
 
     private void publishResults(String bricksSingleSet, int result) {
