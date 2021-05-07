@@ -4,6 +4,6 @@ import retrofit2.*;
 
 public interface CustomCallback {
 
-//    void onSucess(Result<BricksSingleSet> value);
-//    void onFailure();
+    void onSucess(BricksSingleSet value);
+    void onFailure();
 }

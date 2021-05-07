@@ -25,8 +25,11 @@ public class RestCtrl implements Callback<BricksSingleSet> {
     RestApi restApi;
     BricksSingleSet bricksSingleSet;
 
-    public RestCtrl() {
+    CustomCallback customCallback;
+
+    public RestCtrl(CustomCallback customCallback) {
         start();
+        this.customCallback = customCallback;
     }
 
     public BricksSingleSet getById(java.lang.String id) {
@@ -100,6 +103,8 @@ public class RestCtrl implements Callback<BricksSingleSet> {
 //            // potentially add data to the intent
 ////        i.putExtra("KEY1", "Value to be used by the service");
 //            startService(i);
+
+            customCallback.onSucess(bricksSingleSet);
 
         } else {
             System.out.println(response.errorBody().toString());

@@ -8,6 +8,7 @@ import android.os.ResultReceiver;
 
 //import com.example.mylego.rest.String;
 import com.example.mylego.rest.BricksSingleSet;
+import com.example.mylego.rest.CustomCallback;
 import com.example.mylego.rest.RestCtrl;
 
 public class RestService extends IntentService {
@@ -32,7 +33,17 @@ public class RestService extends IntentService {
 
         BricksSingleSet bricksSingleSet = null;
 
-        RestCtrl rest = new RestCtrl();
+        RestCtrl rest = new RestCtrl(new CustomCallback() {
+            @Override
+            public void onSucess(BricksSingleSet value) {
+                System.out.println("name was read " + value.getName());
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
 
         java.lang.String apiRequest = intent.getStringExtra(BRICKS_SET_BY_ID);
         switch(apiRequest){
