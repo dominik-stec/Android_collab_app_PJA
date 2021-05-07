@@ -13,13 +13,13 @@ public class BricksSets implements Serializable {
     int count;
     @SerializedName("next")
     @Expose
-    String next;
+    java.lang.String next;
     @SerializedName("previous")
     @Expose
-    String previous;
+    java.lang.String previous;
     @SerializedName("results")
     @Expose
-    List<BricksSingleSet> results = null;
+    List<String> results = null;
 
     public int getCount() {
         return count;
@@ -29,27 +29,27 @@ public class BricksSets implements Serializable {
         this.count = count;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return next;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.next = name;
     }
 
-    public String getPrevious() {
+    public java.lang.String getPrevious() {
         return previous;
     }
 
-    public void setPrevious(String previous) {
+    public void setPrevious(java.lang.String previous) {
         this.previous = previous;
     }
 
-    public List<BricksSingleSet> getResults() {
+    public List<String> getResults() {
         return results;
     }
 
-    public void setResults(List<BricksSingleSet> results) {
+    public void setResults(List<String> results) {
         this.results = results;
     }
 }

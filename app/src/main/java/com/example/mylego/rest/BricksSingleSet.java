@@ -9,11 +9,11 @@ public class BricksSingleSet implements Serializable {
 
     @SerializedName("set_num")
     @Expose
-    String setNum;
+    java.lang.String setNum;
 
     @SerializedName("name")
     @Expose
-    String name;
+    java.lang.String name;
 
     @SerializedName("year")
     @Expose
@@ -29,29 +29,29 @@ public class BricksSingleSet implements Serializable {
 
     @SerializedName("set_img_url")
     @Expose
-    String setImgUrl;
+    java.lang.String setImgUrl;
 
     @SerializedName("set_url")
     @Expose
-    String setUrl;
+    java.lang.String setUrl;
 
     @SerializedName("last_modified_dt")
     @Expose
-    String lastModifiedDt;
+    java.lang.String lastModifiedDt;
 
-    public String getSetNum() {
+    public java.lang.String getSetNum() {
         return setNum;
     }
 
-    public void setSetNum(String setNum) {
+    public void setSetNum(java.lang.String setNum) {
         this.setNum = setNum;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
@@ -79,27 +79,27 @@ public class BricksSingleSet implements Serializable {
         this.numParts = numParts;
     }
 
-    public String getSetImgUrl() {
+    public java.lang.String getSetImgUrl() {
         return setImgUrl;
     }
 
-    public void setSetImgUrl(String setImgUrl) {
+    public void setSetImgUrl(java.lang.String setImgUrl) {
         this.setImgUrl = setImgUrl;
     }
 
-    public String getSetUrl() {
+    public java.lang.String getSetUrl() {
         return setUrl;
     }
 
-    public void setSetUrl(String setUrl) {
+    public void setSetUrl(java.lang.String setUrl) {
         this.setUrl = setUrl;
     }
 
-    public String getLastModifiedDt() {
+    public java.lang.String getLastModifiedDt() {
         return lastModifiedDt;
     }
 
-    public void setLastModifiedDt(String lastModifiedDt) {
+    public void setLastModifiedDt(java.lang.String lastModifiedDt) {
         this.lastModifiedDt = lastModifiedDt;
     }
 }

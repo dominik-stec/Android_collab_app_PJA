@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestCtrl implements Callback<BricksSingleSet> {
 
-    static final String BASE_URL = "https://rebrickable.com/";
+    static final java.lang.String BASE_URL = "https://rebrickable.com/";
     RestApi restApi;
     BricksSingleSet bricksSingleSet;
 
@@ -26,7 +26,7 @@ public class RestCtrl implements Callback<BricksSingleSet> {
         start();
     }
 
-    public BricksSingleSet getById(String id) {
+    public BricksSingleSet getById(java.lang.String id) {
         start();
         Call<BricksSingleSet> call = restApi.runRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json", id);
         call.enqueue(this);
@@ -83,11 +83,14 @@ public class RestCtrl implements Callback<BricksSingleSet> {
     @Override
     public void onResponse(Call<BricksSingleSet> call, Response<BricksSingleSet> response) {
         if(response.isSuccessful()) {
-            System.out.println("test" + response.message());
-            BricksSingleSet bricksSingleSetObj = response.body();
-            System.out.println("Bricks set name: " + bricksSingleSetObj.name);
+            //System.out.println("test" + response.message());
+            //BricksSingleSet bricksSingleSetObj = response.body();
+
+            //System.out.println("Bricks set name: " + bricksSingleSetObj.name);
             System.out.println("result!!!!!!!!!!!");
-            this.bricksSingleSet = bricksSingleSetObj;
+            System.out.println("name " + response.body().getName());
+            bricksSingleSet = response.body();
+            //this.bricksSingleSet = bricksSingleSetObj;
         } else {
             System.out.println(response.errorBody().toString());
             System.out.println("onResponse error");
@@ -101,4 +104,5 @@ public class RestCtrl implements Callback<BricksSingleSet> {
         System.out.println("onFailure error");
 
     }
+
 }

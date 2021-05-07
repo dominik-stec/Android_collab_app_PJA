@@ -18,7 +18,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.mylego.rest.BricksSingleSet;
+//import com.example.mylego.rest.String;
 import com.example.mylego.rest.RestCtrl;
 
 import com.example.mylego.services.RestService;
@@ -26,18 +26,19 @@ import com.example.mylego.services.RestService;
 public class MainActivity extends AppCompatActivity {
 
     RestCtrl rest;
-    BricksSingleSet bricksSingleSet;
+    String bricksSingleSet;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                bricksSingleSet = (BricksSingleSet) bundle.getParcelable(RestService.BRICKS_SET_BY_ID);
+                bricksSingleSet = bundle.getString(RestService.BRICKS_SET_BY_ID);
                 int resultCode = bundle.getInt(RestService.RESULT);
                 if (resultCode == RESULT_OK) {
                     Log.d("service", "Download pass");
                     //System.out.println("name set: " + bricksSingleSet.getName());
+                    System.out.println("name set: \n" + bricksSingleSet);
                 } else {
                     Log.d("service", "Download failed");
                 }
