@@ -1,7 +1,10 @@
 package com.example.mylego.rest;
 
+import android.content.Intent;
+
 import java.io.IOException;
 
+import com.example.mylego.services.RestService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -91,6 +94,13 @@ public class RestCtrl implements Callback<BricksSingleSet> {
             System.out.println("name " + response.body().getName());
             bricksSingleSet = response.body();
             //this.bricksSingleSet = bricksSingleSetObj;
+
+//            Intent i = new Intent();
+//            i.putExtra("Bricks name", response.body().getName());
+//            // potentially add data to the intent
+////        i.putExtra("KEY1", "Value to be used by the service");
+//            startService(i);
+
         } else {
             System.out.println(response.errorBody().toString());
             System.out.println("onResponse error");

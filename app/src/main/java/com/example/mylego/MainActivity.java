@@ -55,13 +55,15 @@ public class MainActivity extends AppCompatActivity {
 //        rest = new RestCtrl();
 //        bricksSingleSet = rest.getById("75954-1");
 
+
+        ////////////////////////////////////////////////////////////
         // use this to start and trigger a service
         Intent i = new Intent(this, RestService.class);
         i.putExtra(RestService.BRICKS_SET_BY_ID, RestService.BRICKS_SET_BY_ID);
         // potentially add data to the intent
 //        i.putExtra("KEY1", "Value to be used by the service");
         startService(i);
-
+///////////////////////////////////////////////////////////////////////
         //bricksSingleSet.getName();
 
 
