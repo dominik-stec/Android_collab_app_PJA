@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("BRICKS from Activity 2 " + "");
 
-//        Intent providerIntent = new Intent(this, MainActivity2.class);
-//        startActivity(providerIntent);
+        Intent providerIntent = new Intent(this, MainActivity2.class);
+        startActivity(providerIntent);
 
 //
 ////        System.out.println("BRICKS activity " + bricksSingleSet);

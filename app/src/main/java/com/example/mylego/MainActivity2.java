@@ -1,87 +1,88 @@
-//package com.example.mylego;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import android.content.ContentValues;
-//import android.content.Context;
-//import android.database.Cursor;
-//import android.net.Uri;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.MotionEvent;
-//import android.view.View;
-//import android.view.inputmethod.InputMethodManager;
-//import android.widget.EditText;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import com.example.mylego.content_providers.MyContentProvider;
-//
-//public class MainActivity2 extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        //setContentView(R.layout.activity_main2);
-//
-//        onClickAddDetails();
-//        onClickShowDetails();
-//    }
-//
-////    @Override
-////    public boolean onTouchEvent(MotionEvent event) {
-////        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-////        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-////        return true;
-////    }
-//    public void onClickAddDetails() {
-//
-////        MyContentProvider cp = new MyContentProvider();
-////        cp.onCreate();
-//
-//
-//
-//
-//        // class to add values in the database
-//        ContentValues values = new ContentValues();
-//
-//        values.put(MyContentProvider.id, "222");
-//
-//        // fetching text from user
-//        values.put(MyContentProvider.name, "TEST");
-//
-//        /////////////////////////////////////////
-//        values.put(MyContentProvider.test_name, "TEST_2");
-//
-//        // inserting into database through content URI
-//        getContentResolver().insert(MyContentProvider.CONTENT_URI, values);
-//
-//        // displaying a toast message
-//        //Toast.makeText(getBaseContext(), "New Record Inserted", Toast.LENGTH_LONG).show();
-//    }
-//
-//    public void onClickShowDetails() {
-//        // inserting complete table details in this text field
-//        //TextView resultView= (TextView) findViewById(R.id.res);
-//
-//        // creating a cursor object of the
-//        // content URI
-//        Cursor cursor = getContentResolver().query(Uri.parse("content://com.demo.user.provider/users"), null, null, null, null);
-//
-//        // iteration of the cursor
-//        // to print whole table
-//        if(cursor.moveToFirst()) {
-//            StringBuilder strBuild=new StringBuilder();
-//            while (!cursor.isAfterLast()) {
-//                strBuild.append("\n"+cursor.getString(cursor.getColumnIndex("id"))+ "-"+ cursor.getString(cursor.getColumnIndex("name")) + "  " + cursor.getString(cursor.getColumnIndex("name_test")));
-//                cursor.moveToNext();
-//            }
-//            Log.i("FROM CONTENT PROVIDER", strBuild.toString());
-//            //resultView.setText(strBuild);
-//        }
-//        else {
-//            Log.i("FROM CONTENT PROVIDER", "No Records Found");
-//            //resultView.setText("No Records Found");
-//        }
-//    }
-//}
+package com.example.mylego;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sql.FeedReaderContract;
+import sql.FeedReaderDbHelper;
+
+public class MainActivity2 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        FeedReaderDbHelper dbHelper = new FeedReaderDbHelper(this);
+
+        // Gets the data repository in write mode
+        SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
+
+        String title = "My Title";
+        String subtitle = "subtitle_new";
+
+// Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, title);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, subtitle);
+
+// Insert the new row, returning the primary key value of the new row
+        long newRowId = dbWrite.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+
+
+
+
+        SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                BaseColumns._ID,
+                FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE,
+                FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE
+        };
+
+// Filter results WHERE "title" = 'My Title'
+        String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
+        String[] selectionArgs = { "My Title" };
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";
+
+        Cursor cursor = dbRead.query(
+                FeedReaderContract.FeedEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        List<Long> itemIds = new ArrayList<Long>();
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry._ID));
+            itemIds.add(itemId);
+        }
+        cursor.close();
+
+        for(long i : itemIds) {
+            Log.d("DEBUG SQL LIST", itemIds.toString());
+            System.out.println("testing " + i);
+        }
+    }
+
+
+
+}
