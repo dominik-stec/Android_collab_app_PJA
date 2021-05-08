@@ -31,7 +31,7 @@ public class RestService extends IntentService {
 //
 //        BricksSingleSet bricksSingleSet = null;
 
-        RestCtrl rest = new RestCtrl(new IFromRestCallback() {
+        BricksSingleSet bricksSingleSet = new RestCtrl(new IFromRestCallback() {
             @Override
             public void onSucess(BricksSingleSet value) {
                 System.out.println("name was read " + value.getName());
@@ -47,7 +47,9 @@ public class RestService extends IntentService {
             public void onFailure() {
 
             }
-        });
+        }).getById("75954-1");
+
+        //rest.getById("75954-1");
 
 //        java.lang.String apiRequest = intent.getStringExtra(BRICKS_SINGLE_SET);
 //        switch(apiRequest){
@@ -67,13 +69,14 @@ public class RestService extends IntentService {
 
 //        int result = Activity.RESULT_OK;
 
-        //publishResults(bricksSingleSet.getName(), result);
+//        publishResults(bricksSingleSet.getName(), result);
     }
 
     private void publishResults(String bricksSingleSet, int result) {
         Intent intent = new Intent(SERVICE_RECEIVER_ID);
         intent.putExtra(BRICKS_SINGLE_SET, bricksSingleSet);
         intent.putExtra(RESULT_CODE, result);
+        //startService(intent);
         sendBroadcast(intent);
     }
 }

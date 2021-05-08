@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mylego">
+    package="com.example.mylego" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,8 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyLEGO">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.MyLEGO" >
+        <activity android:name=".MainActivity2" >
+        </activity>
+        <activity android:name=".RestContentProvidersActivity" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +22,11 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".services.RestService" />
 
-        <service
-            android:name="com.example.mylego.services.RestService">
-        </service>
-
+        <provider
+            android:name=".content_providers.RestContentProvider"
+            android:authorities="com.example.mylego.content_providers.RestContentProvider" />
     </application>
 
 </manifest>
