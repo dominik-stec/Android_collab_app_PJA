@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,33 +22,36 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        //setContentView(R.layout.activity_main2);
+
+        onClickAddDetails();
+        onClickShowDetails();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
-    }
-    public void onClickAddDetails(View view) {
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//        return true;
+//    }
+    public void onClickAddDetails() {
 
         // class to add values in the database
         ContentValues values = new ContentValues();
 
         // fetching text from user
-        values.put(MyContentProvider.name, ((EditText) findViewById(R.id.textName)).getText().toString());
+        values.put(MyContentProvider.name, "TEST");
 
         // inserting into database through content URI
         getContentResolver().insert(MyContentProvider.CONTENT_URI, values);
 
         // displaying a toast message
-        Toast.makeText(getBaseContext(), "New Record Inserted", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getBaseContext(), "New Record Inserted", Toast.LENGTH_LONG).show();
     }
 
-    public void onClickShowDetails(View view) {
+    public void onClickShowDetails() {
         // inserting complete table details in this text field
-        TextView resultView= (TextView) findViewById(R.id.res);
+        //TextView resultView= (TextView) findViewById(R.id.res);
 
         // creating a cursor object of the
         // content URI
@@ -61,10 +65,12 @@ public class MainActivity2 extends AppCompatActivity {
                 strBuild.append("\n"+cursor.getString(cursor.getColumnIndex("id"))+ "-"+ cursor.getString(cursor.getColumnIndex("name")));
                 cursor.moveToNext();
             }
-            resultView.setText(strBuild);
+            Log.i("FROM CONTENT PROVIDER", strBuild.toString());
+            //resultView.setText(strBuild);
         }
         else {
-            resultView.setText("No Records Found");
+            Log.i("FROM CONTENT PROVIDER", "No Records Found");
+            //resultView.setText("No Records Found");
         }
     }
 }
