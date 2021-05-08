@@ -27,11 +27,11 @@
 <!--            android:name=".content_providers.RestContentProvider"-->
 <!--            android:authorities="com.example.mylego.content_providers.RestContentProvider" />-->
 
-        <provider
-            android:name="com.example.mylego.content_providers.MyContentProvider"
-            android:authorities="com.demo.user.provider"
-            android:enabled="true"
-            android:exported="true"></provider>
+<!--        <provider-->
+<!--            android:name="com.example.mylego.content_providers.MyContentProvider"-->
+<!--            android:authorities="com.demo.user.provider"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"></provider>-->
     </application>
 
 </manifest>
