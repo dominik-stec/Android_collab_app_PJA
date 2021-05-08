@@ -13,10 +13,9 @@ import com.example.mylego.rest.RestCtrl;
 
 public class RestService extends IntentService {
 
-    public static final java.lang.String BRICKS_SET_BY_ID = "bricksById";
-    public static final java.lang.String RESULT = "result";
-
-    public static final java.lang.String NOTIFICATION = "com.example.mylego.services.RestService.receiver";
+    public static final String BRICKS_SINGLE_SET = "BricksSingleSet";
+    public static final String RESULT_CODE = "result code from Intent";
+    public static final String SERVICE_RECEIVER_ID = "BroadcastReceiver from MainActivity";
 
     //BricksSingleSet bricksSingleSet;
 
@@ -26,12 +25,11 @@ public class RestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //TODO do something useful
 
-        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        Bundle bundle = new Bundle();
-
-        BricksSingleSet bricksSingleSet = null;
+//        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+//        Bundle bundle = new Bundle();
+//
+//        BricksSingleSet bricksSingleSet = null;
 
         RestCtrl rest = new RestCtrl(new IFromRestCallback() {
             @Override
@@ -51,14 +49,14 @@ public class RestService extends IntentService {
             }
         });
 
-        java.lang.String apiRequest = intent.getStringExtra(BRICKS_SET_BY_ID);
-        switch(apiRequest){
-            case BRICKS_SET_BY_ID:
-
-                bricksSingleSet = rest.getById("75954-1");
-
-                break;
-        }
+//        java.lang.String apiRequest = intent.getStringExtra(BRICKS_SINGLE_SET);
+//        switch(apiRequest){
+//            case BRICKS_SINGLE_SET:
+//
+//                bricksSingleSet = rest.getById("75954-1");
+//
+//                break;
+//        }
 
 //        if (bricksSingleSet != null) {
 //            receiver.send(111, bundle);
@@ -73,9 +71,9 @@ public class RestService extends IntentService {
     }
 
     private void publishResults(String bricksSingleSet, int result) {
-        Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(BRICKS_SET_BY_ID, bricksSingleSet);
-        intent.putExtra(RESULT, result);
+        Intent intent = new Intent(SERVICE_RECEIVER_ID);
+        intent.putExtra(BRICKS_SINGLE_SET, bricksSingleSet);
+        intent.putExtra(RESULT_CODE, result);
         sendBroadcast(intent);
     }
 }
