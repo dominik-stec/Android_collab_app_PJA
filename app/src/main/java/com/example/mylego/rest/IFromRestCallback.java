@@ -2,7 +2,7 @@ package com.example.mylego.rest;
 
 import retrofit2.*;
 
-public interface CustomCallback {
+public interface IFromRestCallback {
 
     void onSucess(BricksSingleSet value);
     void onFailure();

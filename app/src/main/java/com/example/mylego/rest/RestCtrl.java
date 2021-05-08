@@ -1,10 +1,9 @@
 package com.example.mylego.rest;
 
-import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
 
-import com.example.mylego.services.RestService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,11 +24,11 @@ public class RestCtrl implements Callback<BricksSingleSet> {
     RestApi restApi;
     BricksSingleSet bricksSingleSet;
 
-    CustomCallback customCallback;
+    IFromRestCallback IFromRestCallback;
 
-    public RestCtrl(CustomCallback customCallback) {
+    public RestCtrl(IFromRestCallback IFromRestCallback) {
         start();
-        this.customCallback = customCallback;
+        this.IFromRestCallback = IFromRestCallback;
     }
 
     public BricksSingleSet getById(java.lang.String id) {
@@ -89,35 +88,22 @@ public class RestCtrl implements Callback<BricksSingleSet> {
     @Override
     public void onResponse(Call<BricksSingleSet> call, Response<BricksSingleSet> response) {
         if(response.isSuccessful()) {
-            //System.out.println("test" + response.message());
-            //BricksSingleSet bricksSingleSetObj = response.body();
 
-            //System.out.println("Bricks set name: " + bricksSingleSetObj.name);
-            System.out.println("result!!!!!!!!!!!");
-            System.out.println("name " + response.body().getName());
             bricksSingleSet = response.body();
-            //this.bricksSingleSet = bricksSingleSetObj;
-
-//            Intent i = new Intent();
-//            i.putExtra("Bricks name", response.body().getName());
-//            // potentially add data to the intent
-////        i.putExtra("KEY1", "Value to be used by the service");
-//            startService(i);
-
-            customCallback.onSucess(bricksSingleSet);
+            IFromRestCallback.onSucess(bricksSingleSet);
+            Log.i("REST ok", "onResponse method pass");
 
         } else {
             System.out.println(response.errorBody().toString());
-            System.out.println("onResponse error");
-            System.out.println("error response code: " + response.code());
+            Log.e("REST error", "onResponse method error");
+            Log.e("error response code", String.valueOf(response.code()));
         }
     }
 
     @Override
     public void onFailure(Call<BricksSingleSet> call, Throwable t) {
+        Log.e("REST error","onFailure method error");
         t.printStackTrace();
-        System.out.println("onFailure error");
-
     }
 
 }
