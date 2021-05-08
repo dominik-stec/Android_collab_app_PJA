@@ -20,7 +20,6 @@ import android.util.Log;
 
 //import com.example.mylego.rest.String;
 
-import com.example.mylego.content_providers.RestContentProvider;
 import com.example.mylego.services.RestService;
 
 public class MainActivity extends AppCompatActivity {
