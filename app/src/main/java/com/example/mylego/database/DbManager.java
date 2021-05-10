@@ -100,14 +100,6 @@ public class DbManager {
         this.modificationDate = modificationDate;
     }
 
-    public DbHelper getDbHelper() {
-        return dbHelper;
-    }
-
-    public void setDbHelper(DbHelper dbHelper) {
-        this.dbHelper = dbHelper;
-    }
-
 
     public long writeIntoDb() {
         // Gets the data repository in write mode
@@ -160,8 +152,8 @@ public class DbManager {
         Cursor cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
+                null,//selection,              // The columns for the WHERE clause
+                null,//selectionArgs,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
