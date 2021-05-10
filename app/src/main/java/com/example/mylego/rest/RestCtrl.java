@@ -15,7 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestCtrl {
 
-    static final java.lang.String BASE_URL = "https://rebrickable.com/";
+    static final String BASE_URL = "https://rebrickable.com/";
+    static final String TOKEN_ACCESS_KEY = "key cae9480418c5c7f7ef9a76142f8f5f48";
+
     RestApi restApi;
     //BricksSingleSet bricksSingleSet;
 
