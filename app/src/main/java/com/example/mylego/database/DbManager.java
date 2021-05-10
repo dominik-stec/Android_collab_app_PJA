@@ -170,10 +170,10 @@ public class DbManager {
         }
         cursor.close();
 
-        for(long i : itemIds) {
-            Log.d("TEST BRICKS DB LIST", itemIds.toString());
-            System.out.println("testing SQL" + i);
-        }
+//        for(long i : itemIds) {
+//            Log.d("TEST BRICKS DB LIST", itemIds.toString());
+//            System.out.println("testing SQL" + i);
+//        }
 
         for(String i : namesList) {
             System.out.println("testing SQL result for name :  " + i);

@@ -2,6 +2,7 @@ package com.example.mylego.rest.controllers;
 
 import android.util.Log;
 
+import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
@@ -35,10 +36,11 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
 
 
     List<BricksSingleSet[]> listOfListBricks= new ArrayList<BricksSingleSet[]>();
-    int i = 0;
 
     @Override
     public void onResponse(Call<BricksSets> call, Response<BricksSets> response) {
+    //TODO disable rest
+        ////////////////////////////////
         if(response.isSuccessful()) {
 
                 listOfListBricks.add(response.body().getResults());
@@ -60,14 +62,8 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
                     IFromRestCallback.onGetSetsRestAllSuccess(listOfListBricks);
                     Log.i("REST for all full ok", "onResponse method pass");
                 }
+/////////////////////////////
 
-
-
-
-/////////////////
-//            bricksSets = response.body();
-//            IFromRestCallback.onGetSetsRestSuccess(bricksSets);
-//            Log.i("REST ok", "onResponse method pass");
 
         } else {
             System.out.println(response.errorBody().toString());

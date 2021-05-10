@@ -115,7 +115,8 @@ public class RestService extends IntentService {
 
         @Override
         public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
-            //TODO value to BricksSet and to db
+            //TODO disable value to BricksSet and to db
+            ///////////////////////////////
             ArrayList<BricksSingleSet> allBricksList = new ArrayList<BricksSingleSet>();
             for(BricksSingleSet[] partialBricksList : value) {
                 int length = partialBricksList.length;
@@ -129,8 +130,8 @@ public class RestService extends IntentService {
                 db.setName(bricks.getName());
                 db.writeIntoDb();
             }
-
-            db.readFromDb();
+////////////////////////////////////
+            //db.readFromDb();
             //publishResultsForAllFullySets(allBricksList, Activity.RESULT_OK);
         }
 
