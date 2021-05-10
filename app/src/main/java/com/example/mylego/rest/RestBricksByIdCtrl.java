@@ -18,72 +18,73 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestBricksByIdCtrl implements Callback<BricksSingleSet> {
+public class RestBricksByIdCtrl extends RestCtrl implements Callback<BricksSingleSet> {
 
-    static final java.lang.String BASE_URL = "https://rebrickable.com/";
-    RestApi restApi;
+//    static final java.lang.String BASE_URL = "https://rebrickable.com/";
+//    RestApi restApi;
     BricksSingleSet bricksSingleSet;
 
     IFromRestCallback IFromRestCallback;
 
     public RestBricksByIdCtrl(IFromRestCallback IFromRestCallback) {
-        start();
+        //start();
         this.IFromRestCallback = IFromRestCallback;
+        super.start();
     }
 
     public BricksSingleSet getById(java.lang.String id) {
-        start();
+//        super.start();
         Call<BricksSingleSet> call = restApi.runRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json", id);
         call.enqueue(this);
         return bricksSingleSet;
     }
-
-    public void start() {
-
-        Gson gson = initGson();
-        Builder clientBuilder = initLogBuilder();
-        OkHttpClient httpHeaderConf = initHttpHeader();
-        this.restApi = initRetrofit(httpHeaderConf, gson, clientBuilder);
-    }
-
-    private RestApi initRetrofit(OkHttpClient httpHeaderConf, Gson gson, Builder clientBuilder) {
-        Retrofit retrofit = new Retrofit.Builder()
-                    .client(httpHeaderConf)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .baseUrl(BASE_URL)
-                    .client(clientBuilder.build())
-                    .build();
-        RestApi restApi = retrofit.create(RestApi.class);
-        return restApi;
-    }
-
-    private OkHttpClient initHttpHeader() {
-        OkHttpClient httpHeaderConf = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request newRequest  = chain.request().newBuilder()
-                        .addHeader("Authorization", "key cae9480418c5c7f7ef9a76142f8f5f48")
-                        .addHeader("Accept", "application/json")
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        }).build();
-        return httpHeaderConf;
-    }
-
-    private Builder initLogBuilder() {
-        Builder clientBuilder = new OkHttpClient.Builder();
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        clientBuilder.addInterceptor(loggingInterceptor);
-        return clientBuilder;
-    }
-
-    private Gson initGson() {
-        return new GsonBuilder()
-                .setLenient()
-                .create();
-    }
+//
+//    public void start() {
+//
+//        Gson gson = initGson();
+//        Builder clientBuilder = initLogBuilder();
+//        OkHttpClient httpHeaderConf = initHttpHeader();
+//        this.restApi = initRetrofit(httpHeaderConf, gson, clientBuilder);
+//    }
+//
+//    private RestApi initRetrofit(OkHttpClient httpHeaderConf, Gson gson, Builder clientBuilder) {
+//        Retrofit retrofit = new Retrofit.Builder()
+//                    .client(httpHeaderConf)
+//                    .addConverterFactory(GsonConverterFactory.create(gson))
+//                    .baseUrl(BASE_URL)
+//                    .client(clientBuilder.build())
+//                    .build();
+//        RestApi restApi = retrofit.create(RestApi.class);
+//        return restApi;
+//    }
+//
+//    private OkHttpClient initHttpHeader() {
+//        OkHttpClient httpHeaderConf = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+//            @Override
+//            public okhttp3.Response intercept(Chain chain) throws IOException {
+//                Request newRequest  = chain.request().newBuilder()
+//                        .addHeader("Authorization", "key cae9480418c5c7f7ef9a76142f8f5f48")
+//                        .addHeader("Accept", "application/json")
+//                        .build();
+//                return chain.proceed(newRequest);
+//            }
+//        }).build();
+//        return httpHeaderConf;
+//    }
+//
+//    private Builder initLogBuilder() {
+//        Builder clientBuilder = new OkHttpClient.Builder();
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        clientBuilder.addInterceptor(loggingInterceptor);
+//        return clientBuilder;
+//    }
+//
+//    private Gson initGson() {
+//        return new GsonBuilder()
+//                .setLenient()
+//                .create();
+//    }
 
     @Override
     public void onResponse(Call<BricksSingleSet> call, Response<BricksSingleSet> response) {

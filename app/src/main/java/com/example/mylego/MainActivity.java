@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 bricksSingleSet = bundle.getString(RestService.BRICKS_SINGLE_SET);
-                System.out.println("BRICKS from Activity " + bricksSingleSet);
+                //System.out.println("BRICKS from Activity " + bricksSingleSet);
 
                 Log.i("Android Services", "Exist Intent values in Bundle");
                 int resultCode = bundle.getInt(RestService.RESULT_CODE);
