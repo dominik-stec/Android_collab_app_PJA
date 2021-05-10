@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import sql.FeedReaderContract;
+import sql.CreateTable;
 import sql.FeedReaderDbHelper;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -32,11 +32,11 @@ public class MainActivity2 extends AppCompatActivity {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, title);
-        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, subtitle);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_TITLE, title);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_SUBTITLE, subtitle);
 
 // Insert the new row, returning the primary key value of the new row
-        long newRowId = dbWrite.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+        long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
 
 
 
@@ -47,20 +47,20 @@ public class MainActivity2 extends AppCompatActivity {
 // you will actually use after this query.
         String[] projection = {
                 BaseColumns._ID,
-                FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE,
-                FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE
+                CreateTable.TableEntry.COLUMN_NAME_TITLE,
+                CreateTable.TableEntry.COLUMN_NAME_SUBTITLE
         };
 
 // Filter results WHERE "title" = 'My Title'
-        String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
+        String selection = CreateTable.TableEntry.COLUMN_NAME_TITLE + " = ?";
         String[] selectionArgs = { "My Title" };
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";
+                CreateTable.TableEntry.COLUMN_NAME_SUBTITLE + " DESC";
 
         Cursor cursor = dbRead.query(
-                FeedReaderContract.FeedEntry.TABLE_NAME,   // The table to query
+                CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
                 selectionArgs,          // The values for the WHERE clause
@@ -72,7 +72,7 @@ public class MainActivity2 extends AppCompatActivity {
         List<Long> itemIds = new ArrayList<Long>();
         while(cursor.moveToNext()) {
             long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry._ID));
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
             itemIds.add(itemId);
         }
         cursor.close();
