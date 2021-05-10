@@ -1,4 +1,4 @@
-package database;
+package com.example.mylego.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,7 +39,7 @@ public class DbManager {
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
-// Define a projection that specifies which columns from the database
+// Define a projection that specifies which columns from the com.example.mylego.database
 // you will actually use after this query.
         String[] projection = {
                 BaseColumns._ID,

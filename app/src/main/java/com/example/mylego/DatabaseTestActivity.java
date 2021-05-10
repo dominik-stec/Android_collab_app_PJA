@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import database.DbManager;
+import com.example.mylego.database.DbManager;
 
 public class DatabaseTestActivity extends AppCompatActivity {
 
@@ -16,7 +16,7 @@ public class DatabaseTestActivity extends AppCompatActivity {
         DbManager db = new DbManager(this);
         db.writeIntoDb();
         db.ReadFromDb();
-        System.out.println("!!!!!!!!!!init database COMPLETE!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!init com.example.mylego.database COMPLETE!!!!!!!!!!!!");
 
 
     }

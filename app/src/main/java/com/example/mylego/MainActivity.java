@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("BRICKS from Activity 2 " + "");
 
-        System.out.println("!!!!!!!!!!init database!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
         Intent db = new Intent(this, DatabaseTestActivity.class);
         startActivity(db);
 

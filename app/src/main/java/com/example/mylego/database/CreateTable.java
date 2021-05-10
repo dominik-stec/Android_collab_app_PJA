@@ -1,4 +1,4 @@
-package database;
+package com.example.mylego.database;
 
 import android.provider.BaseColumns;
 

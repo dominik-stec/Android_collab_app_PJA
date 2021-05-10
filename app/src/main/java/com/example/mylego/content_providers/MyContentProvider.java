@@ -7,11 +7,11 @@
 //import android.content.ContentValues;
 //import android.content.Context;
 //import android.content.UriMatcher;
-//import android.database.Cursor;
-//import android.database.sqlite.SQLiteDatabase;
-//import android.database.sqlite.SQLiteException;
-//import android.database.sqlite.SQLiteOpenHelper;
-//import android.database.sqlite.SQLiteQueryBuilder;
+//import android.com.example.mylego.database.Cursor;
+//import android.com.example.mylego.database.sqlite.SQLiteDatabase;
+//import android.com.example.mylego.database.sqlite.SQLiteException;
+//import android.com.example.mylego.database.sqlite.SQLiteOpenHelper;
+//import android.com.example.mylego.database.sqlite.SQLiteQueryBuilder;
 //import android.net.Uri;
 //import android.util.Log;
 //
@@ -69,7 +69,7 @@
 //                throw new IllegalArgumentException("Unsupported URI: " + uri);
 //        }
 //    }
-//    // creating the database
+//    // creating the com.example.mylego.database
 //    @Override
 //    public boolean onCreate() {
 //        Context context = getContext();
@@ -102,7 +102,7 @@
 //        return c;
 //    }
 //
-//    // adding data to the database
+//    // adding data to the com.example.mylego.database
 //    @Override
 //        public Uri insert(Uri uri, ContentValues values) {
 //        long rowID = db.insert(TABLE_NAME, "", values);
@@ -144,17 +144,17 @@
 //        return count;
 //    }
 //
-//    // creating object of database
+//    // creating object of com.example.mylego.database
 //    // to perform query
 //    private SQLiteDatabase db;
 //
-//    // declaring name of the database
+//    // declaring name of the com.example.mylego.database
 //    static final String DATABASE_NAME = "UserDB2";
 //
-//    // declaring table name of the database
+//    // declaring table name of the com.example.mylego.database
 //    static final String TABLE_NAME = "Users7";
 //
-//    // declaring version of the database
+//    // declaring version of the com.example.mylego.database
 //    static final int DATABASE_VERSION = 4;
 //
 //    // sql query to create the table
@@ -163,7 +163,7 @@
 //            + " test TEXT NOT NULL, "
 //            + " test_name TEXT NOT NULL);";
 //
-//    // creating a database
+//    // creating a com.example.mylego.database
 //    private static class DatabaseHelper extends SQLiteOpenHelper {
 //
 //        // defining a constructor
@@ -171,7 +171,7 @@
 //            super(context, DATABASE_NAME, null, DATABASE_VERSION);
 //        }
 //
-//        // creating a table in the database
+//        // creating a table in the com.example.mylego.database
 //        @Override
 //        public void onCreate(SQLiteDatabase db) {
 //
