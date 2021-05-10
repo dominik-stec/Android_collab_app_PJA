@@ -22,9 +22,6 @@ public class RestService extends IntentService {
     public static final String SERVICE_RECEIVER_ALL_SET_ID = "BroadcastReceiver from MainActivity for all sets";
     public static final String BRICKS_ALL_SETS = "BricksSets";
 
-
-    //BricksSingleSet bricksSingleSet;
-
     public RestService(){
         super("RestService");
     }
@@ -32,10 +29,6 @@ public class RestService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-//        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-//        Bundle bundle = new Bundle();
-//
-//        BricksSingleSet bricksSingleSet = null;
 
         BricksSingleSet bricksSingleSet = new RestCtrl(new IFromRestCallback() {
             @Override
@@ -61,27 +54,7 @@ public class RestService extends IntentService {
             }
         }).getById("75954-1");
 
-        //rest.getById("75954-1");
 
-//        java.lang.String apiRequest = intent.getStringExtra(BRICKS_SINGLE_SET);
-//        switch(apiRequest){
-//            case BRICKS_SINGLE_SET:
-//
-//                bricksSingleSet = rest.getById("75954-1");
-//
-//                break;
-//        }
-
-//        if (bricksSingleSet != null) {
-//            receiver.send(111, bundle);
-//        }
-
-        //bundle.putString("111", "test");
-        //receiver.send(111, bundle);
-
-//        int result = Activity.RESULT_OK;
-
-//        publishResults(bricksSingleSet.getName(), result);
 
         BricksSets bricksSets = new RestAllBricksCtrl(new IFromRestCallback() {
             @Override
@@ -93,13 +66,11 @@ public class RestService extends IntentService {
             @Override
             public void onGetSetRestSucess(BricksSets value) {
                 System.out.println("!!!!!!!!!onGetSetRestSucess OK");
-                //////////////////////////////////////
                 int result = Activity.RESULT_OK;
 
                 Intent intent = new Intent(SERVICE_RECEIVER_ALL_SET_ID);
                 intent.putExtra(RESULT_CODE, result);
                 intent.putExtra(BRICKS_ALL_SETS, value);
-                //intent.putExtra(RESULT_CODE, result);
                 sendBroadcast(intent);
 
             }
@@ -115,7 +86,6 @@ public class RestService extends IntentService {
         Intent intent = new Intent(SERVICE_RECEIVER_ID);
         intent.putExtra(BRICKS_SINGLE_SET, bricksSingleSet);
         intent.putExtra(RESULT_CODE, result);
-        //startService(intent);
         sendBroadcast(intent);
     }
 
