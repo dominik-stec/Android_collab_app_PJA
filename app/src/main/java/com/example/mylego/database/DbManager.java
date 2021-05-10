@@ -109,19 +109,9 @@ public class DbManager {
     }
 
 
-    public void writeIntoDb() {
+    public long writeIntoDb() {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
-
-        String setNumber = "test set number";
-        String name = "test name";
-        int year = 1999;
-        int themeId = 2000;
-        int numberOfParts = 3000;
-        String imageUrl = "test image url";
-        String setUrl = "test url of set";
-        String modificationDate = "test modification date";
-
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -138,6 +128,7 @@ public class DbManager {
 // Insert the new row, returning the primary key value of the new row
         long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
 
+        return newRowId;
     }
 
     public void ReadFromDb() {
@@ -177,16 +168,23 @@ public class DbManager {
         );
 
         List<Long> itemIds = new ArrayList<Long>();
+        List<String> namesList = new ArrayList<String>();
         while(cursor.moveToNext()) {
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntry.COLUMN_NAME_NAME));
             itemIds.add(itemId);
+            namesList.add(name);
         }
         cursor.close();
 
         for(long i : itemIds) {
             Log.d("TEST BRICKS DB LIST", itemIds.toString());
             System.out.println("testing SQL" + i);
+        }
+
+        for(String i : namesList) {
+            System.out.println("testing SQL result for name :  " + i);
         }
     }
 
