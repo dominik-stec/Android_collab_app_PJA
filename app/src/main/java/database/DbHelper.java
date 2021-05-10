@@ -1,15 +1,15 @@
-package sql;
+package database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class FeedReaderDbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "FeedReader.db";
 
-    public FeedReaderDbHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db) {

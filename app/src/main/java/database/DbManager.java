@@ -1,29 +1,24 @@
-package com.example.mylego;
+package database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import database.CreateTable;
-import database.DbHelper;
+public class DbManager {
 
-public class MainActivity2 extends AppCompatActivity {
+    public DbManager(Context context) {
+        this.dbHelper = new DbHelper(context);
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+    DbHelper dbHelper;
 
-        DbHelper dbHelper = new DbHelper(this);
-
+    public void writeIntoDb() {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
 
@@ -38,8 +33,9 @@ public class MainActivity2 extends AppCompatActivity {
 // Insert the new row, returning the primary key value of the new row
         long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
 
+    }
 
-
+    public void ReadFromDb() {
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
@@ -83,6 +79,8 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-
-
 }
+
+
+
+
