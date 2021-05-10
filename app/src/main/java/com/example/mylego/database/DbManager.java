@@ -22,13 +22,27 @@ public class DbManager {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
 
-        String title = "My Title";
-        String subtitle = "subtitle_new";
+        String setNumber = "test set number";
+        String name = "test name";
+        int year = 1999;
+        int themeId = 2000;
+        int numberOfParts = 3000;
+        String imageUrl = "test image url";
+        String setUrl = "test url of set";
+        String modificationDate = "test modification date";
+
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(CreateTable.TableEntry.COLUMN_NAME_TITLE, title);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_SUBTITLE, subtitle);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_NUM, setNumber);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_NAME, name);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_YEAR, year);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_THEME_ID, themeId);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_NUM_PARTS, numberOfParts);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_IMG_URL, imageUrl);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_URL, setUrl);
+        values.put(CreateTable.TableEntry.COLUMN_NAME_LAST_MODIFIED_DT, modificationDate);
+
 
 // Insert the new row, returning the primary key value of the new row
         long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
@@ -43,17 +57,23 @@ public class DbManager {
 // you will actually use after this query.
         String[] projection = {
                 BaseColumns._ID,
-                CreateTable.TableEntry.COLUMN_NAME_TITLE,
-                CreateTable.TableEntry.COLUMN_NAME_SUBTITLE
+                CreateTable.TableEntry.COLUMN_NAME_SET_NUM,
+                CreateTable.TableEntry.COLUMN_NAME_NAME,
+                CreateTable.TableEntry.COLUMN_NAME_YEAR,
+                CreateTable.TableEntry.COLUMN_NAME_THEME_ID,
+                CreateTable.TableEntry.COLUMN_NAME_NUM_PARTS,
+                CreateTable.TableEntry.COLUMN_NAME_SET_IMG_URL,
+                CreateTable.TableEntry.COLUMN_NAME_SET_URL,
+                CreateTable.TableEntry.COLUMN_NAME_LAST_MODIFIED_DT,
         };
 
 // Filter results WHERE "title" = 'My Title'
-        String selection = CreateTable.TableEntry.COLUMN_NAME_TITLE + " = ?";
-        String[] selectionArgs = { "My Title" };
+        String selection = CreateTable.TableEntry.COLUMN_NAME_NAME + " = ?";
+        String[] selectionArgs = { "test name" };
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                CreateTable.TableEntry.COLUMN_NAME_SUBTITLE + " DESC";
+                CreateTable.TableEntry.COLUMN_NAME_NAME + " DESC";
 
         Cursor cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
@@ -74,8 +94,8 @@ public class DbManager {
         cursor.close();
 
         for(long i : itemIds) {
-            Log.d("DEBUG SQL LIST", itemIds.toString());
-            System.out.println("testing " + i);
+            Log.d("TEST BRICKS DB LIST", itemIds.toString());
+            System.out.println("testing SQL" + i);
         }
     }
 
