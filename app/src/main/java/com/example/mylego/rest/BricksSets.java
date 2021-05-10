@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class BricksSets implements Serializable {
 
@@ -29,19 +28,19 @@ public class BricksSets implements Serializable {
         this.count = count;
     }
 
-    public java.lang.String getNext() {
+    public String getNext() {
         return next;
     }
 
-    public void setNext(java.lang.String next) {
+    public void setNext(String next) {
         this.next = next;
     }
 
-    public java.lang.String getPrevious() {
+    public String getPrevious() {
         return previous;
     }
 
-    public void setPrevious(java.lang.String previous) {
+    public void setPrevious(String previous) {
         this.previous = previous;
     }
 
