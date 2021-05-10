@@ -46,11 +46,11 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
                 if(nextLink != null) {
                     String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
                     String nextPage = nextPageRaw.substring(1);
-                    Log.d("loop", "loop in work  " + i++);
                     int pageNum = Integer.parseInt(nextPage);
+                    Log.d("loop", "loop in work  " + pageNum);
                     //177 loop iteration
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch(InterruptedException e) {
                         e.printStackTrace();
                     }

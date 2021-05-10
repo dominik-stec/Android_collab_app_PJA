@@ -13,11 +13,11 @@ public class DatabaseTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database_test);
 
-//        DbManager db = new DbManager(this);
+        DbManager db = new DbManager(this);
 //        db.setName("test name for insert");
 //        db.writeIntoDb();
-//        db.ReadFromDb();
-//        System.out.println("!!!!!!!!!!init com.example.mylego.database COMPLETE!!!!!!!!!!!!");
+        db.readFromDb();
+        System.out.println("!!!!!!!!!!init com.example.mylego.database COMPLETE!!!!!!!!!!!!");
 
 
     }

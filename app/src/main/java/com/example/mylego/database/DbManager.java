@@ -123,7 +123,7 @@ public class DbManager {
         return newRowId;
     }
 
-    public void ReadFromDb() {
+    public void readFromDb() {
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
@@ -177,6 +177,7 @@ public class DbManager {
 
         for(String i : namesList) {
             System.out.println("testing SQL result for name :  " + i);
+            Log.d("TEST BRICKS name:  ", i);
         }
     }
 

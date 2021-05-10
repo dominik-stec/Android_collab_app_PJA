@@ -5,6 +5,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
@@ -114,7 +115,7 @@ public class RestService extends IntentService {
 
         @Override
         public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
-            //TODO value to BricksSet and sendBroadcast
+            //TODO value to BricksSet and to db
             ArrayList<BricksSingleSet> allBricksList = new ArrayList<BricksSingleSet>();
             for(BricksSingleSet[] partialBricksList : value) {
                 int length = partialBricksList.length;
@@ -122,7 +123,15 @@ public class RestService extends IntentService {
                     allBricksList.add(partialBricksList[i]);
                 }
             }
-            publishResultsForAllFullySets(allBricksList, Activity.RESULT_OK);
+
+            DbManager db = new DbManager(getApplicationContext());
+            for(BricksSingleSet bricks : allBricksList) {
+                db.setName(bricks.getName());
+                db.writeIntoDb();
+            }
+
+            db.readFromDb();
+            //publishResultsForAllFullySets(allBricksList, Activity.RESULT_OK);
         }
 
         @Override
