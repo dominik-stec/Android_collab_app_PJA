@@ -14,9 +14,100 @@ public class DbManager {
 
     public DbManager(Context context) {
         this.dbHelper = new DbHelper(context);
+
+        setNumber = "test set number";
+        name = "test name";
+        year = 1999;
+        themeId = 2000;
+        numberOfParts = 3000;
+        imageUrl = "test image url";
+        setUrl = "test url of set";
+        modificationDate = "test modification date";
     }
 
     DbHelper dbHelper;
+
+    String setNumber;
+    String name;
+    int year;
+    int themeId;
+    int numberOfParts;
+    String imageUrl;
+    String setUrl;
+    String modificationDate;
+
+    public String getSetNumber() {
+        return setNumber;
+    }
+
+    public void setSetNumber(String setNumber) {
+        this.setNumber = setNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
+    }
+
+    public int getNumberOfParts() {
+        return numberOfParts;
+    }
+
+    public void setNumberOfParts(int numberOfParts) {
+        this.numberOfParts = numberOfParts;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getSetUrl() {
+        return setUrl;
+    }
+
+    public void setSetUrl(String setUrl) {
+        this.setUrl = setUrl;
+    }
+
+    public String getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    public DbHelper getDbHelper() {
+        return dbHelper;
+    }
+
+    public void setDbHelper(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
+
 
     public void writeIntoDb() {
         // Gets the data repository in write mode
