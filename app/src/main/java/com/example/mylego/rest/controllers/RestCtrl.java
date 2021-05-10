@@ -1,5 +1,6 @@
-package com.example.mylego.rest;
+package com.example.mylego.rest.controllers;
 
+import com.example.mylego.rest.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,21 +20,6 @@ public class RestCtrl {
     static final String TOKEN_ACCESS_KEY = "key cae9480418c5c7f7ef9a76142f8f5f48";
 
     RestApi restApi;
-    //BricksSingleSet bricksSingleSet;
-
-    //IFromRestCallback IFromRestCallback;
-
-//    public RestBricksByIdCtrl(IFromRestCallback IFromRestCallback) {
-//        start();
-//        this.IFromRestCallback = IFromRestCallback;
-//    }
-//
-//    public BricksSingleSet getById(java.lang.String id) {
-//        start();
-//        Call<BricksSingleSet> call = restApi.runRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json", id);
-//        call.enqueue(this);
-//        return bricksSingleSet;
-//    }
 
     public void start() {
 

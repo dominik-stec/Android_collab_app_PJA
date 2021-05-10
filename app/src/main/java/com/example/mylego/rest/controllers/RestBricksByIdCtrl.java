@@ -1,28 +1,19 @@
-package com.example.mylego.rest;
+package com.example.mylego.rest.controllers;
 
 import android.util.Log;
 
-import java.io.IOException;
+import com.example.mylego.rest.IFromRestCallback;
+import com.example.mylego.rest.domain.BricksSingleSet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.OkHttpClient.Builder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestBricksByIdCtrl extends RestCtrl implements Callback<BricksSingleSet> {
 
     BricksSingleSet bricksSingleSet;
 
-    IFromRestCallback IFromRestCallback;
+    com.example.mylego.rest.IFromRestCallback IFromRestCallback;
 
     public RestBricksByIdCtrl(IFromRestCallback IFromRestCallback) {
         this.IFromRestCallback = IFromRestCallback;

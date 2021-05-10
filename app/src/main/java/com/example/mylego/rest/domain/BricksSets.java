@@ -1,4 +1,4 @@
-package com.example.mylego.rest;
+package com.example.mylego.rest.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

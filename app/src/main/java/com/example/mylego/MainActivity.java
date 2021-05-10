@@ -20,7 +20,7 @@ import android.util.Log;
 
 //import com.example.mylego.rest.String;
 
-import com.example.mylego.rest.BricksSets;
+import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.services.RestService;
 
 public class MainActivity extends AppCompatActivity {

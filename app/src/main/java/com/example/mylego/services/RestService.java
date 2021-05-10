@@ -5,11 +5,11 @@ import android.app.IntentService;
 import android.content.Intent;
 
 //import com.example.mylego.rest.String;
-import com.example.mylego.rest.BricksSets;
-import com.example.mylego.rest.BricksSingleSet;
+import com.example.mylego.rest.domain.BricksSets;
+import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
-import com.example.mylego.rest.RestAllBricksCtrl;
-import com.example.mylego.rest.RestBricksByIdCtrl;
+import com.example.mylego.rest.controllers.RestAllBricksCtrl;
+import com.example.mylego.rest.controllers.RestBricksByIdCtrl;
 
 public class RestService extends IntentService {
 

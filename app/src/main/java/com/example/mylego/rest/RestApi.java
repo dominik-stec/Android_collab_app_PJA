@@ -1,5 +1,8 @@
 package com.example.mylego.rest;
 
+import com.example.mylego.rest.domain.BricksSets;
+import com.example.mylego.rest.domain.BricksSingleSet;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

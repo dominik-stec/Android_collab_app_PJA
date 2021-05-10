@@ -1,6 +1,7 @@
 package com.example.mylego.rest;
 
-import retrofit2.*;
+import com.example.mylego.rest.domain.BricksSets;
+import com.example.mylego.rest.domain.BricksSingleSet;
 
 public interface IFromRestCallback {
 
