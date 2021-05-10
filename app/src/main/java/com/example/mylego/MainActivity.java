@@ -1,12 +1,3 @@
-/**
- * NullPointerException po wczytaniu obiektu(wczytuje się) i próbie jego odczytu(nie odczytuje).
- * Obiekt jest reprezentowany przez
- * BricksSingleSet - wtedy nie powinien zgłaszać null, ale najprawdopodobnie jest to reprezentacja
- * String
- * po wczytaniu danych z REST(odczytuje), spróbować przetwarzać obiekt string reprezentujący JSON-a,
- * z danymi zestawu Lego o podanym ID
- */
-
 package com.example.mylego;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-
-//import com.example.mylego.rest.String;
 
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.services.RestService;

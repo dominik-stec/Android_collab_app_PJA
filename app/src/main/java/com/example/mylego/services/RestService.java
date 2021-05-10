@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
 
-//import com.example.mylego.rest.String;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
