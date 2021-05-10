@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Intent intentService;
 
 
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    BroadcastReceiver receiverSetById = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        registerReceiver(receiver, new IntentFilter(
-                RestService.SERVICE_RECEIVER_ID));
+        registerReceiver(receiverSetById, new IntentFilter(
+                RestService.SERVICE_RECEIVER_ONE_SET_ID));
 
         registerReceiver(receiverSets, new IntentFilter(
                 RestService.SERVICE_RECEIVER_ALL_SET_ID));
@@ -107,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
+        unregisterReceiver(receiverSetById);
+        unregisterReceiver(receiverSets);
+
     }
 
 }

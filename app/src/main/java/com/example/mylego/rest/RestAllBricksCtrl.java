@@ -29,12 +29,11 @@ public class RestAllBricksCtrl implements Callback<BricksSets> {
     public RestAllBricksCtrl(IFromRestCallback IFromRestCallback) {
         start();
         this.IFromRestCallback = IFromRestCallback;
-    }
-
-    public BricksSets getById(String id) {
-        start();
         Call<BricksSets> call = restApi.getSetsRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json");
         call.enqueue(this);
+    }
+
+    public BricksSets getSets() {
         return bricksSets;
     }
 
@@ -90,7 +89,7 @@ public class RestAllBricksCtrl implements Callback<BricksSets> {
         if(response.isSuccessful()) {
 
             bricksSets = response.body();
-            IFromRestCallback.onGetSetRestSucess(bricksSets);
+            IFromRestCallback.onGetSetsRestSuccess(bricksSets);
             Log.i("REST ok", "onResponse method pass");
 
         } else {

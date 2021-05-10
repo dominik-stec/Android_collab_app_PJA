@@ -4,7 +4,7 @@ import retrofit2.*;
 
 public interface IFromRestCallback {
 
-    void onSucess(BricksSingleSet value);
+    void onGetSetByIdRestSuccess(BricksSingleSet value);
+    void onGetSetsRestSuccess(BricksSets value);
     void onFailure();
-    void onGetSetRestSucess(BricksSets value);
 }

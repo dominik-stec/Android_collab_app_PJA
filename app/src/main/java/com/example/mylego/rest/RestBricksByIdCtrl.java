@@ -18,7 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestCtrl implements Callback<BricksSingleSet> {
+public class RestBricksByIdCtrl implements Callback<BricksSingleSet> {
 
     static final java.lang.String BASE_URL = "https://rebrickable.com/";
     RestApi restApi;
@@ -26,7 +26,7 @@ public class RestCtrl implements Callback<BricksSingleSet> {
 
     IFromRestCallback IFromRestCallback;
 
-    public RestCtrl(IFromRestCallback IFromRestCallback) {
+    public RestBricksByIdCtrl(IFromRestCallback IFromRestCallback) {
         start();
         this.IFromRestCallback = IFromRestCallback;
     }
@@ -90,7 +90,7 @@ public class RestCtrl implements Callback<BricksSingleSet> {
         if(response.isSuccessful()) {
 
             bricksSingleSet = response.body();
-            IFromRestCallback.onSucess(bricksSingleSet);
+            IFromRestCallback.onGetSetByIdRestSuccess(bricksSingleSet);
             Log.i("REST ok", "onResponse method pass");
 
         } else {
