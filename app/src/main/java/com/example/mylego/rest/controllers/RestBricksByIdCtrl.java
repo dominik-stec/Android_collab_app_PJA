@@ -21,7 +21,7 @@ public class RestBricksByIdCtrl extends RestCtrl implements Callback<BricksSingl
     }
 
     public BricksSingleSet getById(java.lang.String id) {
-        Call<BricksSingleSet> call = restApi.runRest(TOKEN_ACCESS_KEY, "application/json", id);
+        Call<BricksSingleSet> call = restApi.getSetByIdRest(TOKEN_ACCESS_KEY, "application/json", id);
         call.enqueue(this);
         return bricksSingleSet;
     }

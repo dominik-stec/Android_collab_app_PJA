@@ -3,12 +3,15 @@ package com.example.mylego.services;
 import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.controllers.RestAllBricksCtrl;
 import com.example.mylego.rest.controllers.RestBricksByIdCtrl;
+
+import java.util.List;
 
 public class RestService extends IntentService {
 
@@ -44,6 +47,11 @@ public class RestService extends IntentService {
             }
 
             @Override
+            public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
+
+            }
+
+            @Override
             public void onFailure() {
 
             }
@@ -63,6 +71,8 @@ public class RestService extends IntentService {
                 System.out.println("!!!!!!!!!onGetSetRestSucess OK");
                 int result = Activity.RESULT_OK;
 
+                Log.d("bricks result from list", value.getResults()[99].getName());
+
                 publishResultsForAllSets(value, result);
 
 //                Intent intent = new Intent(SERVICE_RECEIVER_ALL_SET_ID);
@@ -73,11 +83,42 @@ public class RestService extends IntentService {
             }
 
             @Override
+            public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
+
+            }
+
+            @Override
             public void onFailure() {
 
             }
         }).getSets();
     }
+
+    List<BricksSingleSet[]> bricksAll = new RestAllBricksCtrl(new IFromRestCallback() {
+        @Override
+        public void onGetSetByIdRestSuccess(BricksSingleSet value) {
+
+
+        }
+
+        @Override
+        public void onGetSetsRestSuccess(BricksSets value) {
+
+
+        }
+
+        @Override
+        public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
+            //TODO value to BRicksSet and sendBroadcast
+
+        }
+
+        @Override
+        public void onFailure() {
+
+        }
+    }).getAllSets();
+
 
     private void publishResultsForSetById(String bricksSingleSet, int result) {
         Intent intent = new Intent(SERVICE_RECEIVER_ONE_SET_ID);

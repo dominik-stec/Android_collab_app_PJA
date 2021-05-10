@@ -4,6 +4,10 @@ import android.util.Log;
 
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
+import com.example.mylego.rest.domain.BricksSingleSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,14 +29,45 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
     public BricksSets getSets() {
         return bricksSets;
     }
+    public List<BricksSingleSet[]> getAllSets() {
+        return listOfListBricks;
+    }
+
+
+    List<BricksSingleSet[]> listOfListBricks= new ArrayList<BricksSingleSet[]>();
+    int i = 0;
 
     @Override
     public void onResponse(Call<BricksSets> call, Response<BricksSets> response) {
         if(response.isSuccessful()) {
 
-            bricksSets = response.body();
-            IFromRestCallback.onGetSetsRestSuccess(bricksSets);
-            Log.i("REST ok", "onResponse method pass");
+                listOfListBricks.add(response.body().getResults());
+                String nextLink = response.body().getNext();
+                if(nextLink != null) {
+                    String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
+                    String nextPage = nextPageRaw.substring(1);
+                    Log.d("loop", "loop in work  " + i++);
+                    int pageNum = Integer.parseInt(nextPage);
+                    //177 loop iteration
+                    try{
+                        Thread.sleep(1000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Call<BricksSets> callLoop = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", pageNum);
+                    callLoop.enqueue(this);
+                } else if(nextLink == null) {
+                    IFromRestCallback.onGetSetsRestAllSuccess(listOfListBricks);
+                    Log.i("REST for all full ok", "onResponse method pass");
+                }
+
+
+
+
+/////////////////
+//            bricksSets = response.body();
+//            IFromRestCallback.onGetSetsRestSuccess(bricksSets);
+//            Log.i("REST ok", "onResponse method pass");
 
         } else {
             System.out.println(response.errorBody().toString());
