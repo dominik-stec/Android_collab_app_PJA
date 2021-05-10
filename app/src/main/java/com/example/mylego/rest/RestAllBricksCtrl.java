@@ -18,11 +18,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestAllBricksCtrl implements Callback<BricksSingleSet> {
+public class RestAllBricksCtrl implements Callback<BricksSets> {
 
     static final String BASE_URL = "https://rebrickable.com/";
     RestApi restApi;
-    BricksSingleSet bricksSingleSet;
+    BricksSets bricksSets;
 
     IFromRestCallback IFromRestCallback;
 
@@ -31,11 +31,11 @@ public class RestAllBricksCtrl implements Callback<BricksSingleSet> {
         this.IFromRestCallback = IFromRestCallback;
     }
 
-    public BricksSingleSet getById(String id) {
+    public BricksSets getById(String id) {
         start();
-        Call<BricksSingleSet> call = restApi.runRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json", id);
+        Call<BricksSets> call = restApi.getSetsRest("key cae9480418c5c7f7ef9a76142f8f5f48", "application/json");
         call.enqueue(this);
-        return bricksSingleSet;
+        return bricksSets;
     }
 
     public void start() {
@@ -86,11 +86,11 @@ public class RestAllBricksCtrl implements Callback<BricksSingleSet> {
     }
 
     @Override
-    public void onResponse(Call<BricksSingleSet> call, Response<BricksSingleSet> response) {
+    public void onResponse(Call<BricksSets> call, Response<BricksSets> response) {
         if(response.isSuccessful()) {
 
-            bricksSingleSet = response.body();
-            IFromRestCallback.onSucess(bricksSingleSet);
+            bricksSets = response.body();
+            IFromRestCallback.onGetSetRestSucess(bricksSets);
             Log.i("REST ok", "onResponse method pass");
 
         } else {
@@ -101,7 +101,7 @@ public class RestAllBricksCtrl implements Callback<BricksSingleSet> {
     }
 
     @Override
-    public void onFailure(Call<BricksSingleSet> call, Throwable t) {
+    public void onFailure(Call<BricksSets> call, Throwable t) {
         Log.e("REST error","onFailure method error");
         t.printStackTrace();
     }

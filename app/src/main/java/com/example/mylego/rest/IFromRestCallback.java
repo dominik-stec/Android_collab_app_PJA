@@ -6,4 +6,5 @@ public interface IFromRestCallback {
 
     void onSucess(BricksSingleSet value);
     void onFailure();
+    void onGetSetRestSucess(BricksSets value);
 }

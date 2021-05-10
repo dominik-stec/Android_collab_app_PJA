@@ -29,12 +29,12 @@ public class BricksSets implements Serializable {
         this.count = count;
     }
 
-    public java.lang.String getName() {
+    public java.lang.String getNext() {
         return next;
     }
 
-    public void setName(java.lang.String name) {
-        this.next = name;
+    public void setNext(java.lang.String next) {
+        this.next = next;
     }
 
     public java.lang.String getPrevious() {

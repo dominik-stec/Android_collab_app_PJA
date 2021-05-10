@@ -20,6 +20,7 @@ import android.util.Log;
 
 //import com.example.mylego.rest.String;
 
+import com.example.mylego.rest.BricksSets;
 import com.example.mylego.services.RestService;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,8 +78,50 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Android Services", "RestService - onSucess method from IFromRestCAllback fail");
                 }
             }
+
         }
     };
+
+
+
+
+    BroadcastReceiver receiverSets = new BroadcastReceiver() {
+
+        //final MainActivity act = MainActivity.this;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            intentService = intent;
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                BricksSets bricksSet = (BricksSets) bundle.get(RestService.BRICKS_ALL_SETS);
+                System.out.println("BRICKS sets from Activity " + bricksSet.getNext());
+
+//                    i = new Intent(context, RestService.class);
+//                    i.putExtra("Hogwart", bricksSingleSet);
+
+                //startService(i);
+//
+//                    Intent i = new Intent(context, RestService.class);
+//                    startService(i);
+//                    registerReceiver(this, new IntentFilter(
+//                            RestService.SERVICE_RECEIVER_ID));
+
+                Log.i("Android Services sets", "!!!!!!!!!!!!!!!!!Exist Intent values in Bundle");
+                int resultCode = bundle.getInt(RestService.RESULT_CODE);
+                if (resultCode == RESULT_OK) {
+                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
+                } else {
+                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
+                }
+            }
+
+
+        }
+    };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +136,11 @@ public class MainActivity extends AppCompatActivity {
 //        //i.putExtra(RestService.BRICKS_SINGLE_SET, RestService.BRICKS_SINGLE_SET);
 //
         startService(i);
-
+//
         System.out.println("BRICKS from Activity 2 " + "");
-
-        Intent providerIntent = new Intent(this, MainActivity2.class);
-        startActivity(providerIntent);
+//!!!!!!!!!!!!!!!!!!!!!!!!
+//        Intent providerIntent = new Intent(this, MainActivity2.class);
+//        startActivity(providerIntent);
 
 //
 ////        System.out.println("BRICKS activity " + bricksSingleSet);
@@ -118,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
 
         registerReceiver(receiver, new IntentFilter(
                 RestService.SERVICE_RECEIVER_ID));
+
+        registerReceiver(receiverSets, new IntentFilter(
+                RestService.SERVICE_RECEIVER_ALL_SET_ID));
+
     }
 //
     @Override
