@@ -90,7 +90,13 @@ public class MainActivity extends AppCompatActivity {
         startService(i);
 
         System.out.println("BRICKS from Activity 2 " + "");
- }
+
+        System.out.println("!!!!!!!!!!init database!!!!!!!!!!!!");
+        Intent db = new Intent(this, DatabaseTestActivity.class);
+        startActivity(db);
+
+
+    }
 
     @Override
     protected void onResume() {
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         registerReceiver(receiverSets, new IntentFilter(
                 RestService.SERVICE_RECEIVER_ALL_SET_ID));
+
 
     }
 
