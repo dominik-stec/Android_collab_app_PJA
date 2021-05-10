@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.mylego.rest.domain.BricksSets;
+import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.services.RestService;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +70,34 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    BroadcastReceiver receiverAllSets = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            intentService = intent;
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                ArrayList<BricksSingleSet> bricksAllSet = (ArrayList<BricksSingleSet>) bundle.get(RestService.BRICKS_ALL_FULLY_SETS);
+                System.out.println("BRICKS fully sets from Activity ");
+
+                for(BricksSingleSet b : bricksAllSet) {
+                    System.out.println("!!!!!!name: " + b.getName());
+                }
+
+                Log.i("Android Services sets", "!!!!!!!!!!!!!!!!!Exist Intent values in Bundle");
+                int resultCode = bundle.getInt(RestService.RESULT_CODE);
+                if (resultCode == RESULT_OK) {
+                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
+                } else {
+                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
+                }
+            }
+
+
+        }
+    };
+
+
 
 
     @Override
@@ -96,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
         registerReceiver(receiverSets, new IntentFilter(
                 RestService.SERVICE_RECEIVER_ALL_SET_ID));
+
+        registerReceiver(receiverAllSets, new IntentFilter(
+                RestService.SERVICE_RECEIVER_ALL_FULLY_SET_ID));
 
 
     }

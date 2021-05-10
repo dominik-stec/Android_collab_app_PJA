@@ -11,6 +11,7 @@ import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.controllers.RestAllBricksCtrl;
 import com.example.mylego.rest.controllers.RestBricksByIdCtrl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestService extends IntentService {
@@ -21,6 +22,10 @@ public class RestService extends IntentService {
 
     public static final String SERVICE_RECEIVER_ALL_SET_ID = "BroadcastReceiver from MainActivity for all sets";
     public static final String BRICKS_ALL_SETS = "BricksSets";
+
+    public static final String SERVICE_RECEIVER_ALL_FULLY_SET_ID = "BroadcastReceiver from MainActivity for all fully sets";
+    public static final String BRICKS_ALL_FULLY_SETS = "List<BricksSets>";
+
 
     public RestService(){
         super("RestService");
@@ -109,8 +114,15 @@ public class RestService extends IntentService {
 
         @Override
         public void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value) {
-            //TODO value to BRicksSet and sendBroadcast
-
+            //TODO value to BricksSet and sendBroadcast
+            ArrayList<BricksSingleSet> allBricksList = new ArrayList<BricksSingleSet>();
+            for(BricksSingleSet[] partialBricksList : value) {
+                int length = partialBricksList.length;
+                for(int i=0; i<length; i++) {
+                    allBricksList.add(partialBricksList[i]);
+                }
+            }
+            publishResultsForAllFullySets(allBricksList, Activity.RESULT_OK);
         }
 
         @Override
@@ -131,6 +143,13 @@ public class RestService extends IntentService {
         Intent intent = new Intent(SERVICE_RECEIVER_ALL_SET_ID);
         intent.putExtra(RESULT_CODE, result);
         intent.putExtra(BRICKS_ALL_SETS, bricksSets);
+        sendBroadcast(intent);
+    }
+
+    private void publishResultsForAllFullySets(ArrayList<BricksSingleSet> bricksSets, int result) {
+        Intent intent = new Intent(SERVICE_RECEIVER_ALL_FULLY_SET_ID);
+        intent.putExtra(BRICKS_ALL_FULLY_SETS, bricksSets);
+        intent.putExtra(RESULT_CODE, result);
         sendBroadcast(intent);
     }
 
