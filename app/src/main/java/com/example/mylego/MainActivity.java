@@ -72,6 +72,29 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+//    BroadcastReceiver receiverAllSets = new BroadcastReceiver() {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            intentService = intent;
+//            Bundle bundle = intent.getExtras();
+//            if (bundle != null) {
+//                ArrayList<BricksSingleSet> bricksAllSet = (ArrayList<BricksSingleSet>) bundle.get(RestService.BRICKS_ALL_FULLY_SETS);
+//                System.out.println("BRICKS fully sets from Activity ");
+//
+//                for(BricksSingleSet b : bricksAllSet) {
+//                    System.out.println("!!!!!!name: " + b.getName());
+//                }
+//
+//                Log.i("Android Services sets", "!!!!!!!!!!!!!!!!!Exist Intent values in Bundle");
+//                int resultCode = bundle.getInt(RestService.RESULT_CODE);
+//                if (resultCode == RESULT_OK) {
+//                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
+//                } else {
+//                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
+//                }
+//            }
+
     BroadcastReceiver receiverAllSets = new BroadcastReceiver() {
 
         @Override
@@ -79,23 +102,17 @@ public class MainActivity extends AppCompatActivity {
             intentService = intent;
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                ArrayList<BricksSingleSet> bricksAllSet = (ArrayList<BricksSingleSet>) bundle.get(RestService.BRICKS_ALL_FULLY_SETS);
-                System.out.println("BRICKS fully sets from Activity ");
+                long progress = bundle.getLong("progress");
 
-                for(BricksSingleSet b : bricksAllSet) {
-                    System.out.println("!!!!!!name: " + b.getName());
-                }
 
-                Log.i("Android Services sets", "!!!!!!!!!!!!!!!!!Exist Intent values in Bundle");
-                int resultCode = bundle.getInt(RestService.RESULT_CODE);
-                if (resultCode == RESULT_OK) {
-                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
-                } else {
-                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
-                }
+                Log.i("Android Services, ", "receive progress " + progress);
+//                int resultCode = bundle.getInt(RestService.RESULT_CODE);
+//                if (resultCode == RESULT_OK) {
+//                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
+//                } else {
+//                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
+//                }
             }
-
-
         }
     };
 
@@ -146,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(receiverSetById);
         unregisterReceiver(receiverSets);
-
+        ////////////////////
+        unregisterReceiver(receiverAllSets);
     }
 
 }

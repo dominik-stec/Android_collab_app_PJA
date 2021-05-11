@@ -133,7 +133,7 @@ public class RestService extends IntentService {
             int counter = 0;
             //SyncRestDb syncRestDb = (SyncRestDb) getApplicationContext();
             Intent intent = new Intent(getApplicationContext(), DatabaseTestActivity.class);
-            Intent progressBar = new Intent(getApplicationContext(), RestLoadProgressBar.class);
+            Intent progressBar = new Intent(SERVICE_RECEIVER_ALL_FULLY_SET_ID);
 
             DbManager db = new DbManager(getApplicationContext());
             for(BricksSingleSet bricks : allBricksList) {
@@ -154,9 +154,10 @@ public class RestService extends IntentService {
                 if(counter % 100 == 0) {
                     Log.d("database insert", "from callback insert with modulo 100 count");
                     long progress = Math.round(((double)counter/RestAllBricksCtrl.to_insert_row_count)*100);
-                    progressBar.putExtra("progress", progress);
                     progressBar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(progressBar);
+                    progressBar.putExtra("progress", progress);
+                    sendBroadcast(progressBar);
+                    //startActivity(progressBar);
                 }
 
                 //intent.putExtra("counter", ++counter);
@@ -165,6 +166,7 @@ public class RestService extends IntentService {
                 //insertCount.getInstance().setData(++counter);
                 //((SyncRestDb) getApplication()).setData(100);
             }
+            //TODO down uncomment
 ////////////////////////////////////
             if(counter == RestAllBricksCtrl.to_insert_row_count) {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
