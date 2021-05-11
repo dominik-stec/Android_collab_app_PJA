@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
         startService(i);
 
-        System.out.println("BRICKS from Activity 2 " + "");
+        System.out.println("START SERVICE from act 1 " + "");
 
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
 
-        Intent db = new Intent(this, DatabaseTestActivity.class);
-        startActivity(db);
+//        Intent db = new Intent(this, DatabaseTestActivity.class);
+//        startActivity(db);
 
 
         }

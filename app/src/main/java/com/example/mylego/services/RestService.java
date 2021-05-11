@@ -5,7 +5,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.mylego.DatabaseTestActivity;
 import com.example.mylego.database.DbManager;
+import com.example.mylego.database.SyncRestDb;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
@@ -126,6 +128,11 @@ public class RestService extends IntentService {
             }
             Log.d("database insert", "number of items in array: " + allBricksList.size());
 
+            //SyncRestDb insertCount = (SyncRestDb) getApplicationContext();
+
+            int counter = 0;
+            //SyncRestDb syncRestDb = (SyncRestDb) getApplicationContext();
+            Intent intent = new Intent(getApplicationContext(), DatabaseTestActivity.class);
 
             DbManager db = new DbManager(getApplicationContext());
             for(BricksSingleSet bricks : allBricksList) {
@@ -139,9 +146,24 @@ public class RestService extends IntentService {
                 db.setModificationDate(bricks.getLastModifiedDt());
 
                 db.commitIntoDb();
-                Log.d("database insert", "from callback insert " + DbManager.commit_counter);
+                Log.d("database insert", "from callback insert");
+
+                ++counter;
+
+                if(counter % 100 == 0) Log.d("database insert", "from callback insert with modulo 100 count");
+
+                //intent.putExtra("counter", ++counter);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+                //insertCount.getInstance().setData(++counter);
+                //((SyncRestDb) getApplication()).setData(100);
             }
 ////////////////////////////////////
+            if(counter == RestAllBricksCtrl.to_insert_row_count) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("counter", counter);
+                startActivity(intent);
+            }
             //db.readFromDb();
             //publishResultsForAllFullySets(allBricksList.get(10).getName(), Activity.RESULT_OK);
         }

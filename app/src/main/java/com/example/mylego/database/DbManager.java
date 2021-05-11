@@ -105,7 +105,7 @@ public class DbManager {
         this.modificationDate = modificationDate;
     }
 
-    public static int commit_counter = 0;
+    //public static int commit_counter = 0;
 
     public long commitIntoDb() {
         // Gets the data repository in write mode
@@ -126,7 +126,7 @@ public class DbManager {
 // Insert the new row, returning the primary key value of the new row
         long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
 
-        ++commit_counter;
+        //++SyncRestDb.insert_counter;
 
         return newRowId;
     }
