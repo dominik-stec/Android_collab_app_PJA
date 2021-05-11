@@ -105,8 +105,9 @@ public class DbManager {
         this.modificationDate = modificationDate;
     }
 
+    public static int commit_counter = 0;
 
-    public long writeIntoDb() {
+    public long commitIntoDb() {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
 
@@ -124,6 +125,8 @@ public class DbManager {
 
 // Insert the new row, returning the primary key value of the new row
         long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
+
+        ++commit_counter;
 
         return newRowId;
     }
@@ -157,8 +160,8 @@ public class DbManager {
         this.cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                null,//selection,              // The columns for the WHERE clause
-                null,//selectionArgs,          // The values for the WHERE clause
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
@@ -173,24 +176,17 @@ public class DbManager {
             itemIds.add(itemId);
             namesList.add(name);
         }
-        //TODO close or not ????
         cursor.close();
 
-//        for(long i : itemIds) {
-//            Log.d("TEST BRICKS DB LIST", itemIds.toString());
-//            System.out.println("testing SQL" + i);
-//        }
+        for(long i : itemIds) {
+            Log.d("TEST BRICKS DB LIST", itemIds.toString());
+            System.out.println("testing SQL" + i);
+        }
 
-//        for(String i : namesList) {
-//            System.out.println("testing SQL result for name :  " + i);
-//            Log.d("TEST BRICKS name:  ", i);
-//        }
-    }
-
-    public ArrayList<BricksSingleSet> getAllBricksAsList(int startId, int endId) {
-        ArrayList<BricksSingleSet> bricks = new ArrayList<BricksSingleSet>();
-
-        return bricks;
+        for(String i : namesList) {
+            System.out.println("testing SQL result for name :  " + i);
+            Log.d("TEST BRICKS name:  ", i);
+        }
     }
 
     public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
@@ -206,6 +202,7 @@ public class DbManager {
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+
         String[] projection = {
                 BaseColumns._ID,
                 columnType,
@@ -223,10 +220,13 @@ public class DbManager {
         while(cursor.moveToNext()) {
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
-            if(itemId > endId) break;
-            if(itemId >= startId || itemId <= endId) {
+            /////////////////////////
+            int singleRowId = cursor.getInt((int)itemId);
+            ////////////////////////
+            if(singleRowId > endId) break;
+            if(singleRowId >= startId || singleRowId <= endId) {
                 String stringResult = cursor.getString(cursor.getColumnIndexOrThrow(columnType));
-                queryResult.put(itemId, stringResult);
+                queryResult.put((long)singleRowId, stringResult);
             }
 
         }
@@ -251,6 +251,7 @@ public class DbManager {
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+
         String[] projection = {
                 BaseColumns._ID,
                 columnType,

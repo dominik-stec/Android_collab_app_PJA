@@ -37,10 +37,15 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
 
     List<BricksSingleSet[]> listOfListBricks= new ArrayList<BricksSingleSet[]>();
 
+    public static int max_iter_num = 10;
+    public static int speed_rest_read = 2000;
+    public static int to_insert_row_count = max_iter_num * 100;
+
     @Override
     public void onResponse(Call<BricksSets> call, Response<BricksSets> response) {
     //TODO disable rest
         ////////////////////////////////
+
         if(response.isSuccessful()) {
 
                 listOfListBricks.add(response.body().getResults());
@@ -49,15 +54,27 @@ public class RestAllBricksCtrl extends RestCtrl implements Callback<BricksSets> 
                     String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
                     String nextPage = nextPageRaw.substring(1);
                     int pageNum = Integer.parseInt(nextPage);
-                    Log.d("loop", "loop in work  " + pageNum);
+
                     //177 loop iteration
                     try{
-                        Thread.sleep(2000);
+                        Thread.sleep(speed_rest_read);
                     } catch(InterruptedException e) {
                         e.printStackTrace();
                     }
+
+                    //177 pages max
+                    if(pageNum > max_iter_num){
+                        IFromRestCallback.onGetSetsRestAllSuccess(listOfListBricks);
+                        Log.i("REST for all full ok", "onResponse method pass but with limit maxIterNum");
+                        return;
+                    }
+
+                    double progress = Math.round(((double)pageNum/max_iter_num) * 100);
+                    Log.d("rest_loop", "loop in work  " + progress + " %");
+
                     Call<BricksSets> callLoop = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", pageNum);
                     callLoop.enqueue(this);
+
                 } else if(nextLink == null) {
                     IFromRestCallback.onGetSetsRestAllSuccess(listOfListBricks);
                     Log.i("REST for all full ok", "onResponse method pass");

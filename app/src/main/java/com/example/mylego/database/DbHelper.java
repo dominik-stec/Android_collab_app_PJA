@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the com.example.mylego.database schema, you must increment the com.example.mylego.database version.
     public static final int DATABASE_VERSION = 10;
-    public static final String DATABASE_NAME = "BricksSetTest.db";
+    public static final String DATABASE_NAME = "BricksSetTest3.db";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

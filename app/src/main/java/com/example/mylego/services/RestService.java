@@ -124,21 +124,33 @@ public class RestService extends IntentService {
                     allBricksList.add(partialBricksList[i]);
                 }
             }
+            Log.d("database insert", "number of items in array: " + allBricksList.size());
+
 
             DbManager db = new DbManager(getApplicationContext());
             for(BricksSingleSet bricks : allBricksList) {
+                db.setSetNumber(bricks.getSetNum());
                 db.setName(bricks.getName());
-                db.writeIntoDb();
+                db.setYear(bricks.getYear());
+                db.setThemeId(bricks.getThemeId());
+                db.setNumberOfParts(bricks.getNumParts());
+                db.setImageUrl(bricks.getSetImgUrl());
+                db.setSetUrl(bricks.getSetUrl());
+                db.setModificationDate(bricks.getLastModifiedDt());
+
+                db.commitIntoDb();
+                Log.d("database insert", "from callback insert " + DbManager.commit_counter);
             }
 ////////////////////////////////////
             //db.readFromDb();
-            //publishResultsForAllFullySets(allBricksList, Activity.RESULT_OK);
+            //publishResultsForAllFullySets(allBricksList.get(10).getName(), Activity.RESULT_OK);
         }
 
         @Override
         public void onFailure() {
 
         }
+
     }).getAllSets();
 
 
@@ -156,9 +168,9 @@ public class RestService extends IntentService {
         sendBroadcast(intent);
     }
 
-    private void publishResultsForAllFullySets(ArrayList<BricksSingleSet> bricksSets, int result) {
+    private void publishResultsForAllFullySets(String testName, int result) {
         Intent intent = new Intent(SERVICE_RECEIVER_ALL_FULLY_SET_ID);
-        intent.putExtra(BRICKS_ALL_FULLY_SETS, bricksSets);
+        intent.putExtra(BRICKS_ALL_FULLY_SETS, testName);
         intent.putExtra(RESULT_CODE, result);
         sendBroadcast(intent);
     }

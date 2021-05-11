@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.mylego.database.DbManager;
+import com.example.mylego.rest.controllers.RestAllBricksCtrl;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.services.RestService;
@@ -112,11 +114,16 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("BRICKS from Activity 2 " + "");
 
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
+
         Intent db = new Intent(this, DatabaseTestActivity.class);
         startActivity(db);
 
 
-    }
+        }
+
+
+
+
 
     @Override
     protected void onResume() {
