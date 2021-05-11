@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
-import com.example.mylego.database.SyncRestDb;
 import com.example.mylego.rest.controllers.RestAllBricksCtrl;
 
 import java.util.HashMap;

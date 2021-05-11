@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.mylego.DatabaseTestActivity;
+import com.example.mylego.RestLoadProgressBar;
 import com.example.mylego.database.DbManager;
-import com.example.mylego.database.SyncRestDb;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
@@ -133,6 +133,7 @@ public class RestService extends IntentService {
             int counter = 0;
             //SyncRestDb syncRestDb = (SyncRestDb) getApplicationContext();
             Intent intent = new Intent(getApplicationContext(), DatabaseTestActivity.class);
+            Intent progressBar = new Intent(getApplicationContext(), RestLoadProgressBar.class);
 
             DbManager db = new DbManager(getApplicationContext());
             for(BricksSingleSet bricks : allBricksList) {
@@ -150,7 +151,13 @@ public class RestService extends IntentService {
 
                 ++counter;
 
-                if(counter % 100 == 0) Log.d("database insert", "from callback insert with modulo 100 count");
+                if(counter % 100 == 0) {
+                    Log.d("database insert", "from callback insert with modulo 100 count");
+                    long progress = Math.round(((double)counter/RestAllBricksCtrl.to_insert_row_count)*100);
+                    progressBar.putExtra("progress", progress);
+                    progressBar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(progressBar);
+                }
 
                 //intent.putExtra("counter", ++counter);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
