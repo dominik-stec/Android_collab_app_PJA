@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSingleSet;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,5 +48,6 @@ public class RestBricksByIdCtrl extends RestCtrl implements Callback<BricksSingl
         Log.e("REST error","onFailure method error");
         t.printStackTrace();
     }
+
 
 }

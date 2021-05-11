@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.controllers.RestAllBricksCtrl;
+import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.services.RestService;
@@ -117,6 +119,28 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    public static long progressBar = 0;
+
+    BroadcastReceiver receiverOnePageRestBricks = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            intentService = intent;
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                progressBar = bundle.getLong("progressBarVal");
+
+
+                //Log.i("Android Services, ", "receive progress " + progress);
+//                int resultCode = bundle.getInt(RestService.RESULT_CODE);
+//                if (resultCode == RESULT_OK) {
+//                    Log.i("Android Services sets", "!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback pass");
+//                } else {
+//                    Log.d("Android Services stes", "!!!!!!!!!!!!!!!!!!!RestService - onSucess method from IFromRestCAllback fail");
+//                }
+            }
+        }
+    };
 
 
     @Override
@@ -130,7 +154,19 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("START SERVICE from act 1 " + "");
 
+        while(progressBar<99) {
+            Toast.makeText(this, "initilise database: " + progressBar + " %", Toast.LENGTH_LONG).show();
+            try {
+                Thread.sleep(RestOnePageBricksCtrl.speed_rest_read);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
+
+        Intent basicActivity = new Intent(this, RestLoadProgressBar.class);
+        startActivity(basicActivity);
 
 //        Intent db = new Intent(this, DatabaseTestActivity.class);
 //        startActivity(db);
@@ -155,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiverAllSets, new IntentFilter(
                 RestService.SERVICE_RECEIVER_ALL_FULLY_SET_ID));
 
+        registerReceiver(receiverOnePageRestBricks, new IntentFilter(
+                "progressBar"));
+
 
     }
 
@@ -165,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(receiverSets);
         ////////////////////
         unregisterReceiver(receiverAllSets);
+        unregisterReceiver(receiverOnePageRestBricks);
+
     }
 
 }

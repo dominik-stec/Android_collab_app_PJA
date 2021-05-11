@@ -10,5 +10,6 @@ public interface IFromRestCallback {
     void onGetSetByIdRestSuccess(BricksSingleSet value);
     void onGetSetsRestSuccess(BricksSets value);
     void onGetSetsRestAllSuccess(List<BricksSingleSet[]> value);
+    void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value);
     void onFailure();
 }
