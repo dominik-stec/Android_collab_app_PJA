@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.example.mylego.rest.domain.BricksSingleSet;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DbManager {
@@ -26,6 +29,8 @@ public class DbManager {
     }
 
     DbHelper dbHelper;
+
+    Cursor cursor;
 
     String setNumber;
     String name;
@@ -147,9 +152,9 @@ public class DbManager {
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                CreateTable.TableEntry.COLUMN_NAME_NAME + " DESC";
+                CreateTable.TableEntry._ID + " ASC";
 
-        Cursor cursor = dbRead.query(
+        this.cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,//selection,              // The columns for the WHERE clause
@@ -168,6 +173,7 @@ public class DbManager {
             itemIds.add(itemId);
             namesList.add(name);
         }
+        //TODO close or not ????
         cursor.close();
 
 //        for(long i : itemIds) {
@@ -175,10 +181,102 @@ public class DbManager {
 //            System.out.println("testing SQL" + i);
 //        }
 
-        for(String i : namesList) {
-            System.out.println("testing SQL result for name :  " + i);
-            Log.d("TEST BRICKS name:  ", i);
+//        for(String i : namesList) {
+//            System.out.println("testing SQL result for name :  " + i);
+//            Log.d("TEST BRICKS name:  ", i);
+//        }
+    }
+
+    public ArrayList<BricksSingleSet> getAllBricksAsList(int startId, int endId) {
+        ArrayList<BricksSingleSet> bricks = new ArrayList<BricksSingleSet>();
+
+        return bricks;
+    }
+
+    public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
+        HashMap<Long, String> queryResult = new HashMap<Long, String>();
+
+        switch(columnType) {
+            case CreateTable.TableEntry.COLUMN_NAME_YEAR:
+                throw new IllegalArgumentException("COLUMN_NAME_YEAR point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_THEME_ID:
+                throw new IllegalArgumentException("COLUMN_NAME_THEME_ID point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_NUM_PARTS:
+                throw new IllegalArgumentException("COLUMN_NAME_NUM_PARTS point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
         }
+
+        SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                columnType,
+        };
+        String selection = columnType + " = ?";
+        Cursor cursor = dbRead.query(
+                CreateTable.TableEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                null,//selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
+            if(itemId > endId) break;
+            if(itemId >= startId || itemId <= endId) {
+                String stringResult = cursor.getString(cursor.getColumnIndexOrThrow(columnType));
+                queryResult.put(itemId, stringResult);
+            }
+
+        }
+        cursor.close();
+        return queryResult;
+    }
+
+    public HashMap<Long, Integer> selectNumberQuery(String columnType, int startId, int endId) {
+        HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
+
+        switch(columnType) {
+            case CreateTable.TableEntry.COLUMN_NAME_SET_NUM:
+                throw new IllegalArgumentException("COLUMN_NAME_YEAR point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_NAME:
+                throw new IllegalArgumentException("COLUMN_NAME_NAME point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_SET_IMG_URL:
+                throw new IllegalArgumentException("COLUMN_NAME_SET_IMG_URL point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_SET_URL:
+                throw new IllegalArgumentException("COLUMN_NAME_SET_URL point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntry.COLUMN_NAME_LAST_MODIFIED_DT:
+                throw new IllegalArgumentException("COLUMN_NAME_LAST_MODIFIED_DT point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+        }
+
+        SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                columnType,
+        };
+        String selection = columnType + " = ?";
+        Cursor cursor = dbRead.query(
+                CreateTable.TableEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                null,//selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
+            if(itemId > endId) break;
+            if(itemId >= startId || itemId <= endId) {
+                int numberResult = cursor.getInt(cursor.getColumnIndexOrThrow(columnType));
+                queryResult.put(itemId, numberResult);
+            }
+
+        }
+        cursor.close();
+        return queryResult;
     }
 
 }
