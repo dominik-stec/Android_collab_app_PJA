@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLEGO">
-        <activity android:name=".RestLoadProgressBar"></activity>
-        <activity android:name=".DatabaseTestActivity"></activity>
+        <activity android:name=".AfterDataLoadActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
