@@ -207,26 +207,32 @@ public class DbManager {
                 BaseColumns._ID,
                 columnType,
         };
-        String selection = columnType + " = ?";
+
         Cursor cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
+                null,//selection,              // The columns for the WHERE clause
                 null,//selectionArgs,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
                 null               // The sort order
         );
+
+        Log.d("from cursor query", "method body");
+
         while(cursor.moveToNext()) {
+            Log.d("from cursor query", "cursor loop");
+
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
-            /////////////////////////
-            int singleRowId = cursor.getInt((int)itemId);
-            ////////////////////////
-            if(singleRowId > endId) break;
-            if(singleRowId >= startId || singleRowId <= endId) {
+            Log.d("from cursor query", "itemId " + itemId);
+
+            if(itemId > endId) break;
+            if(itemId >= startId || itemId <= endId) {
                 String stringResult = cursor.getString(cursor.getColumnIndexOrThrow(columnType));
-                queryResult.put((long)singleRowId, stringResult);
+                Log.d("from cursor query", "stringResult " + stringResult);
+
+                queryResult.put((long)itemId, stringResult);
             }
 
         }

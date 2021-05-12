@@ -129,9 +129,14 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 progressBar = (long)bundle.get("progressBarVal");
+                if(progressBar > 100) progressBar = 100;
                 Log.d("progress bar", "progress bar from onReceive " + progressBar);
                 Toast.makeText(getApplicationContext(), "initilise database: " + progressBar + " %", Toast.LENGTH_LONG).show();
 
+                if(progressBar == 100) {
+                    Intent basicActivity = new Intent(getApplicationContext(), RestLoadProgressBar.class);
+                    startActivity(basicActivity);
+                }
 
                 //Log.i("Android Services, ", "receive progress " + progress);
 //                int resultCode = bundle.getInt(RestService.RESULT_CODE);
@@ -166,9 +171,12 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
-//TODO uncomment ?
-//        Intent basicActivity = new Intent(this, RestLoadProgressBar.class);
-//        startActivity(basicActivity);
+
+//        if(progressBar >= 100) {
+//            Intent basicActivity = new Intent(this, RestLoadProgressBar.class);
+//            startActivity(basicActivity);
+//        }
+
 
 //        Intent db = new Intent(this, DatabaseTestActivity.class);
 //        startActivity(db);
