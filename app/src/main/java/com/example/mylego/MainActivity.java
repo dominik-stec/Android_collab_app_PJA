@@ -166,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
-
-        Intent basicActivity = new Intent(this, RestLoadProgressBar.class);
-        startActivity(basicActivity);
+//TODO uncomment ?
+//        Intent basicActivity = new Intent(this, RestLoadProgressBar.class);
+//        startActivity(basicActivity);
 
 //        Intent db = new Intent(this, DatabaseTestActivity.class);
 //        startActivity(db);
