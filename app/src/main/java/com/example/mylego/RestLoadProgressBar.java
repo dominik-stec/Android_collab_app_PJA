@@ -24,6 +24,11 @@ public class RestLoadProgressBar extends AppCompatActivity {
         for (Map.Entry<Long, String> entry : queriesStr.entrySet()) {
                     Log.d("read query string: ", "id string " + entry.getKey() + " " + entry.getValue());
                 }
+
+                        HashMap<Long, Integer> queriesNum = db.selectNumberQuery(CreateTable.TableEntry.COLUMN_NAME_YEAR, 20, 40);
+                for (Map.Entry<Long, Integer> entry : queriesNum.entrySet()) {
+                    Log.d("read query number: ", "id integer " + entry.getKey() + " " + entry.getValue());
+                }
         //TODO
 //        Bundle bundle = getIntent().getExtras();
 //        long progress = bundle.getLong("progress");

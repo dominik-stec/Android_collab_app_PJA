@@ -228,7 +228,7 @@ public class DbManager {
             Log.d("from cursor query", "itemId " + itemId);
 
             if(itemId > endId) break;
-            if(itemId >= startId || itemId <= endId) {
+            if(itemId >= startId && itemId <= endId) {
                 String stringResult = cursor.getString(cursor.getColumnIndexOrThrow(columnType));
                 Log.d("from cursor query", "stringResult " + stringResult);
 
@@ -241,6 +241,7 @@ public class DbManager {
     }
 
     public HashMap<Long, Integer> selectNumberQuery(String columnType, int startId, int endId) {
+
         HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
 
         switch(columnType) {
@@ -262,12 +263,11 @@ public class DbManager {
                 BaseColumns._ID,
                 columnType,
         };
-        String selection = columnType + " = ?";
         Cursor cursor = dbRead.query(
                 CreateTable.TableEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                null,//selectionArgs,          // The values for the WHERE clause
+                null,              // The columns for the WHERE clause
+                null,         // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
                 null               // The sort order
@@ -276,7 +276,7 @@ public class DbManager {
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
             if(itemId > endId) break;
-            if(itemId >= startId || itemId <= endId) {
+            if(itemId >= startId && itemId <= endId) {
                 int numberResult = cursor.getInt(cursor.getColumnIndexOrThrow(columnType));
                 queryResult.put(itemId, numberResult);
             }
