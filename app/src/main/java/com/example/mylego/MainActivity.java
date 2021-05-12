@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.mylego.database.DbManager;
-import com.example.mylego.rest.controllers.RestAllBricksCtrl;
+//import com.example.mylego.rest.controllers.RestAllBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
             intentService = intent;
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                progressBar = bundle.getLong("progressBarVal");
+                progressBar = (long)bundle.get("progressBarVal");
+                Log.d("progress bar", "progress bar from onReceive " + progressBar);
+                Toast.makeText(getApplicationContext(), "initilise database: " + progressBar + " %", Toast.LENGTH_LONG).show();
 
 
                 //Log.i("Android Services, ", "receive progress " + progress);
@@ -154,14 +156,14 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("START SERVICE from act 1 " + "");
 
-        while(progressBar<99) {
-            Toast.makeText(this, "initilise database: " + progressBar + " %", Toast.LENGTH_LONG).show();
-            try {
-                Thread.sleep(RestOnePageBricksCtrl.speed_rest_read);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while(progressBar<99) {
+//            Toast.makeText(this, "initilise database: " + progressBar + " %", Toast.LENGTH_LONG).show();
+//            try {
+//                Thread.sleep(RestOnePageBricksCtrl.speed_rest_read);
+//            } catch(InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         System.out.println("!!!!!!!!!!init com.example.mylego.database!!!!!!!!!!!!");
 
@@ -182,14 +184,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        registerReceiver(receiverSetById, new IntentFilter(
-                RestService.SERVICE_RECEIVER_ONE_SET_ID));
-
-        registerReceiver(receiverSets, new IntentFilter(
-                RestService.SERVICE_RECEIVER_ALL_SET_ID));
-
-        registerReceiver(receiverAllSets, new IntentFilter(
-                RestService.SERVICE_RECEIVER_ALL_FULLY_SET_ID));
+//        registerReceiver(receiverSetById, new IntentFilter(
+//                RestService.SERVICE_RECEIVER_ONE_SET_ID));
+//
+//        registerReceiver(receiverSets, new IntentFilter(
+//                RestService.SERVICE_RECEIVER_ALL_SET_ID));
+//
+//        registerReceiver(receiverAllSets, new IntentFilter(
+//                RestService.SERVICE_RECEIVER_ALL_FULLY_SET_ID));
 
         registerReceiver(receiverOnePageRestBricks, new IntentFilter(
                 "progressBar"));
@@ -200,10 +202,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiverSetById);
-        unregisterReceiver(receiverSets);
-        ////////////////////
-        unregisterReceiver(receiverAllSets);
+//        unregisterReceiver(receiverSetById);
+//        unregisterReceiver(receiverSets);
+//        ////////////////////
+//        unregisterReceiver(receiverAllSets);
         unregisterReceiver(receiverOnePageRestBricks);
 
     }

@@ -19,7 +19,10 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
     public RestOnePageBricksCtrl(IFromRestCallback IFromRestCallback) {
         super.start();
         this.IFromRestCallback = IFromRestCallback;
-        Call<BricksSets> call = restApi.getSetsRest(TOKEN_ACCESS_KEY, "application/json");
+        bricksSets = new BricksSets();
+//        Call<BricksSets> call = restApi.getSetsRest(TOKEN_ACCESS_KEY, "application/json");
+//        call.enqueue(this);
+        Call<BricksSets> call = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", 1);
         call.enqueue(this);
     }
 
@@ -34,6 +37,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
         if(response.isSuccessful()) {
 
             bricksSets.setResults(response.body().getResults());
+            Log.d("result one page", "get one page brickset.result()");
             String nextLink = response.body().getNext();
             if(nextLink != null) {
 
