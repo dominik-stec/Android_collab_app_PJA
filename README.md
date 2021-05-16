@@ -40,3 +40,9 @@ REST:
 - [Okhttp3:logging-interceptor](https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor) - v.4.9.1
 - [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) - v.2.8.6
 - [json API](https://mvnrepository.com/artifact/javax.json/javax.json-api) - v.1.1.4
+
+## Project requirements
+### Testing
+- 3 unit tests
+- log from monkey test
+- 3 espresso tests
