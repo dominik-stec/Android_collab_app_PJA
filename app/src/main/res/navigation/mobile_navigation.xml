@@ -22,4 +22,10 @@
         android:name="com.example.mylego.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_moc"
+        android:name="com.example.mylego.ui.moc.MyOwnCreationFragment"
+        android:label="@string/title_moc"
+        tools:layout="@layout/fragment_moc" />
 </navigation>
