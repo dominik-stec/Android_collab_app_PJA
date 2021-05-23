@@ -12,9 +12,9 @@
         android:title="@string/title_parts" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_my_collection"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/title_notifications" />
+        android:title="@string/title_my_collection" />
 
     <item
         android:id="@+id/navigation_moc"

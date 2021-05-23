@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_parts" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.mylego.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_my_collection"
+        android:name="com.example.mylego.ui.collection.MyCollectionFragment"
+        android:label="@string/title_my_collection"
+        tools:layout="@layout/fragment_my_collection" />
 
     <fragment
         android:id="@+id/navigation_moc"

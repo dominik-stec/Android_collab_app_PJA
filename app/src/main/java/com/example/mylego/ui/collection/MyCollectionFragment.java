@@ -1,4 +1,4 @@
-package com.example.mylego.ui.notifications;
+package com.example.mylego.ui.collection;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mylego.R;
-import com.example.mylego.databinding.FragmentNotificationsBinding;
+import com.example.mylego.databinding.FragmentMyCollectionBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MyCollectionFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private MyCollectionViewModel myCollectionViewModel;
+    private FragmentMyCollectionBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        myCollectionViewModel =
+                new ViewModelProvider(this).get(MyCollectionViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentMyCollectionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textMyCollection;
+        myCollectionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
