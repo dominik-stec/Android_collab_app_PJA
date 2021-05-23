@@ -13,27 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.mylego.R;
-import com.example.mylego.databinding.FragmentDashboardBinding;
-import com.example.mylego.databinding.FragmentHomeBinding;
-import com.example.mylego.ui.dashboard.DashboardViewModel;
-import com.example.mylego.ui.home.HomeViewModel;
+import com.example.mylego.databinding.FragmentMocBinding;
 
 
 public class MyOwnCreationFragment extends Fragment {
 
     private MyOwnCreationViewModel myOwnCreationViewModel;
-    private FragmentHomeBinding binding;
+    private FragmentMocBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         myOwnCreationViewModel =
                 new ViewModelProvider(this).get(MyOwnCreationViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMocBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
+        final TextView textView = binding.textMoc;
         myOwnCreationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
