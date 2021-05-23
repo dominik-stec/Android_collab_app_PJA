@@ -2,7 +2,7 @@
     <string name="app_name">MyLEGO</string>
     <string name="title_activity_bottom_menu">MainActivity</string>
     <string name="title_sets">Sets</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_parts">Parts</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_moc">MOC</string>
 </resources>

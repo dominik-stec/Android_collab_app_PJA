@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_sets" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.mylego.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_parts"
+        android:name="com.example.mylego.ui.parts.PartsFragment"
+        android:label="@string/title_parts"
+        tools:layout="@layout/fragment_parts" />
 
     <fragment
         android:id="@+id/navigation_notifications"

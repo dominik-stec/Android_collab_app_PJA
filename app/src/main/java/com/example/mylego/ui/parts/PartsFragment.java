@@ -1,4 +1,4 @@
-package com.example.mylego.ui.dashboard;
+package com.example.mylego.ui.parts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mylego.R;
-import com.example.mylego.databinding.FragmentDashboardBinding;
+import com.example.mylego.databinding.FragmentPartsBinding;
 
-public class DashboardFragment extends Fragment {
+public class PartsFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private PartsViewModel partsViewModel;
+    private FragmentPartsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        partsViewModel =
+                new ViewModelProvider(this).get(PartsViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentPartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        partsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
