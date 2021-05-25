@@ -1,24 +1,18 @@
 package com.example.mylego.services;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.ResultReceiver;
+import com.example.mylego.database.DbManager;
+import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
+import com.example.mylego.rest.domain.BricksSingleSet;
+import com.example.mylego.rest.IFromRestCallback;
 
-//import com.example.mylego.rest.String;
-import com.example.mylego.rest.BricksSingleSet;
-import com.example.mylego.rest.CustomCallback;
-import com.example.mylego.rest.RestCtrl;
 
 public class RestService extends IntentService {
 
-    public static final java.lang.String BRICKS_SET_BY_ID = "bricksById";
-    public static final java.lang.String RESULT = "result";
-
-    public static final java.lang.String NOTIFICATION = "com.example.mylego.services.RestService.receiver";
-
-    //BricksSingleSet bricksSingleSet;
+    public static final String BRICKS_SINGLE_SET = "BricksSingleSet";
+    public static final String RESULT_CODE = "result code from Intent";
+    public static final String BRICKS_ALL_SETS = "BricksSets";
 
     public RestService(){
         super("RestService");
@@ -26,56 +20,46 @@ public class RestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //TODO do something useful
 
-        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        Bundle bundle = new Bundle();
 
-        BricksSingleSet bricksSingleSet = null;
+        BricksSingleSet[] onePageBricks = new RestOnePageBricksCtrl(new IFromRestCallback() {
 
-        RestCtrl rest = new RestCtrl(new CustomCallback() {
             @Override
-            public void onSucess(BricksSingleSet value) {
-                System.out.println("name was read " + value.getName());
-                //////////////////////////////////////
-                int result = Activity.RESULT_OK;
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
 
-                publishResults(value.getName(), result);
-                //////////////////////////////////////
+                DbManager db = new DbManager(getApplicationContext());
+
+                Intent progressBar = new Intent("progressBar");
+
+                int count = value.length;
+
+                for (int i = 0; i < count; i++) {
+
+                    BricksSingleSet bricksSingleSets = value[i];
+
+                    db.setSetNumber(bricksSingleSets.getSetNum());
+                    db.setName(bricksSingleSets.getName());
+                    db.setYear(bricksSingleSets.getYear());
+                    db.setThemeId(bricksSingleSets.getThemeId());
+                    db.setNumberOfParts(bricksSingleSets.getNumParts());
+                    db.setImageUrl(bricksSingleSets.getSetImgUrl());
+                    db.setSetUrl(bricksSingleSets.getSetUrl());
+                    db.setModificationDate(bricksSingleSets.getLastModifiedDt());
+
+                    db.commitIntoDb();
+
+                    ++RestOnePageBricksCtrl.counter;
+                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                        progressBar.putExtra("progressBarVal", progress);
+                        sendBroadcast(progressBar);
+                    }
+
+                }
 
             }
 
-            @Override
-            public void onFailure() {
+        }).getOnePageBricksList();
 
-            }
-        });
-
-        java.lang.String apiRequest = intent.getStringExtra(BRICKS_SET_BY_ID);
-        switch(apiRequest){
-            case BRICKS_SET_BY_ID:
-
-                bricksSingleSet = rest.getById("75954-1");
-
-                break;
-        }
-
-//        if (bricksSingleSet != null) {
-//            receiver.send(111, bundle);
-//        }
-
-        //bundle.putString("111", "test");
-        //receiver.send(111, bundle);
-
-//        int result = Activity.RESULT_OK;
-
-        //publishResults(bricksSingleSet.getName(), result);
-    }
-
-    private void publishResults(String bricksSingleSet, int result) {
-        Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(BRICKS_SET_BY_ID, bricksSingleSet);
-        intent.putExtra(RESULT, result);
-        sendBroadcast(intent);
     }
 }

@@ -1,10 +1,9 @@
-package com.example.mylego.rest;
+package com.example.mylego.rest.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class BricksSets implements Serializable {
 
@@ -13,13 +12,13 @@ public class BricksSets implements Serializable {
     int count;
     @SerializedName("next")
     @Expose
-    java.lang.String next;
+    String next;
     @SerializedName("previous")
     @Expose
-    java.lang.String previous;
+    String previous;
     @SerializedName("results")
     @Expose
-    List<String> results = null;
+    BricksSingleSet[] results = null;
 
     public int getCount() {
         return count;
@@ -29,27 +28,27 @@ public class BricksSets implements Serializable {
         this.count = count;
     }
 
-    public java.lang.String getName() {
+    public String getNext() {
         return next;
     }
 
-    public void setName(java.lang.String name) {
-        this.next = name;
+    public void setNext(String next) {
+        this.next = next;
     }
 
-    public java.lang.String getPrevious() {
+    public String getPrevious() {
         return previous;
     }
 
-    public void setPrevious(java.lang.String previous) {
+    public void setPrevious(String previous) {
         this.previous = previous;
     }
 
-    public List<String> getResults() {
+    public BricksSingleSet[] getResults() {
         return results;
     }
 
-    public void setResults(List<String> results) {
+    public void setResults(BricksSingleSet[] results) {
         this.results = results;
     }
 }

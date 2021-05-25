@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MyLEGO</string>
+    <string name="app_name">MyLego</string>
+    <string name="restInitilise">Please wait &#8230; Load Data</string>
 </resources>

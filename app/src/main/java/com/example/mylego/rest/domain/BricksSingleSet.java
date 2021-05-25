@@ -1,4 +1,4 @@
-package com.example.mylego.rest;
+package com.example.mylego.rest.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,11 +9,11 @@ public class BricksSingleSet implements Serializable {
 
     @SerializedName("set_num")
     @Expose
-    java.lang.String setNum;
+    String setNum;
 
     @SerializedName("name")
     @Expose
-    java.lang.String name;
+    String name;
 
     @SerializedName("year")
     @Expose
@@ -29,29 +29,29 @@ public class BricksSingleSet implements Serializable {
 
     @SerializedName("set_img_url")
     @Expose
-    java.lang.String setImgUrl;
+    String setImgUrl;
 
     @SerializedName("set_url")
     @Expose
-    java.lang.String setUrl;
+    String setUrl;
 
     @SerializedName("last_modified_dt")
     @Expose
-    java.lang.String lastModifiedDt;
+    String lastModifiedDt;
 
-    public java.lang.String getSetNum() {
+    public String getSetNum() {
         return setNum;
     }
 
-    public void setSetNum(java.lang.String setNum) {
+    public void setSetNum(String setNum) {
         this.setNum = setNum;
     }
 
-    public java.lang.String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(java.lang.String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -79,27 +79,27 @@ public class BricksSingleSet implements Serializable {
         this.numParts = numParts;
     }
 
-    public java.lang.String getSetImgUrl() {
+    public String getSetImgUrl() {
         return setImgUrl;
     }
 
-    public void setSetImgUrl(java.lang.String setImgUrl) {
+    public void setSetImgUrl(String setImgUrl) {
         this.setImgUrl = setImgUrl;
     }
 
-    public java.lang.String getSetUrl() {
+    public String getSetUrl() {
         return setUrl;
     }
 
-    public void setSetUrl(java.lang.String setUrl) {
+    public void setSetUrl(String setUrl) {
         this.setUrl = setUrl;
     }
 
-    public java.lang.String getLastModifiedDt() {
+    public String getLastModifiedDt() {
         return lastModifiedDt;
     }
 
-    public void setLastModifiedDt(java.lang.String lastModifiedDt) {
+    public void setLastModifiedDt(String lastModifiedDt) {
         this.lastModifiedDt = lastModifiedDt;
     }
 }
