@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MyLego</string>
-    <string name="restInitilise">Please wait &#8230; Load Data</string>
+    <string name="restInitialise">Please wait &#8230; Loading Data</string>
+    <string name="title_activity_bottom_menu">MainActivity</string>
+    <string name="title_sets">Sets</string>
+    <string name="title_parts">Parts</string>
+    <string name="title_my_collection">My Collection</string>
+    <string name="title_moc">MOC</string>
 </resources>

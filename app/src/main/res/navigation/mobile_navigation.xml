@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_sets">
+
+    <fragment
+        android:id="@+id/navigation_sets"
+        android:name="com.example.mylego.ui.sets.SetsFragment"
+        android:label="@string/title_sets"
+        tools:layout="@layout/fragment_sets" />
+
+    <fragment
+        android:id="@+id/navigation_parts"
+        android:name="com.example.mylego.ui.parts.PartsFragment"
+        android:label="@string/title_parts"
+        tools:layout="@layout/fragment_parts" />
+
+    <fragment
+        android:id="@+id/navigation_my_collection"
+        android:name="com.example.mylego.ui.collection.MyCollectionFragment"
+        android:label="@string/title_my_collection"
+        tools:layout="@layout/fragment_my_collection" />
+
+    <fragment
+        android:id="@+id/navigation_moc"
+        android:name="com.example.mylego.ui.moc.MyOwnCreationFragment"
+        android:label="@string/title_moc"
+        tools:layout="@layout/fragment_moc" />
+</navigation>
