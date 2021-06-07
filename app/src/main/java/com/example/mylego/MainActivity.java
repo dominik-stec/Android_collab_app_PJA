@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(basicActivity);
 
                     //return to main app activity after init database
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", "Database init success");
-                    setResult(1, "OK", bundle);
+                    //Intent returnIntent = new Intent();
+                    //returnIntent.putExtra("result", "Database init success");
+                    //setResult(Activity.RESULT_CANCELED, returnIntent);
                     finish();
                 }
             }
