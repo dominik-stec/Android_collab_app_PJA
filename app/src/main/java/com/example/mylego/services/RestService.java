@@ -6,6 +6,7 @@ import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
+import com.example.mylego.rest.domain.MinigfigsSingleSet;
 
 
 public class RestService extends IntentService {
@@ -56,6 +57,11 @@ public class RestService extends IntentService {
                     }
 
                 }
+
+            }
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(MinigfigsSingleSet[] value) {
 
             }
 
