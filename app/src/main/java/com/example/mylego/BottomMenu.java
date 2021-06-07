@@ -1,5 +1,6 @@
 package com.example.mylego;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,11 @@ public class BottomMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //initialise database and come back here
+        int INIT_DATABASE = 1;
+        Intent i = new Intent(this, MainActivity.class);
+        startActivityForResult(i, INIT_DATABASE);
+
         binding = ActivityBottomMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -32,6 +38,7 @@ public class BottomMenu extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_bottom_menu);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
     }
 
 }
