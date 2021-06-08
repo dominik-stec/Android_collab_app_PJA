@@ -44,7 +44,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
 
     // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = 10;
+    public static int max_iter_num = 3;
 
     // how fast REST should read data from API
     public static int speed_rest_read = 2000;

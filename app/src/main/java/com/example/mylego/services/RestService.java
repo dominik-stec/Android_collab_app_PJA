@@ -2,18 +2,25 @@ package com.example.mylego.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.example.mylego.database.DbHelper;
+import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
+import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
-import com.example.mylego.rest.domain.MinigfigsSingleSet;
+import com.example.mylego.rest.domain.MinifigsSingleSet;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RestService extends IntentService {
+
+    public static boolean isDatabaseInit = false;
+    public static boolean isSetNumsWrite = false;
+    public static ArrayList<String> setNumsList = new ArrayList<String>();
 
     public static final String BRICKS_SINGLE_SET = "BricksSingleSet";
     public static final String RESULT_CODE = "result code from Intent";
@@ -25,6 +32,7 @@ public class RestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
 
         BricksSingleSet[] onePageBricks = new RestOnePageBricksCtrl(new IFromRestCallback() {
 
@@ -54,9 +62,12 @@ public class RestService extends IntentService {
                     db.commitIntoDb();
 
                     ++RestOnePageBricksCtrl.counter;
+
+                    if(i==count-1) isDatabaseInit = true;
+
                     if (RestOnePageBricksCtrl.counter % 100 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", progress);
+                        progressBar.putExtra("progressBarVal", progress/2);
                         sendBroadcast(progressBar);
                     }
 
@@ -65,12 +76,77 @@ public class RestService extends IntentService {
             }
 
             @Override
-            public void onGetOnePageResultFromRestSuccess(MinigfigsSingleSet[] value) {
+            public void onGetOnePageResultFromRestSuccess(MinifigsSingleSet[] value) {
 
             }
 
 
         }).getOnePageBricksList();
+
+        MinifigsSingleSet[] onePageMinifigs = new RestOnePageMinifigsCtrl(new IFromRestCallback() {
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(MinifigsSingleSet[] value) {
+
+                if(isDatabaseInit) {
+
+                    DbManager db = new DbManager(getApplicationContext());
+
+                    Intent progressBar = new Intent("progressBar");
+
+                    int count = value.length;
+
+                    int loopCounter = 0;
+                    if(!isSetNumsWrite) {
+                        //read set_num for exist bricks set for download minifigs, parts, alternates
+                        HashMap<Long, String> queriesStr = db.selectStringQuery(CreateTable.TableEntry.COLUMN_NAME_SET_NUM_STRING, 0, RestOnePageBricksCtrl.counter);
+                        for (Map.Entry<Long, String> entry : queriesStr.entrySet()) {
+                            setNumsList.add(entry.getValue());
+                            ++loopCounter;
+                        }
+                        if(loopCounter == RestOnePageBricksCtrl.counter) isSetNumsWrite=true;
+                    }
+
+                    for (int i = 0; i < count; i++) {
+
+                        MinifigsSingleSet minifigsSingleSets = value[i];
+
+                        db.setSetNumber(bricksSingleSets.getSetNum());
+                        db.setName(bricksSingleSets.getName());
+                        db.setYear(bricksSingleSets.getYear());
+                        db.setThemeId(bricksSingleSets.getThemeId());
+                        db.setNumberOfParts(bricksSingleSets.getNumParts());
+                        db.setImageUrl(bricksSingleSets.getSetImgUrl());
+                        db.setSetUrl(bricksSingleSets.getSetUrl());
+                        db.setModificationDate(bricksSingleSets.getLastModifiedDt());
+
+                        db.commitIntoDb();
+
+                        ++RestOnePageBricksCtrl.counter;
+
+                        if(i==count-1) isDatabaseInit = true;
+
+                        if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                            long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                            progressBar.putExtra("progressBarVal", progress);
+                            sendBroadcast(progressBar);
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
+        }).getOnePageSetList();
+
 
     }
 }

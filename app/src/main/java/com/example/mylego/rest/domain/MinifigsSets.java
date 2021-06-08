@@ -18,7 +18,7 @@ public class MinifigsSets implements Serializable {
     String previous;
     @SerializedName("results")
     @Expose
-    MinigfigsSingleSet[] results = null;
+    MinifigsSingleSet[] results = null;
 
     public int getCount() {
         return count;
@@ -44,11 +44,11 @@ public class MinifigsSets implements Serializable {
         this.previous = previous;
     }
 
-    public MinigfigsSingleSet[] getResults() {
+    public MinifigsSingleSet[] getResults() {
         return results;
     }
 
-    public void setResults(MinigfigsSingleSet[] results) {
+    public void setResults(MinifigsSingleSet[] results) {
         this.results = results;
     }
 }

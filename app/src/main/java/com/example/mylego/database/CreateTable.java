@@ -35,4 +35,28 @@ public final class CreateTable {
     public static final String SQL_DELETE_TABLE =
             "DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME;
 
+    /* Inner class that defines the table contents */
+    public static class TableEntryMinifigs implements BaseColumns {
+        public static final String TABLE_NAME_MINIFIG = "minifig";
+        public static final String COLUMN_NAME_MINIFIG_ID_INTEGER = "id";
+        public static final String COLUMN_NAME_MINIFIG_SET_NUM_STRING = "set_num";
+        public static final String COLUMN_NAME_MINIFIG_SET_NAME_STRING = "set_name";
+        public static final String COLUMN_NAME_MINIFIG_QUANTITY_INTEGER = "quantity";
+        public static final String COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING = "set_img_url";
+    }
+
+    public static final String SQL_CREATE_TABLE_MINIFIGS =
+            "CREATE TABLE " + TableEntryMinifigs.TABLE_NAME_MINIFIG + " (" +
+                    TableEntryMinifigs._ID + " INTEGER PRIMARY KEY," +
+                    TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER + " INTEGER," +
+                    TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING + " TEXT," +
+                    TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING + " INTEGER," +
+                    TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER + " INTEGER," +
+                    TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING + " TEXT)";
+
+
+    public static final String SQL_DELETE_TABLE_MINIFIGS =
+            "DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME;
+
+
 }

@@ -3,7 +3,7 @@ package com.example.mylego.rest.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MinigfigsSingleSet {
+public class MinifigsSingleSet {
 
     @SerializedName("id")
     @Expose
