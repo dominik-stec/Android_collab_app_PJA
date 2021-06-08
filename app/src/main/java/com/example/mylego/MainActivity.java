@@ -7,8 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.mylego.database.DbHelper;
 import com.example.mylego.services.RestService;
 
 
@@ -51,16 +55,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent i = new Intent(this, RestService.class);
+        //if(!isTableExists("brick_set", false)) {
 
-        startService(i);
+            Intent i = new Intent(this, RestService.class);
+
+            startService(i);
+
+//        } else {
+//            finish();
+//        }
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(receiverOnePageRestBricks, new IntentFilter(
-                "progressBar"));
+            registerReceiver(receiverOnePageRestBricks, new IntentFilter(
+                    "progressBar"));
+
+
 
 
     }
@@ -68,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiverOnePageRestBricks);
+            unregisterReceiver(receiverOnePageRestBricks);
+
     }
+
+
 }

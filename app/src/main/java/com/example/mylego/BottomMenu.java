@@ -1,6 +1,7 @@
 package com.example.mylego;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,5 +41,7 @@ public class BottomMenu extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
+
+
 
 }

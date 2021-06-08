@@ -1,7 +1,10 @@
 package com.example.mylego.rest.controllers;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.mylego.database.DbHelper;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
@@ -25,7 +28,12 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
         bricksSets = new BricksSets();
 
         Call<BricksSets> call = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", 1);
-        call.enqueue(this);
+
+        //if(!isTableExists("brick_set", false)) {
+
+            call.enqueue(this);
+
+        //}
     }
 
 
@@ -94,6 +102,32 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
     public BricksSingleSet[] getOnePageBricksList() {
         return bricksSets.getResults();
+    }
+
+    public boolean isTableExists(String tableName, boolean openDb) {
+        DbHelper dbHelper = new DbHelper(this);
+        SQLiteDatabase mDatabase = dbHelper.getReadableDatabase();
+
+        if(openDb) {
+            if(mDatabase == null || !mDatabase.isOpen()) {
+                mDatabase = dbHelper.getReadableDatabase();
+            }
+
+            if(!mDatabase.isReadOnly()) {
+                mDatabase.close();
+                mDatabase = dbHelper.getReadableDatabase();
+            }
+        }
+
+        String query = "select DISTINCT tbl_name from sqlite_master where tbl_name = '"+tableName+"'";
+        try (Cursor cursor = mDatabase.rawQuery(query, null)) {
+            if(cursor!=null) {
+                if(cursor.getCount()>0) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 }

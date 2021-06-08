@@ -1,5 +1,7 @@
 package com.example.mylego.rest.controllers;
 
+import android.app.Application;
+
 import com.example.mylego.rest.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestCtrl {
+public class RestCtrl extends Application {
 
     static final String BASE_URL = "https://rebrickable.com/";
     static final String TOKEN_ACCESS_KEY = "key cae9480418c5c7f7ef9a76142f8f5f48";

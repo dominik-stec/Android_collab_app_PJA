@@ -2,6 +2,10 @@ package com.example.mylego.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.mylego.database.DbHelper;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
@@ -22,11 +26,11 @@ public class RestService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-
         BricksSingleSet[] onePageBricks = new RestOnePageBricksCtrl(new IFromRestCallback() {
 
             @Override
             public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
 
                 DbManager db = new DbManager(getApplicationContext());
 
@@ -64,6 +68,7 @@ public class RestService extends IntentService {
             public void onGetOnePageResultFromRestSuccess(MinigfigsSingleSet[] value) {
 
             }
+
 
         }).getOnePageBricksList();
 
