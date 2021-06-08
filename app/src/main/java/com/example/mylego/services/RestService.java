@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
+import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
@@ -95,7 +96,7 @@ public class RestService extends IntentService {
 
                 if(isDatabaseInit) {
 
-                    DbManager db = new DbManager(getApplicationContext());
+                    DbMinifigsManager db = new DbMinifigsManager(getApplicationContext());
 
                     Intent progressBar = new Intent("progressBar");
 
@@ -116,24 +117,21 @@ public class RestService extends IntentService {
 
                         MinifigsSingleSet minifigsSingleSets = value[i];
 
-                        db.setSetNumber(bricksSingleSets.getSetNum());
-                        db.setName(bricksSingleSets.getName());
-                        db.setYear(bricksSingleSets.getYear());
-                        db.setThemeId(bricksSingleSets.getThemeId());
-                        db.setNumberOfParts(bricksSingleSets.getNumParts());
-                        db.setImageUrl(bricksSingleSets.getSetImgUrl());
-                        db.setSetUrl(bricksSingleSets.getSetUrl());
-                        db.setModificationDate(bricksSingleSets.getLastModifiedDt());
+                        db.setId(minifigsSingleSets.getId());
+                        db.setSetNum(minifigsSingleSets.getSetNum());
+                        db.setSetName(minifigsSingleSets.getSetName());
+                        db.setQuantity(minifigsSingleSets.getQuantity());
+                        db.setSetImgUrl(minifigsSingleSets.getSetImgUrl());
 
                         db.commitIntoDb();
 
-                        ++RestOnePageBricksCtrl.counter;
+                        ++RestOnePageMinifigsCtrl.counter;
 
                         if(i==count-1) isDatabaseInit = true;
 
                         if (RestOnePageBricksCtrl.counter % 100 == 0) {
                             long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                            progressBar.putExtra("progressBarVal", progress);
+                            progressBar.putExtra("progressBarVal", 50+progress/3);
                             sendBroadcast(progressBar);
                         }
 
