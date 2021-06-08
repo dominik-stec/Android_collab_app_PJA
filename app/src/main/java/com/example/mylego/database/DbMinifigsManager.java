@@ -27,7 +27,7 @@ public class DbMinifigsManager {
         setNum = "test set num";
         setName = "test set name";
         quantity = 1;
-        setImgUrl = "test et img url";
+        setImgUrl = "test set img url";
     }
 
     public int getId() {
@@ -76,17 +76,14 @@ public class DbMinifigsManager {
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_NUM_STRING, setNumber);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_NAME_STRING, name);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_YEAR_INTEGER, year);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_THEME_ID_INTEGER, themeId);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_NUM_PARTS_INTEGER, numberOfParts);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_IMG_URL_STRING, imageUrl);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_SET_URL_STRING, setUrl);
-        values.put(CreateTable.TableEntry.COLUMN_NAME_LAST_MODIFIED_DT_STRING, modificationDate);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER, id);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING, setNum);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING, setName);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER, quantity);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING, setImgUrl);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = dbWrite.insert(CreateTable.TableEntry.TABLE_NAME, null, values);
+        long newRowId = dbWrite.insert(CreateTable.TableEntryMinifigs.TABLE_NAME_MINIFIG, null, values);
 
         return newRowId;
     }
@@ -95,12 +92,10 @@ public class DbMinifigsManager {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
         switch(columnType) {
-            case CreateTable.TableEntry.COLUMN_NAME_YEAR_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_YEAR point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_THEME_ID_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_THEME_ID point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_NUM_PARTS_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_NUM_PARTS point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_QUANTITY_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -111,7 +106,7 @@ public class DbMinifigsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntry.TABLE_NAME,   // The table to query
+                CreateTable.TableEntryMinifigs.TABLE_NAME_MINIFIG,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -123,7 +118,7 @@ public class DbMinifigsManager {
         while(cursor.moveToNext()) {
 
             long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntryMinifigs._ID));
 
             if(itemId > endId) break;
 
@@ -144,17 +139,13 @@ public class DbMinifigsManager {
         HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
 
         switch (columnType) {
-            case CreateTable.TableEntry.COLUMN_NAME_SET_NUM_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_YEAR point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_NAME_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_NAME point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_SET_IMG_URL_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_SET_IMG_URL point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_SET_URL_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_SET_URL point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntry.COLUMN_NAME_LAST_MODIFIED_DT_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_LAST_MODIFIED_DT point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-        }
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_NAME_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
@@ -164,7 +155,7 @@ public class DbMinifigsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntry.TABLE_NAME,   // The table to query
+                CreateTable.TableEntryMinifigs.TABLE_NAME_MINIFIG,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,         // The values for the WHERE clause
@@ -175,7 +166,7 @@ public class DbMinifigsManager {
         while (cursor.moveToNext()) {
 
             long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(CreateTable.TableEntry._ID));
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntryMinifigs._ID));
 
             if (itemId > endId) break;
 

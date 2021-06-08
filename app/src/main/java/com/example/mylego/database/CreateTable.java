@@ -56,7 +56,7 @@ public final class CreateTable {
 
 
     public static final String SQL_DELETE_TABLE_MINIFIGS =
-            "DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + TableEntryMinifigs.TABLE_NAME_MINIFIG;
 
 
 }
