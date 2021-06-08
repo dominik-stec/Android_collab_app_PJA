@@ -1,13 +1,19 @@
 package com.example.mylego.rest.controllers;
 
+import android.app.Application;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbHelper;
+import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,11 +35,11 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
         Call<BricksSets> call = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", 1);
 
-        //if(!isTableExists("brick_set", false)) {
+        if(isDatabaseEmpty()) {
 
             call.enqueue(this);
 
-        //}
+        }
     }
 
 
@@ -80,6 +86,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
                 }
 
                 Call<BricksSets> callLoop = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", pageNum);
+                if(isDatabaseEmpty())
                 callLoop.enqueue(this);
 
             } else if(nextLink == null) {
@@ -104,30 +111,45 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
         return bricksSets.getResults();
     }
 
-    public boolean isTableExists(String tableName, boolean openDb) {
-        DbHelper dbHelper = new DbHelper(this);
-        SQLiteDatabase mDatabase = dbHelper.getReadableDatabase();
+//    public boolean isTableExists(String tableName, boolean openDb) {
+//        DbHelper dbHelper = new DbHelper((RestOnePageBricksCtrl)this.getApplicationContext());
+//        SQLiteDatabase mDatabase = dbHelper.getReadableDatabase();
+//
+//        if(openDb) {
+//            if(mDatabase == null || !mDatabase.isOpen()) {
+//                mDatabase = dbHelper.getReadableDatabase();
+//            }
+//
+//            if(!mDatabase.isReadOnly()) {
+//                mDatabase.close();
+//                mDatabase = dbHelper.getReadableDatabase();
+//            }
+//        }
+//
+//        String query = "select DISTINCT tbl_name from sqlite_master where tbl_name = '"+tableName+"'";
+//        try (Cursor cursor = mDatabase.rawQuery(query, null)) {
+//            if(cursor!=null) {
+//                if(cursor.getCount()>0) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        }
+//    }
 
-        if(openDb) {
-            if(mDatabase == null || !mDatabase.isOpen()) {
-                mDatabase = dbHelper.getReadableDatabase();
-            }
+    public boolean isDatabaseEmpty() {
+        DbManager db = new DbManager(this);
+        boolean ret = true;
 
-            if(!mDatabase.isReadOnly()) {
-                mDatabase.close();
-                mDatabase = dbHelper.getReadableDatabase();
+        try {
+            HashMap<Long, String> queriesStr = db.selectStringQuery(CreateTable.TableEntry.COLUMN_NAME_NAME_STRING, 0, 1);
+            for (Map.Entry<Long, String> entry : queriesStr.entrySet()) {
+                if(entry.getKey() >=0 ) ret = false;
             }
+        } catch(NullPointerException e) {
+            ret = true;
         }
-
-        String query = "select DISTINCT tbl_name from sqlite_master where tbl_name = '"+tableName+"'";
-        try (Cursor cursor = mDatabase.rawQuery(query, null)) {
-            if(cursor!=null) {
-                if(cursor.getCount()>0) {
-                    return true;
-                }
-            }
-            return false;
-        }
+        return ret;
     }
 
 }
