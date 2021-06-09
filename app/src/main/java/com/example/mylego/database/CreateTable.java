@@ -35,10 +35,13 @@ public final class CreateTable {
     public static final String SQL_DELETE_TABLE =
             "DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME;
 
+
+
     /* Inner class that defines the table contents */
     public static class TableEntryMinifigs implements BaseColumns {
         public static final String TABLE_NAME_MINIFIG = "minifig";
         public static final String COLUMN_NAME_MINIFIG_ID_INTEGER = "id";
+        public static final String COLUMN_NAME_SET_NUM_STRING = "set_num_contain";
         public static final String COLUMN_NAME_MINIFIG_SET_NUM_STRING = "set_num";
         public static final String COLUMN_NAME_MINIFIG_SET_NAME_STRING = "set_name";
         public static final String COLUMN_NAME_MINIFIG_QUANTITY_INTEGER = "quantity";
@@ -48,15 +51,32 @@ public final class CreateTable {
     public static final String SQL_CREATE_TABLE_MINIFIGS =
             "CREATE TABLE " + TableEntryMinifigs.TABLE_NAME_MINIFIG + " (" +
                     TableEntryMinifigs._ID + " INTEGER PRIMARY KEY," +
+                    TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING + " TEXT," +
                     TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER + " INTEGER," +
                     TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING + " TEXT," +
                     TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING + " INTEGER," +
                     TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER + " INTEGER," +
                     TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING + " TEXT)";
 
-
     public static final String SQL_DELETE_TABLE_MINIFIGS =
             "DROP TABLE IF EXISTS " + TableEntryMinifigs.TABLE_NAME_MINIFIG;
+
+
+    public static class TableEntrySetNum implements BaseColumns {
+        public static final String TABLE_NAME_SETNUM = "set_num";
+        public static final String COLUMN_NAME_SETNUM_SET_NUM_STRING = "set_num";
+        public static final String COLUMN_NAME_SETNUM_ID = "_id";
+    }
+
+    public static final String SQL_CREATE_TABLE_SETNUM =
+            "CREATE TABLE " + TableEntrySetNum.TABLE_NAME_SETNUM + " (" +
+                    TableEntrySetNum._ID + " INTEGER PRIMARY KEY," +
+                    TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING + " TEXT)";
+
+
+    public static final String SQL_DELETE_TABLE_SETNUM =
+            "DROP TABLE IF EXISTS " + TableEntrySetNum.TABLE_NAME_SETNUM;
+
 
 
 }

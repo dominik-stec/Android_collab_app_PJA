@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class MinifigsSets implements Serializable {
 
+
     @SerializedName("count")
     @Expose
     int count;
@@ -19,6 +20,7 @@ public class MinifigsSets implements Serializable {
     @SerializedName("results")
     @Expose
     MinifigsSingleSet[] results = null;
+
 
     public int getCount() {
         return count;

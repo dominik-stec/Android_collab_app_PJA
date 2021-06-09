@@ -25,6 +25,8 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
     public static String SET_NUM =  "0011-2";
 
+
+
     public RestOnePageMinifigsCtrl(IFromRestCallback IFromRestCallback) {
 
         super.start();
@@ -63,7 +65,7 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
             if(nextLink != null) {
 
-                IFromRestCallback.onGetOnePageResultFromRestSuccess(minifigsSets.getResults());
+                IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
 
                 String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
                 String nextPage = nextPageRaw.substring(1);
@@ -78,7 +80,7 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
                 //pages max
                 if(pageNum == counter*100){
-                    IFromRestCallback.onGetOnePageResultFromRestSuccess(minifigsSets.getResults());
+                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
                     return;
                 }
 
@@ -86,8 +88,8 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 callLoop.enqueue(this);
 
             } else if(nextLink == null) {
-                if(inc+1 < RestService.setNumsList.size()) {
-                    IFromRestCallback.onGetOnePageResultFromRestSuccess(minifigsSets.getResults());
+                if(inc < RestService.setNumsList.size()) {
+                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
                     SET_NUM = RestService.setNumsList.get(inc);
                     ++inc;
                     int pageNum = 1;

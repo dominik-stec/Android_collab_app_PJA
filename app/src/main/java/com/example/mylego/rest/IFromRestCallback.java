@@ -6,5 +6,5 @@ import com.example.mylego.rest.domain.MinifigsSingleSet;
 public interface IFromRestCallback {
 
     void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value);
-    void onGetOnePageResultFromRestSuccess(MinifigsSingleSet[] value);
+    void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value);
 }

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.mylego.database.DbHelper;
+import com.example.mylego.services.RestDatabaseMinifigsService;
 import com.example.mylego.services.RestService;
 
 
@@ -57,9 +58,69 @@ public class MainActivity extends AppCompatActivity {
 
         //if(!isTableExists("brick_set", false)) {
 
-            Intent i = new Intent(this, RestService.class);
+        Intent i = new Intent(this, RestService.class);
+        Intent intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
+//
+//
+//        Thread minifigsThread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                        startService(intentMinifigs);
+//
+//            }
+//
+//        });
+//
+//        Thread setsThread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                startService(i);
+//                //minifigsThread.notify();
+//
+//            }
+//        });
+//
+//        synchronized (setsThread) {
+//            setsThread.notifyAll();
+//        }
+//        synchronized (minifigsThread) {
+//            try{
+//                minifigsThread.wait();
+//            } catch(InterruptedException e) {
+//
+//            }
+//        }
+//
+//        Thread unlockThreads = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+////                while(progressBar<=50) {
+//                    if(progressBar==50) {
+//                        //minifigsThread.start();
+//                    }
+//               // }
+//
+//            }
+//
+//        });
 
-            startService(i);
+
+
+//        setsThread.run();
+//        minifigsThread.start();
+
+        startService(i);
+        startService(intentMinifigs);
+
+
+        //unlockThreads.start();
+
+
+
+
 
 //        } else {
 //            finish();

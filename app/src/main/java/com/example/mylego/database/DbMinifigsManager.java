@@ -15,6 +15,7 @@ public class DbMinifigsManager {
     Cursor cursor;
 
     int id;
+    String setNumContain;
     String setNum;
     String setName;
     int quantity;
@@ -24,7 +25,8 @@ public class DbMinifigsManager {
         this.dbHelper = new DbHelper(context);
 
         id = 0;
-        setNum = "test set num";
+        setNumContain = "000-00";
+        setNum = "test num";
         setName = "test set name";
         quantity = 1;
         setImgUrl = "test set img url";
@@ -36,6 +38,14 @@ public class DbMinifigsManager {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getSetNumContain() {
+        return setNumContain;
+    }
+
+    public void setSetNumContain(String setNumContain) {
+        this.setNumContain = setNumContain;
     }
 
     public String getSetNum() {
@@ -77,6 +87,7 @@ public class DbMinifigsManager {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER, id);
+        values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING, setNumContain);
         values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING, setNum);
         values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING, setName);
         values.put(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER, quantity);
@@ -145,7 +156,10 @@ public class DbMinifigsManager {
                 throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_NAME_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
             case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING:
                 throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            }
+            case CreateTable.TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+
+        }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 

@@ -11,6 +11,8 @@ import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
+import com.example.mylego.rest.domain.MinifigsSets;
+import com.example.mylego.services.RestService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,6 +93,14 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
             } else if(nextLink == null) {
                 IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
+
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        notifyAll();
+//                    }
+//                }).start();
+
             }
 
 
@@ -151,5 +161,6 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
         }
         return ret;
     }
+
 
 }

@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class MinifigsSingleSet {
 
+    String setNumContain;
+
     @SerializedName("id")
     @Expose
     int id;
@@ -24,6 +26,14 @@ public class MinifigsSingleSet {
     @SerializedName("set_img_url")
     @Expose
     String setImgUrl;
+
+    public String getSetNumContain() {
+        return setNumContain;
+    }
+
+    public void setSetNumContain(String setSetNumContain) {
+        this.setNumContain = setNumContain;
+    }
 
     public int getId() {
         return id;
