@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.mylego.database.DbHelper;
@@ -19,6 +20,9 @@ import com.example.mylego.services.RestService;
 
 public class MainActivity extends AppCompatActivity {
 
+    Intent i;
+    Intent intentMinifigs;
+
     Intent intentService;
 
     public static long progressBar = 0;
@@ -27,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
+//            if(isTableExists("brick_set")) {
+//                stopService(i);
+//                finish();
+//            }
+
+
             intentService = intent;
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
@@ -35,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 if(progressBar > 100) progressBar = 100;
 
                 Toast.makeText(getApplicationContext(), "Initilise Database: " + progressBar + " %", Toast.LENGTH_LONG).show();
+
+
 
                 if(progressBar == 100) {
 //                    Intent basicActivity = new Intent(getApplicationContext(), AfterDataLoadActivity.class);
@@ -58,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         //if(!isTableExists("brick_set", false)) {
 
-        Intent i = new Intent(this, RestService.class);
-        Intent intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
+//        Intent i = new Intent(this, RestService.class);
+//        Intent intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
 //
-//
+
 //        Thread minifigsThread = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -92,14 +105,14 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        }
-//
+
 //        Thread unlockThreads = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
 //
 ////                while(progressBar<=50) {
-//                    if(progressBar==50) {
-//                        //minifigsThread.start();
+//                    if(progressBar>=50) {
+//                        minifigsThread.start();
 //                    }
 //               // }
 //
@@ -108,9 +121,12 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-
-//        setsThread.run();
+//
+//        setsThread.start();
 //        minifigsThread.start();
+
+        i = new Intent(this, RestService.class);
+        intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
 
         startService(i);
         startService(intentMinifigs);
@@ -146,6 +162,5 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(receiverOnePageRestBricks);
 
     }
-
 
 }

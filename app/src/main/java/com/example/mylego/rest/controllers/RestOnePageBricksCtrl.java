@@ -60,7 +60,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
     @Override
     public void onResponse(Call<BricksSets> call, Response<BricksSets> response) {
 
-        if(response.isSuccessful()) {
+        if(response.isSuccessful() ) {
 
             bricksSets.setResults(response.body().getResults());
 
@@ -89,7 +89,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
                 Call<BricksSets> callLoop = restApi.getSetsByPageNumRest(TOKEN_ACCESS_KEY, "application/json", pageNum);
                 if(isDatabaseEmpty())
-                callLoop.enqueue(this);
+                    callLoop.enqueue(this);
 
             } else if(nextLink == null) {
                 IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());

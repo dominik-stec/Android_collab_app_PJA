@@ -1,8 +1,11 @@
 package com.example.mylego;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,9 +26,13 @@ public class BottomMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //initialise database and come back here
-        int INIT_DATABASE = 1;
-        Intent i = new Intent(this, MainActivity.class);
-        startActivityForResult(i, INIT_DATABASE);
+        //only once if database not exist
+        if(!isTableExists("brick_set")) {
+            int INIT_DATABASE = 1;
+            Intent i = new Intent(this, MainActivity.class);
+            startActivityForResult(i, INIT_DATABASE);
+        }
+
 
         binding = ActivityBottomMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,6 +49,24 @@ public class BottomMenu extends AppCompatActivity {
 
     }
 
+    public boolean isTableExists(String tableName) {
+        SQLiteDatabase mDatabase = openOrCreateDatabase("BricksSet.db", Context.MODE_PRIVATE,null);
 
+        Cursor c = null;
+        boolean tableExists = false;
+        /* get cursor on it */
+        try
+        {
+            c = mDatabase.query(tableName, null,
+                    null, null, null, null, null);
+            tableExists = true;
+        }
+        catch (Exception e) {
+            /* fail */
+            Log.d("Database state", "BricksSet.db database doesn't exist");
+        }
+
+        return tableExists;
+    }
 
 }
