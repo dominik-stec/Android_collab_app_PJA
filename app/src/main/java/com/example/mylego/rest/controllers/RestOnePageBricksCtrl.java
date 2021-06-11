@@ -82,7 +82,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
                 }
 
                 //177 pages max
-                if(pageNum > max_iter_num){
+                if(pageNum == max_iter_num){
                     IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
                     return;
                 }
