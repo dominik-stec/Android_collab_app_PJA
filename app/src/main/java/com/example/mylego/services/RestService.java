@@ -2,6 +2,7 @@ package com.example.mylego.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.mylego.database.CreateTable;

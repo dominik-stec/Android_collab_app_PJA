@@ -1,5 +1,6 @@
 package com.example.mylego.rest.controllers;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.mylego.database.CreateTable;
@@ -9,6 +10,7 @@ import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSets;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.services.RestDatabaseMinifigsService;
 import com.example.mylego.services.RestService;
 
 import java.util.ArrayList;
@@ -54,16 +56,18 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
     // do not change
     public static int counter = 0;
 
-    public static int inc = 0;
+    public static int inc = 1;
+
+    String setNum = "";
 
     @Override
     public void onResponse(Call<MinifigsSets> call, Response<MinifigsSets> response) {
 
         if(response.isSuccessful()) {
 
-            DbSetNumManager dbSetNum = new DbSetNumManager(this);
+            //DbSetNumManager dbSetNum = new DbSetNumManager(RestDatabaseMinifigsService.getContext());
             HashMap<Long, String> setNumMap = new HashMap<>();
-            String setNum = "";
+
 
             minifigsSets.setResults(response.body().getResults());
 
@@ -91,10 +95,10 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 }
 
                 try{
-                    setNumMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc+1, inc+1);
+                    //setNumMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc+1, inc+1);
                     setNum = setNumMap.get(1);
                 } catch(Exception e) {
-                    Log.d("MinifigsCtrl","exception from minifigs controller");
+                    Log.d("MinifigsCtrl1","exception from minifigs controller");
                     return;
                 }
 
@@ -105,14 +109,21 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
             } else if(nextLink == null) {
                     IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
                     //SET_NUM = RestService.setNumsList.get(inc);
-                    ++inc;
+
                     try{
-                        setNumMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc+1, inc+1);
-                        setNum = setNumMap.get(1);
+//                        setNumMap = dbSetNum.(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc, inc+1);
+//                        setNum = setNumMap.get(1);
+
+//                        DbSetNumManager dbSetNum = new DbSetNumManager(RestDatabaseMinifigsService.getContext());
+//                        HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
+//                        ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+//                        String setNum = setNumList.get(inc);
+//                        ++inc;
                     } catch(Exception e) {
-                        Log.d("MinifigsCtrl","exception from minifigs controller");
-                        return;
+                        Log.d("MinifigsCtrl2","exception from minifigs controller");
+                        throw(e);
                     }
+
                     int pageNum = 1;
                     Call<MinifigsSets> callLoop = restApi.getMinifigsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
                     callLoop.enqueue(this);

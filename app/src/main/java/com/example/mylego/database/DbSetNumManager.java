@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DbSetNumManager {
@@ -56,7 +58,39 @@ public class DbSetNumManager {
         return newRowId;
     }
 
-    public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
+    public ArrayList<String> selectAllQueries() {
+        ArrayList<String> result = new ArrayList<>();
+
+        SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING,
+        };
+
+        Cursor cursor = dbRead.query(
+                CreateTable.TableEntrySetNum.TABLE_NAME_SETNUM,   // The table to query
+                null,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+
+        while(cursor.moveToNext()) {
+
+                String stringResult = cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING));
+                result.add(stringResult);
+            }
+
+
+        cursor.close();
+
+        return result;
+    }
+
+
+        public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
         switch(columnType) {

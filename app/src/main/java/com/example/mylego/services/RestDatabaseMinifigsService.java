@@ -1,7 +1,9 @@
 package com.example.mylego.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.mylego.database.CreateTable;
@@ -17,6 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RestDatabaseMinifigsService extends IntentService {
+
+    public static Context context;
+
+    public static Context getContext() {
+        return context;
+    }
 
     public RestDatabaseMinifigsService(){
         super("RestDatabaseMinifigsService");
@@ -35,6 +43,7 @@ public class RestDatabaseMinifigsService extends IntentService {
             @Override
             public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
 
+                context = getApplicationContext();
 
                     Log.d("database init", "rest database");
 
@@ -56,6 +65,11 @@ public class RestDatabaseMinifigsService extends IntentService {
 //                    }
 
                     for (int i = 0; i < count; i++) {
+
+                        SharedPreferences prefs = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+                        String setNum = prefs.getString("setNum", "No name defined");//"No name defined" is the default value.
+
+                        db.setSetNumContain(setNum);
 
                         MinifigsSingleSet minifigsSingleSets = value[i];
 
