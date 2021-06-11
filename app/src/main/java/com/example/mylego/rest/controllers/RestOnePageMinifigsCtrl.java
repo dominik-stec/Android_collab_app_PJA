@@ -114,11 +114,11 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 //                        setNumMap = dbSetNum.(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc, inc+1);
 //                        setNum = setNumMap.get(1);
 
-//                        DbSetNumManager dbSetNum = new DbSetNumManager(RestDatabaseMinifigsService.getContext());
-//                        HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
-//                        ArrayList<String> setNumList = dbSetNum.selectAllQueries();
-//                        String setNum = setNumList.get(inc);
-//                        ++inc;
+                        DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
+                        HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
+                        ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+                        String setNum = setNumList.get(inc);
+                        ++inc;
                     } catch(Exception e) {
                         Log.d("MinifigsCtrl2","exception from minifigs controller");
                         throw(e);
