@@ -5,17 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DbSetNumManager {
 
     DbHelper dbHelper;
-
-    Cursor cursor;
-
     int id;
     String setNum;
 

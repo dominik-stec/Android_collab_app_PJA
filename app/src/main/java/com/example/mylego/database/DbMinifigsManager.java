@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
 import java.util.HashMap;
+
 
 public class DbMinifigsManager {
 
     DbHelper dbHelper;
-
-    Cursor cursor;
-
     int id;
     String setNumContain;
     String setNum;
