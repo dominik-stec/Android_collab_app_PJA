@@ -1,28 +1,18 @@
 package com.example.mylego;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-
-import com.example.mylego.database.DbHelper;
-import com.example.mylego.services.RestDatabaseMinifigsService;
 import com.example.mylego.services.RestService;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    Intent i;
-    Intent intentMinifigs;
-
+    Intent rest;
     Intent intentService;
 
     public static long progressBar = 0;
@@ -31,12 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
-//            if(isTableExists("brick_set")) {
-//                stopService(i);
-//                finish();
-//            }
-
 
             intentService = intent;
             Bundle bundle = intent.getExtras();
@@ -47,18 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Initilise Database: " + progressBar + " %", Toast.LENGTH_LONG).show();
 
+//                if(progressBar == 100) {
+//                    finish();
+//                }
 
-
-                if(progressBar == 100) {
-//                    Intent basicActivity = new Intent(getApplicationContext(), AfterDataLoadActivity.class);
-//                    startActivity(basicActivity);
-
-                    //return to main app activity after init database
-                    //Intent returnIntent = new Intent();
-                    //returnIntent.putExtra("result", "Database init success");
-                    //setResult(Activity.RESULT_CANCELED, returnIntent);
+                // should be progressBar==100 after all rest read implements
+                if(progressBar > 50) {
                     finish();
                 }
+
             }
         }
     };
@@ -69,79 +50,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //if(!isTableExists("brick_set", false)) {
+        rest = new Intent(this, RestService.class);
 
-//        Intent i = new Intent(this, RestService.class);
-//        Intent intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
-//
-
-//        Thread minifigsThread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                        startService(intentMinifigs);
-//
-//            }
-//
-//        });
-//
-//        Thread setsThread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                startService(i);
-//                //minifigsThread.notify();
-//
-//            }
-//        });
-//
-//        synchronized (setsThread) {
-//            setsThread.notifyAll();
-//        }
-//        synchronized (minifigsThread) {
-//            try{
-//                minifigsThread.wait();
-//            } catch(InterruptedException e) {
-//
-//            }
-//        }
-
-//        Thread unlockThreads = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-////                while(progressBar<=50) {
-//                    if(progressBar>=50) {
-//                        minifigsThread.start();
-//                    }
-//               // }
-//
-//            }
-//
-//        });
-
-
-//
-//        setsThread.start();
-//        minifigsThread.start();
-
-        i = new Intent(this, RestService.class);
-        intentMinifigs = new Intent(this, RestDatabaseMinifigsService.class);
-
-        startService(i);
-        startService(intentMinifigs);
-
-
-        //unlockThreads.start();
-
-
-
-
-
-//        } else {
-//            finish();
-//        }
-
+        startService(rest);
 
     }
 
@@ -150,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
             registerReceiver(receiverOnePageRestBricks, new IntentFilter(
                     "progressBar"));
-
-
-
-
     }
 
     @Override

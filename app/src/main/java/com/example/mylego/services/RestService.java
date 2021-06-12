@@ -3,10 +3,7 @@ package com.example.mylego.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbSetNumManager;
@@ -15,21 +12,10 @@ import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class RestService extends IntentService {
-
-    public static boolean isDatabaseInit = false;
-    public static boolean isSetNumsWrite = false;
-    public static ArrayList<String> setNumsList = new ArrayList<String>();
-
-    public static final String BRICKS_SINGLE_SET = "BricksSingleSet";
-    public static final String RESULT_CODE = "result code from Intent";
-    public static final String BRICKS_ALL_SETS = "BricksSets";
 
     public RestService(){
         super("RestService");
@@ -46,7 +32,7 @@ public class RestService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        BricksSingleSet[] onePageBricks = new RestOnePageBricksCtrl(new IFromRestCallback() {
+        new RestOnePageBricksCtrl(new IFromRestCallback() {
 
             @Override
             public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
@@ -91,6 +77,7 @@ public class RestService extends IntentService {
 
                 }
 
+                // run minifigs rest after load sets data
                 if(RestOnePageBricksCtrl.to_insert_row_count==RestOnePageBricksCtrl.counter) {
 
                     try{
@@ -102,19 +89,6 @@ public class RestService extends IntentService {
                     startMinifigsRest();
                 }
 
-//                int loopCounter = 0;
-//                if(isSetNumsWrite) {
-//                    //read set_num for exist bricks set for download minifigs, parts, alternates
-//                    HashMap<Long, String> queriesStr = db.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, RestOnePageBricksCtrl.counter);
-//                    for (Map.Entry<Long, String> entry : queriesStr.entrySet()) {
-//                        setNumsList.add(entry.getValue());
-//                        ++loopCounter;
-//                    }
-//                }
-//                if(loopCounter==RestOnePageBricksCtrl.counter-1) {
-//                    RestService.isDatabaseInit = true;
-//                }
-
             }
 
             @Override
@@ -122,7 +96,7 @@ public class RestService extends IntentService {
 
             }
 
-            }).getOnePageBricksList();
+            });
 
 
 
@@ -133,7 +107,7 @@ public class RestService extends IntentService {
 
     public void startMinifigsRest() {
 
-        MinifigsSingleSet[] onePageMinifigs = new RestOnePageMinifigsCtrl(new IFromRestCallback() {
+        new RestOnePageMinifigsCtrl(new IFromRestCallback() {
 
             @Override
             public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
@@ -143,10 +117,7 @@ public class RestService extends IntentService {
             @Override
             public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
 
-
                 context = getApplicationContext();
-
-                Log.d("database init", "rest database");
 
                 DbMinifigsManager db = new DbMinifigsManager(getApplicationContext());
 
@@ -154,24 +125,10 @@ public class RestService extends IntentService {
 
                 int count = value.length;
 
-//                    int loopCounter = 0;
-//                    if(!isSetNumsWrite) {
-//                        //read set_num for exist bricks set for download minifigs, parts, alternates
-//                        HashMap<Long, String> queriesStr = db.selectStringQuery(CreateTable.TableEntry.COLUMN_NAME_SET_NUM_STRING, 0, RestOnePageBricksCtrl.counter);
-//                        for (Map.Entry<Long, String> entry : queriesStr.entrySet()) {
-//                            setNumsList.add(entry.getValue());
-//                            ++loopCounter;
-//                        }
-//                        if(loopCounter == RestOnePageBricksCtrl.counter) isSetNumsWrite=true;
-//                    }
 
                 for (int i = 0; i < count; i++) {
 
-//                    SharedPreferences prefs = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-//                    String setNum = prefs.getString("setNum", "No name defined");//"No name defined" is the default value.
-
                     DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-                    //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
                     ArrayList<String> setNumList = dbSetNum.selectAllQueries();
                     String setNum = setNumList.get(RestOnePageMinifigsCtrl.counter);
 
@@ -197,9 +154,8 @@ public class RestService extends IntentService {
 
                 }
 
-
             }
 
-        }).getOnePageSetList();
+        });
     }
 }

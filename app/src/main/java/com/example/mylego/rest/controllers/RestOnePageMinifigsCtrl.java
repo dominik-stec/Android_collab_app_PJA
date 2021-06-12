@@ -1,23 +1,14 @@
 package com.example.mylego.rest.controllers;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.example.mylego.database.CreateTable;
-import com.example.mylego.database.DbHelper;
-import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSets;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
-import com.example.mylego.services.RestDatabaseMinifigsService;
 import com.example.mylego.services.RestService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,13 +21,17 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
     public static String SET_NUM =  "0011-2";
 
-    SharedPreferences sharedpreferences;
+    DbSetNumManager dbSetNum;
+    ArrayList<String> setNumList;
 
     public RestOnePageMinifigsCtrl(IFromRestCallback IFromRestCallback) {
 
         super.start();
 
         this.IFromRestCallback = IFromRestCallback;
+
+        dbSetNum = new DbSetNumManager(RestService.getContext());
+        setNumList = dbSetNum.selectAllQueries();
 
         minifigsSets = new MinifigsSets();
 
@@ -66,13 +61,12 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
         if(response.isSuccessful()) {
 
+            //read all need data from rest
             if(inc == max_iter_num){
                 return;
             }
 
-            //DbSetNumManager dbSetNum = new DbSetNumManager(RestDatabaseMinifigsService.getContext());
             HashMap<Long, String> setNumMap = new HashMap<>();
-
 
             minifigsSets.setResults(response.body().getResults());
 
@@ -86,25 +80,15 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 String nextPage = nextPageRaw.substring(1);
                 int pageNum = Integer.parseInt(nextPage);
 
-                //loop iteration
+                //loop iteration speed
                 try{
                     Thread.sleep(speed_rest_read);
                 } catch(InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                //pages max
-//                if(pageNum == counter*100){
-//                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
-//                    return;
-//                }
-
                 try{
-                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-                    //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
-                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
                     setNum = setNumList.get(inc);
-                    //++inc;
                 } catch(Exception e) {
                     Log.d("MinifigsCtrl1","exception from minifigs controller");
                     return;
@@ -116,15 +100,8 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
             } else if(nextLink == null) {
                     IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
-                    //SET_NUM = RestService.setNumsList.get(inc);
 
                     try{
-//                        setNumMap = dbSetNum.(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc, inc+1);
-//                        setNum = setNumMap.get(1);
-
-                        DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-                        //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
-                        ArrayList<String> setNumList = dbSetNum.selectAllQueries();
                         setNum = setNumList.get(inc);
                         ++inc;
                     } catch(Exception e) {

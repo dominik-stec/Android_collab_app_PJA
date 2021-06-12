@@ -31,19 +31,16 @@ public class MyCollectionViewModel extends AndroidViewModel {
         DbMinifigsManager db = new DbMinifigsManager(getApplication().getApplicationContext());
         HashMap<Long, String> minifigName = db.selectStringQuery(CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING, 0, 3);
         for(Map.Entry<Long, String> entry : minifigName.entrySet()) {
-            Log.d("query minifig string: ", "id string " + entry.getKey() + " " + entry.getValue());
             setNames = setNames.concat(entry.getValue() + ", ");
         }
         DbSetNumManager dbSetNum = new DbSetNumManager(getApplication().getApplicationContext());
         HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
         for(Map.Entry<Long, String> entry : setNameMap.entrySet()) {
-            //Log.d("query minifig string: ", "id string " + entry.getKey() + " " + entry.getValue());
             setNum = setNum.concat(entry.getValue() + ", ");
         }
         HashMap<Long, String> minifigSetNum = db.selectStringQuery(CreateTable.TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING, 0, 3);
         for(Map.Entry<Long, String> entry : minifigSetNum.entrySet()) {
-            Log.d("query minifig string: ", "id string " + entry.getKey() + " " + entry.getValue());
-            setNumForMinifig = setNames.concat(entry.getValue() + ", ");
+            setNumForMinifig = setNumForMinifig.concat(entry.getValue() + ", ");
         }
 
         mText = new MutableLiveData<>();

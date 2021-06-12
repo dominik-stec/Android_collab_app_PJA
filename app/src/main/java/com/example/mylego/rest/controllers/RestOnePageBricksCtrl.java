@@ -1,22 +1,13 @@
 package com.example.mylego.rest.controllers;
 
-import android.app.Application;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.example.mylego.database.CreateTable;
-import com.example.mylego.database.DbHelper;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.BricksSingleSet;
-import com.example.mylego.rest.domain.MinifigsSets;
-import com.example.mylego.services.RestService;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,14 +65,14 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
                 String nextPage = nextPageRaw.substring(1);
                 int pageNum = Integer.parseInt(nextPage);
 
-                //177 loop iteration
+                //177 loop iteration for get full rest data
                 try{
                     Thread.sleep(speed_rest_read);
                 } catch(InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                //177 pages max
+                //177 pages max for get full rest data
                 if(pageNum == max_iter_num){
                     IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
                     return;
@@ -93,14 +84,6 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
             } else if(nextLink == null) {
                 IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
-
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        notifyAll();
-//                    }
-//                }).start();
-
             }
 
 
@@ -120,32 +103,6 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
     public BricksSingleSet[] getOnePageBricksList() {
         return bricksSets.getResults();
     }
-
-//    public boolean isTableExists(String tableName, boolean openDb) {
-//        DbHelper dbHelper = new DbHelper((RestOnePageBricksCtrl)this.getApplicationContext());
-//        SQLiteDatabase mDatabase = dbHelper.getReadableDatabase();
-//
-//        if(openDb) {
-//            if(mDatabase == null || !mDatabase.isOpen()) {
-//                mDatabase = dbHelper.getReadableDatabase();
-//            }
-//
-//            if(!mDatabase.isReadOnly()) {
-//                mDatabase.close();
-//                mDatabase = dbHelper.getReadableDatabase();
-//            }
-//        }
-//
-//        String query = "select DISTINCT tbl_name from sqlite_master where tbl_name = '"+tableName+"'";
-//        try (Cursor cursor = mDatabase.rawQuery(query, null)) {
-//            if(cursor!=null) {
-//                if(cursor.getCount()>0) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        }
-//    }
 
     public boolean isDatabaseEmpty() {
         DbManager db = new DbManager(this);

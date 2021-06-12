@@ -28,7 +28,6 @@ public class SetsViewModel extends AndroidViewModel {
         DbManager db = new DbManager(getApplication().getApplicationContext());
         HashMap<Long, String> setName = db.selectStringQuery(CreateTable.TableEntry.COLUMN_NAME_NAME_STRING, 0, 5);
         for(Map.Entry<Long, String> entry : setName.entrySet()) {
-            Log.d("read query string: ", "id string " + entry.getKey() + " " + entry.getValue());
             setNames = setNames.concat(entry.getValue() + ", ");
         }
 

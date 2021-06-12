@@ -27,7 +27,6 @@
         </activity>
 
         <service android:name=".services.RestService"></service>
-        <service android:name=".services.RestDatabaseMinifigsService"></service>
 
 
 
