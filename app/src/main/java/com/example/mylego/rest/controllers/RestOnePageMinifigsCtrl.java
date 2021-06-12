@@ -1,5 +1,6 @@
 package com.example.mylego.rest.controllers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
     public static String SET_NUM =  "0011-2";
 
-
+    SharedPreferences sharedpreferences;
 
     public RestOnePageMinifigsCtrl(IFromRestCallback IFromRestCallback) {
 

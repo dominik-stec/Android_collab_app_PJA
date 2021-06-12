@@ -22,6 +22,7 @@ public class MyCollectionViewModel extends AndroidViewModel {
     private MutableLiveData<String> mText;
     String setNames = "SAMPLE MINIFIGS NAMES: ";
     String setNum = "SET_NUMBERS: ";
+    String setNumForMinifig = "SET NUMBER FOR MINIFIG: ";
 
     public MyCollectionViewModel(@NonNull Application application) {
         super(application);
@@ -39,9 +40,14 @@ public class MyCollectionViewModel extends AndroidViewModel {
             //Log.d("query minifig string: ", "id string " + entry.getKey() + " " + entry.getValue());
             setNum = setNum.concat(entry.getValue() + ", ");
         }
+        HashMap<Long, String> minifigSetNum = db.selectStringQuery(CreateTable.TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING, 0, 3);
+        for(Map.Entry<Long, String> entry : minifigSetNum.entrySet()) {
+            Log.d("query minifig string: ", "id string " + entry.getKey() + " " + entry.getValue());
+            setNumForMinifig = setNames.concat(entry.getValue() + ", ");
+        }
 
         mText = new MutableLiveData<>();
-        mText.setValue(setNames + " " + setNum);
+        mText.setValue(setNames + " " + setNum + " " + setNumForMinifig);
     }
 
     public LiveData<String> getText() {

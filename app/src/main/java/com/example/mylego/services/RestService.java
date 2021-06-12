@@ -167,8 +167,13 @@ public class RestService extends IntentService {
 
                 for (int i = 0; i < count; i++) {
 
-                    SharedPreferences prefs = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-                    String setNum = prefs.getString("setNum", "No name defined");//"No name defined" is the default value.
+//                    SharedPreferences prefs = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+//                    String setNum = prefs.getString("setNum", "No name defined");//"No name defined" is the default value.
+
+                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
+                    //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
+                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+                    String setNum = setNumList.get(RestOnePageMinifigsCtrl.counter);
 
                     db.setSetNumContain(setNum);
 
