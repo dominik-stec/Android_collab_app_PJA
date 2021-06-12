@@ -65,6 +65,10 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
         if(response.isSuccessful()) {
 
+            if(inc == max_iter_num){
+                return;
+            }
+
             //DbSetNumManager dbSetNum = new DbSetNumManager(RestDatabaseMinifigsService.getContext());
             HashMap<Long, String> setNumMap = new HashMap<>();
 
@@ -89,14 +93,17 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 }
 
                 //pages max
-                if(pageNum == counter*100){
-                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
-                    return;
-                }
+//                if(pageNum == counter*100){
+//                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
+//                    return;
+//                }
 
                 try{
-                    //setNumMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, inc+1, inc+1);
-                    setNum = setNumMap.get(1);
+                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
+                    //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
+                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+                    setNum = setNumList.get(inc);
+                    //++inc;
                 } catch(Exception e) {
                     Log.d("MinifigsCtrl1","exception from minifigs controller");
                     return;
@@ -115,9 +122,9 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 //                        setNum = setNumMap.get(1);
 
                         DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-                        HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
+                        //HashMap<Long, String> setNameMap = dbSetNum.selectStringQuery(CreateTable.TableEntrySetNum.COLUMN_NAME_SETNUM_SET_NUM_STRING, 0, 3);
                         ArrayList<String> setNumList = dbSetNum.selectAllQueries();
-                        String setNum = setNumList.get(inc);
+                        setNum = setNumList.get(inc);
                         ++inc;
                     } catch(Exception e) {
                         Log.d("MinifigsCtrl2","exception from minifigs controller");
