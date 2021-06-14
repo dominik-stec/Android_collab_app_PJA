@@ -20,4 +20,5 @@ public interface RestApi {
     @GET("api/v3/lego/sets/{set_num}/minifigs/")
     Call<MinifigsSets> getMinifigsSetByBricksSetNumByPage(@Header("Authorization") String auth, @Header("Accept") String type, @Path("set_num") String setNum, @Query("page") int pageNum);
 
+
 }
