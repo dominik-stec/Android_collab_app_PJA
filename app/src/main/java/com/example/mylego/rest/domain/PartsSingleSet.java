@@ -3,7 +3,9 @@ package com.example.mylego.rest.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PartsSingleSet {
+import java.io.Serializable;
+
+public class PartsSingleSet implements Serializable {
 
     @SerializedName("id")
     @Expose
