@@ -9,9 +9,12 @@ import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
+import com.example.mylego.rest.controllers.RestOnePagePartsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.rest.domain.PartsSingleSet;
+
 import java.util.ArrayList;
 
 
@@ -87,12 +90,18 @@ public class RestService extends IntentService {
                     }
 
                     startMinifigsRest();
+                    startPartsRest();
                 }
 
             }
 
             @Override
             public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
 
             }
 
@@ -156,6 +165,35 @@ public class RestService extends IntentService {
 
             }
 
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
         });
     }
+
+    public void startPartsRest() {
+
+        new RestOnePagePartsCtrl(new IFromRestCallback() {
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+        });
+    }
+
+
 }

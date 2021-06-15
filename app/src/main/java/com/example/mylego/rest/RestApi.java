@@ -2,6 +2,7 @@ package com.example.mylego.rest;
 
 import com.example.mylego.rest.domain.BricksSets;
 import com.example.mylego.rest.domain.MinifigsSets;
+import com.example.mylego.rest.domain.PartsSets;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,6 +20,12 @@ public interface RestApi {
 
     @GET("api/v3/lego/sets/{set_num}/minifigs/")
     Call<MinifigsSets> getMinifigsSetByBricksSetNumByPage(@Header("Authorization") String auth, @Header("Accept") String type, @Path("set_num") String setNum, @Query("page") int pageNum);
+
+    @GET("api/v3/lego/sets/{set_num}/parts/")
+    Call<PartsSets> getPartsSetByBricksSetNum(@Header("Authorization") String auth, @Header("Accept") String type, @Path("set_num") String setNum);
+
+    @GET("api/v3/lego/sets/{set_num}/parts/")
+    Call<PartsSets> getPartsSetByBricksSetNumByPage(@Header("Authorization") String auth, @Header("Accept") String type, @Path("set_num") String setNum, @Query("page") int pageNum);
 
 
 }

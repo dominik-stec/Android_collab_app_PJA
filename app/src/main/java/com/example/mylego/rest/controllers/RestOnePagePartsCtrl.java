@@ -1,20 +1,25 @@
 package com.example.mylego.rest.controllers;
 
 import android.util.Log;
+
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSets;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.rest.domain.Part;
+import com.example.mylego.rest.domain.PartsSets;
 import com.example.mylego.services.RestService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<MinifigsSets> {
+public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets> {
 
-    MinifigsSets minifigsSets;
+    PartsSets partsSets;
 
     IFromRestCallback IFromRestCallback;
 
@@ -23,7 +28,7 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
     DbSetNumManager dbSetNum;
     ArrayList<String> setNumList;
 
-    public RestOnePageMinifigsCtrl(IFromRestCallback IFromRestCallback) {
+    public RestOnePagePartsCtrl(IFromRestCallback IFromRestCallback) {
 
         super.start();
 
@@ -32,9 +37,9 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
         dbSetNum = new DbSetNumManager(RestService.getContext());
         setNumList = dbSetNum.selectAllQueries();
 
-        minifigsSets = new MinifigsSets();
+        partsSets = new PartsSets();
 
-        Call<MinifigsSets> call = restApi.getMinifigsSetByBricksSetNum(TOKEN_ACCESS_KEY, "application/json", SET_NUM);
+        Call<PartsSets> call = restApi.getPartsSetByBricksSetNum(TOKEN_ACCESS_KEY, "application/json", SET_NUM);
         call.enqueue(this);
     }
 
@@ -56,7 +61,7 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
     String setNum = "";
 
     @Override
-    public void onResponse(Call<MinifigsSets> call, Response<MinifigsSets> response) {
+    public void onResponse(Call<PartsSets> call, Response<PartsSets> response) {
 
         if(response.isSuccessful()) {
 
@@ -67,13 +72,13 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
             HashMap<Long, String> setNumMap = new HashMap<>();
 
-            minifigsSets.setResults(response.body().getResults());
+            partsSets.setResults(response.body().getResults());
 
             String nextLink = response.body().getNext();
 
             if(nextLink != null) {
 
-                IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
+                IFromRestCallback.onGetOnePageResultPartsFromRestSuccess(partsSets.getResults());
 
                 String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
                 String nextPage = nextPageRaw.substring(1);
@@ -94,23 +99,23 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 }
 
 
-                Call<MinifigsSets> callLoop = restApi.getMinifigsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
+                Call<PartsSets> callLoop = restApi.getPartsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
                 callLoop.enqueue(this);
 
             } else if(nextLink == null) {
-                    IFromRestCallback.onGetOnePageResultMinifigsFromRestSuccess(minifigsSets.getResults());
+                IFromRestCallback.onGetOnePageResultPartsFromRestSuccess(partsSets.getResults());
 
-                    try{
-                        setNum = setNumList.get(inc);
-                        ++inc;
-                    } catch(Exception e) {
-                        Log.d("MinifigsCtrl2","exception from minifigs controller");
-                        throw(e);
-                    }
+                try{
+                    setNum = setNumList.get(inc);
+                    ++inc;
+                } catch(Exception e) {
+                    Log.d("MinifigsCtrl2","exception from minifigs controller");
+                    throw(e);
+                }
 
-                    int pageNum = 1;
-                    Call<MinifigsSets> callLoop = restApi.getMinifigsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
-                    callLoop.enqueue(this);
+                int pageNum = 1;
+                Call<PartsSets> callLoop = restApi.getPartsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
+                callLoop.enqueue(this);
 
             }
 
@@ -123,13 +128,9 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
     }
 
     @Override
-    public void onFailure(Call<MinifigsSets> call, Throwable t) {
+    public void onFailure(Call<PartsSets> call, Throwable t) {
         Log.e("REST error one page","onFailure method error one page read for MinifigsSets");
         t.printStackTrace();
-    }
-
-    public MinifigsSingleSet[] getOnePageSetList() {
-        return minifigsSets.getResults();
     }
 
 }
