@@ -27,4 +27,43 @@ public class Color implements Serializable {
     @Expose
     ExternalIdsColor externalIdsColor;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRgb() {
+        return rgb;
+    }
+
+    public void setRgb(String rgb) {
+        this.rgb = rgb;
+    }
+
+    public boolean isTrans() {
+        return isTrans;
+    }
+
+    public void setTrans(boolean trans) {
+        isTrans = trans;
+    }
+
+    public ExternalIdsColor getExternalIdsColor() {
+        return externalIdsColor;
+    }
+
+    public void setExternalIdsColor(ExternalIdsColor externalIdsColor) {
+        this.externalIdsColor = externalIdsColor;
+    }
 }

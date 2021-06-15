@@ -27,7 +27,43 @@ public class ExternalIdsColor implements Serializable {
     @Expose
     LDraw lDraw;
 
-    @SerializedName("ext_descrs")
-    @Expose
-    ExtDescrs extDescrs;
+    public BrickLink getBrickLink() {
+        return brickLink;
+    }
+
+    public void setBrickLink(BrickLink brickLink) {
+        this.brickLink = brickLink;
+    }
+
+    public BrickOwl getBrickOwl() {
+        return brickOwl;
+    }
+
+    public void setBrickOwl(BrickOwl brickOwl) {
+        this.brickOwl = brickOwl;
+    }
+
+    public Lego getLego() {
+        return lego;
+    }
+
+    public void setLego(Lego lego) {
+        this.lego = lego;
+    }
+
+    public Peeron getPeeron() {
+        return peeron;
+    }
+
+    public void setPeeron(Peeron peeron) {
+        this.peeron = peeron;
+    }
+
+    public LDraw getlDraw() {
+        return lDraw;
+    }
+
+    public void setlDraw(LDraw lDraw) {
+        this.lDraw = lDraw;
+    }
 }

@@ -7,6 +7,10 @@ import java.io.Serializable;
 
 public class ExternalIdsPart implements Serializable {
 
+    @SerializedName("BrickLink")
+    @Expose
+    String[] brickLink = null;
+
     @SerializedName("BrickOwl")
     @Expose
     String[] brickOwl = null;
@@ -22,6 +26,14 @@ public class ExternalIdsPart implements Serializable {
     @SerializedName("Peeron")
     @Expose
     String[] peeron = null;
+
+    public String[] getBrickLink() {
+        return brickLink;
+    }
+
+    public void setBrickLink(String[] brickLink) {
+        this.brickLink = brickLink;
+    }
 
     public String[] getBrickOwl() {
         return brickOwl;

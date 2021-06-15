@@ -33,11 +33,11 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("is_spare")
     @Expose
-    int isSpare;
+    boolean isSpare;
 
     @SerializedName("element_id")
     @Expose
-    int elementId;
+    String elementId;
 
     @SerializedName("num_sets")
     @Expose
@@ -91,19 +91,19 @@ public class PartsSingleSet implements Serializable {
         this.quantity = quantity;
     }
 
-    public int getIsSpare() {
+    public boolean isSpare() {
         return isSpare;
     }
 
-    public void setIsSpare(int isSpare) {
-        this.isSpare = isSpare;
+    public void setSpare(boolean spare) {
+        isSpare = spare;
     }
 
-    public int getElementId() {
+    public String getElementId() {
         return elementId;
     }
 
-    public void setElementId(int elementId) {
+    public void setElementId(String elementId) {
         this.elementId = elementId;
     }
 
