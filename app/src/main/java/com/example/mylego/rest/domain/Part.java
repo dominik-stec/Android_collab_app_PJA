@@ -29,7 +29,7 @@ public class Part implements Serializable {
 
     @SerializedName("external_ids")
     @Expose
-    ExternalIds externalIds;
+    ExternalIdsPart externalIds;
 
     @SerializedName("print_of")
     @Expose
@@ -75,12 +75,12 @@ public class Part implements Serializable {
         this.partImgUrl = partImgUrl;
     }
 
-    public ExternalIds getExternalIds() {
+    public ExternalIdsPart getExternalIdsPart() {
         return externalIds;
     }
 
-    public void setExternalIds(ExternalIds externalIds) {
-        this.externalIds = externalIds;
+    public void setExternalIdsPart(ExternalIdsPart externalIdsPart) {
+        this.externalIds = externalIdsPart;
     }
 
     public String getPrintOf() {

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ExternalIds implements Serializable {
+public class ExternalIdsPart implements Serializable {
 
     @SerializedName("BrickOwl")
     @Expose
