@@ -163,10 +163,16 @@ public class DbPartsManager {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
         switch(columnType) {
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_ID_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_QUANTITY_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_QUANTITY_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_INV_PART_ID_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_INV_PART_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_QUANTITY_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_NUM_SETS_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -177,7 +183,7 @@ public class DbPartsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntryMinifigs.TABLE_NAME_MINIFIG,   // The table to query
+                CreateTable.TableEntryParts.TABLE_NAME_PARTS,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -210,15 +216,10 @@ public class DbPartsManager {
         HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
 
         switch (columnType) {
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NUM_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_NAME_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_NAME_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_MINIFIG_SET_IMG_URL_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntryMinifigs.COLUMN_NAME_SET_NUM_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ELEMENT_ID_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PARTS_ELEMENT_ID_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -229,7 +230,7 @@ public class DbPartsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntryMinifigs.TABLE_NAME_MINIFIG,   // The table to query
+                CreateTable.TableEntryParts.TABLE_NAME_PARTS,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,         // The values for the WHERE clause
@@ -273,284 +274,12 @@ public class DbPartsManager {
         this.id = id;
     }
 
-    public int getInv_part_id() {
+    public int getInvPartId() {
         return invPartId;
     }
 
-    public void setInv_part_id(int inv_part_id) {
-        this.invPartId = inv_part_id;
-    }
-
-    public Part getPart() {
-        return part;
-    }
-
-    public void setPart(Part part) {
-        this.part = part;
-    }
-
-    public String getPartNum() {
-        return partNum;
-    }
-
-    public void setPartNum(String partNum) {
-        this.partNum = partNum;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPartCatId() {
-        return partCatId;
-    }
-
-    public void setPartCatId(int partCatId) {
-        this.partCatId = partCatId;
-    }
-
-    public String getPartUrl() {
-        return partUrl;
-    }
-
-    public void setPartUrl(String partUrl) {
-        this.partUrl = partUrl;
-    }
-
-    public String getPartImgUrl() {
-        return partImgUrl;
-    }
-
-    public void setPartImgUrl(String partImgUrl) {
-        this.partImgUrl = partImgUrl;
-    }
-
-    public ExternalIdsPart getExternalIdsPart() {
-        return externalIdsPart;
-    }
-
-    public void setExternalIdsPart(ExternalIdsPart externalIdsPart) {
-        this.externalIdsPart = externalIdsPart;
-    }
-
-    public String getPrintOf() {
-        return printOf;
-    }
-
-    public void setPrintOf(String printOf) {
-        this.printOf = printOf;
-    }
-
-    public String[] getBrickLinkPart() {
-        return brickLinkPart;
-    }
-
-    public void setBrickLinkPart(String[] brickLinkPart) {
-        this.brickLinkPart = brickLinkPart;
-    }
-
-    public String[] getBrickOwlPart() {
-        return brickOwlPart;
-    }
-
-    public void setBrickOwlPart(String[] brickOwlPart) {
-        this.brickOwlPart = brickOwlPart;
-    }
-
-    public String[] getlDrawPart() {
-        return lDrawPart;
-    }
-
-    public void setlDrawPart(String[] lDrawPart) {
-        this.lDrawPart = lDrawPart;
-    }
-
-    public String[] getLegoPart() {
-        return legoPart;
-    }
-
-    public void setLegoPart(String[] legoPart) {
-        this.legoPart = legoPart;
-    }
-
-    public String[] getPeeronPart() {
-        return peeronPart;
-    }
-
-    public void setPeeronPart(String[] peeronPart) {
-        this.peeronPart = peeronPart;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public int getColorId() {
-        return colorId;
-    }
-
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
-    }
-
-    public String getColorName() {
-        return colorName;
-    }
-
-    public void setColorName(String colorName) {
-        this.colorName = colorName;
-    }
-
-    public String getRgb() {
-        return rgb;
-    }
-
-    public void setRgb(String rgb) {
-        this.rgb = rgb;
-    }
-
-    public boolean isTrans() {
-        return isTrans;
-    }
-
-    public void setTrans(boolean trans) {
-        isTrans = trans;
-    }
-
-    public ExternalIdsColor getExternalIdsColor() {
-        return externalIdsColor;
-    }
-
-    public void setExternalIdsColor(ExternalIdsColor externalIdsColor) {
-        this.externalIdsColor = externalIdsColor;
-    }
-
-    public BrickLink getBrickLink() {
-        return brickLink;
-    }
-
-    public void setBrickLink(BrickLink brickLink) {
-        this.brickLink = brickLink;
-    }
-
-    public int[] getExtIdsBrickLink() {
-        return extIdsBrickLink;
-    }
-
-    public void setExtIdsBrickLink(int[] extIdsBrickLink) {
-        this.extIdsBrickLink = extIdsBrickLink;
-    }
-
-    public String[][] getExtDescrsBrickLink() {
-        return extDescrsBrickLink;
-    }
-
-    public void setExtDescrsBrickLink(String[][] extDescrsBrickLink) {
-        this.extDescrsBrickLink = extDescrsBrickLink;
-    }
-
-    public BrickOwl getBrickOwl() {
-        return brickOwl;
-    }
-
-    public void setBrickOwl(BrickOwl brickOwl) {
-        this.brickOwl = brickOwl;
-    }
-
-    public int[] getExtIdsBrickOwl() {
-        return extIdsBrickOwl;
-    }
-
-    public void setExtIdsBrickOwl(int[] extIdsBrickOwl) {
-        this.extIdsBrickOwl = extIdsBrickOwl;
-    }
-
-    public String[][] getExtDescrsBrickOwl() {
-        return extDescrsBrickOwl;
-    }
-
-    public void setExtDescrsBrickOwl(String[][] extDescrsBrickOwl) {
-        this.extDescrsBrickOwl = extDescrsBrickOwl;
-    }
-
-    public Lego getLego() {
-        return lego;
-    }
-
-    public void setLego(Lego lego) {
-        this.lego = lego;
-    }
-
-    public int[] getExtIdsLego() {
-        return extIdsLego;
-    }
-
-    public void setExtIdsLego(int[] extIdsLego) {
-        this.extIdsLego = extIdsLego;
-    }
-
-    public String[][] getExtDescrsLego() {
-        return extDescrsLego;
-    }
-
-    public void setExtDescrsLego(String[][] extDescrsLego) {
-        this.extDescrsLego = extDescrsLego;
-    }
-
-    public Peeron getPeeron() {
-        return peeron;
-    }
-
-    public void setPeeron(Peeron peeron) {
-        this.peeron = peeron;
-    }
-
-    public int[] getExtIdsPeeron() {
-        return extIdsPeeron;
-    }
-
-    public void setExtIdsPeeron(int[] extIdsPeeron) {
-        this.extIdsPeeron = extIdsPeeron;
-    }
-
-    public String[][] getExtDescrsPeeron() {
-        return extDescrsPeeron;
-    }
-
-    public void setExtDescrsPeeron(String[][] extDescrsPeeron) {
-        this.extDescrsPeeron = extDescrsPeeron;
-    }
-
-    public LDraw getlDraw() {
-        return lDraw;
-    }
-
-    public void setlDraw(LDraw lDraw) {
-        this.lDraw = lDraw;
-    }
-
-    public int[] getExtIdsLDraw() {
-        return extIdsLDraw;
-    }
-
-    public void setExtIdsLDraw(int[] extIdsLDraw) {
-        this.extIdsLDraw = extIdsLDraw;
-    }
-
-    public String[][] getExtDescrsLDraw() {
-        return extDescrsLDraw;
-    }
-
-    public void setExtDescrsLDraw(String[][] extDescrsLDraw) {
-        this.extDescrsLDraw = extDescrsLDraw;
+    public void setInvPartId(int invPartId) {
+        this.invPartId = invPartId;
     }
 
     public String getSetNum() {
