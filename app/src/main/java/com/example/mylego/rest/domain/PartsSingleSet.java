@@ -13,7 +13,7 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("inv_part_id")
     @Expose
-    int inv_part_id;
+    int invPartId;
 
     @SerializedName("part")
     @Expose
@@ -51,12 +51,12 @@ public class PartsSingleSet implements Serializable {
         this.id = id;
     }
 
-    public int getInv_part_id() {
-        return inv_part_id;
+    public int getInvPartId() {
+        return invPartId;
     }
 
-    public void setInv_part_id(int inv_part_id) {
-        this.inv_part_id = inv_part_id;
+    public void setInvPartId(int invPartId) {
+        this.invPartId = invPartId;
     }
 
     public Part getPart() {
