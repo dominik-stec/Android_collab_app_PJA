@@ -75,7 +75,7 @@ public class RestService extends IntentService {
                     ++RestOnePageBricksCtrl.counter;
 
 
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                    if (RestOnePageBricksCtrl.counter % 25 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
                         progressBar.putExtra("progressBarVal", progress/2);
                         sendBroadcast(progressBar);
@@ -168,11 +168,11 @@ public class RestService extends IntentService {
 
                     ++RestOnePageMinifigsCtrl.counter;
 
-                    if (RestOnePageMinifigsCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageMinifigsCtrl.counter / RestOnePageMinifigsCtrl.max_iter_num) * 100);
-                        progressBar.putExtra("progressBarVal", 50+progress/2/3);
-                        sendBroadcast(progressBar);
-                    }
+//                    if (RestOnePageMinifigsCtrl.counter % 100 == 0) {
+//                        long progress = Math.round(((double) RestOnePageMinifigsCtrl.counter / RestOnePageMinifigsCtrl.max_iter_num) * 100);
+//                        progressBar.putExtra("progressBarVal", 50+progress/2/3);
+//                        sendBroadcast(progressBar);
+//                    }
 
                 }
 
@@ -239,11 +239,11 @@ public class RestService extends IntentService {
 
                     ++RestOnePagePartsCtrl.counter;
 
-                    if (RestOnePagePartsCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePagePartsCtrl.counter / RestOnePagePartsCtrl.max_iter_num) * 100);
-                        progressBar.putExtra("progressBarVal", 67+progress/2/3);
-                        sendBroadcast(progressBar);
-                    }
+//                    if (RestOnePagePartsCtrl.counter % 100 == 0) {
+//                        long progress = Math.round(((double) RestOnePagePartsCtrl.counter / RestOnePagePartsCtrl.max_iter_num) * 100);
+//                        progressBar.putExtra("progressBarVal", 67+progress/2/3);
+//                        sendBroadcast(progressBar);
+//                    }
 
                 }
 
@@ -321,9 +321,9 @@ public class RestService extends IntentService {
 //                }
 
 
-                    if (RestOnePageSinglePartsCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageSinglePartsCtrl.counter / RestOnePageSinglePartsCtrl.max_iter_num) * 100);
-                        progressBar.putExtra("progressBarVal", 85+progress/2/3);
+                    if (RestLimiter.limiter % 2 == 0) {
+                        long progress = Math.round(((double) RestLimiter.limiter / RestLimiter.rest_limit) * 100);
+                        progressBar.putExtra("progressBarVal", 50+progress/2);
                         sendBroadcast(progressBar);
                     }
 
