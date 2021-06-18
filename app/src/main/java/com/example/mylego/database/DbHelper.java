@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the com.example.mylego.database schema, you must increment the com.example.mylego.database version.
-    public static final int DATABASE_VERSION = 70;
+    public static final int DATABASE_VERSION = 80;
     public static final String DATABASE_NAME = "BricksSet.db";
 
     public DbHelper(Context context) {
@@ -17,7 +17,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CreateTable.SQL_CREATE_TABLE_MINIFIGS);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SETNUM);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_PARTS);
-        db.execSQL(CreateTable.SQL_CREATE_TABLE_PART);
+        db.execSQL(CreateTable.SQL_CREATE_TABLE_SINGLE_PARTS);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_COLOR);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_PART);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_COLOR);
@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CreateTable.SQL_DELETE_TABLE_MINIFIGS);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_SETNUM);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_PARTS);
-        db.execSQL(CreateTable.SQL_DELETE_TABLE_PART);
+        db.execSQL(CreateTable.SQL_DELETE_TABLE_SINGLE_PARTS);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_COLOR);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_SUBTABLES_PART);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_SUBTABLES_COLOR);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+
 import com.example.mylego.rest.domain.BrickLink;
 import com.example.mylego.rest.domain.BrickOwl;
 import com.example.mylego.rest.domain.Color;
@@ -16,80 +17,33 @@ import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
 import com.example.mylego.rest.domain.Peeron;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DbPartsManager {
+public class DbSinglePartsManager {
 
     DbHelper dbHelper = null;
 
-    int id;
-    int invPartId;
-
-    Part part = null;
+    Integer id;
+    String setNum;
     String partNum;
-    String name;
-    int partCatId;
+    String partName;
+    Integer partCatId;
     String partUrl;
     String partImgUrl;
-    ExternalIdsPart externalIdsPart = null;
-    String printOf;
+    String partColor;
 
-    String[] brickLinkPart = null;
-    String[] brickOwlPart = null;
-    String[] lDrawPart = null;
-    String[] legoPart = null;
-    String[] peeronPart = null;
-
-
-    Color color = null;
-    int colorId;
-    String colorName;
-    String rgb;
-    boolean isTrans;
-    ExternalIdsColor externalIdsColor = null;
-
-    BrickLink brickLink = null;
-    int[] extIdsBrickLink = null;
-    String[][] extDescrsBrickLink = null;
-
-    BrickOwl brickOwl = null;
-    int[] extIdsBrickOwl = null;
-    String[][] extDescrsBrickOwl = null;
-
-    Lego lego = null;
-    int[] extIdsLego = null;
-    String[][] extDescrsLego = null;
-
-    Peeron peeron = null;
-    int[] extIdsPeeron = null;
-    String[][] extDescrsPeeron = null;
-
-    LDraw lDraw = null;
-    int[] extIdsLDraw = null;
-    String[][] extDescrsLDraw = null;
-
-    String setNum;
-    int quantity;
-    boolean isSpare;
-    String elementId;
-    int numSets;
-
-
-
-    public DbPartsManager(Context context) {
+    public DbSinglePartsManager(Context context) {
         this.dbHelper = new DbHelper(context);
 
-        Part part = new Part();
-        ExternalIdsPart externalIdsPart = new ExternalIdsPart();
-        Color color = new Color();
-        ExternalIdsColor externalIdsColor = new ExternalIdsColor();
-        BrickLink brickLink = new BrickLink();
-        BrickOwl brickOwl = new BrickOwl();
-        Lego lego = new Lego();
-        Peeron peeron = new Peeron();
-        LDraw lDraw = new LDraw();
+         id = 0;
+         setNum = "test";
+         partNum = "test";
+         partName = "test";
+         partCatId = 0;
+         partUrl = "test";
+         partImgUrl = "test";
+         partColor = "test";
 
     }
 
@@ -101,16 +55,18 @@ public class DbPartsManager {
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER, id);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_INV_PART_ID_INTEGER, invPartId);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING, setNum);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER, quantity);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN, isSpare);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ELEMENT_ID_STRING, elementId);
-        values.put(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER, numSets);
+        values.put(CreateTable.TableEntrySinglePart._ID, id);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING, setNum);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING, partNum);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING, partName);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER, partCatId);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING, partUrl);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING, partImgUrl);
+        values.put(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING, partColor);
+
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = dbWrite.insert(CreateTable.TableEntryParts.TABLE_NAME_PARTS, null, values);
+        long newRowId = dbWrite.insert(CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS, null, values);
 
         return newRowId;
     }
@@ -266,20 +222,12 @@ public class DbPartsManager {
         this.dbHelper = dbHelper;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getInvPartId() {
-        return invPartId;
-    }
-
-    public void setInvPartId(int invPartId) {
-        this.invPartId = invPartId;
     }
 
     public String getSetNum() {
@@ -290,47 +238,6 @@ public class DbPartsManager {
         this.setNum = setNum;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean isSpare() {
-        return isSpare;
-    }
-
-    public void setSpare(boolean spare) {
-        isSpare = spare;
-    }
-
-    public String getElementId() {
-        return elementId;
-    }
-
-    public void setElementId(String elementId) {
-        this.elementId = elementId;
-    }
-
-    public int getNumSets() {
-        return numSets;
-    }
-
-    public void setNumSets(int numSets) {
-        this.numSets = numSets;
-    }
-
-    //for Part obj
-    public Part getPart() {
-        return part;
-    }
-
-    public void setPart(Part part) {
-        this.part = part;
-    }
-
     public String getPartNum() {
         return partNum;
     }
@@ -339,19 +246,19 @@ public class DbPartsManager {
         this.partNum = partNum;
     }
 
-    public String getName() {
-        return name;
+    public String getPartName() {
+        return partName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPartName(String partName) {
+        this.partName = partName;
     }
 
-    public int getPartCatId() {
+    public Integer getPartCatId() {
         return partCatId;
     }
 
-    public void setPartCatId(int partCatId) {
+    public void setPartCatId(Integer partCatId) {
         this.partCatId = partCatId;
     }
 
@@ -369,5 +276,13 @@ public class DbPartsManager {
 
     public void setPartImgUrl(String partImgUrl) {
         this.partImgUrl = partImgUrl;
+    }
+
+    public String getPartColor() {
+        return partColor;
+    }
+
+    public void setPartColor(String partColor) {
+        this.partColor = partColor;
     }
 }

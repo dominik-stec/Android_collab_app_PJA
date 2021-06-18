@@ -117,28 +117,32 @@ public final class CreateTable {
     public static final String SQL_DELETE_TABLE_PARTS =
             "DROP TABLE IF EXISTS " + TableEntryParts.TABLE_NAME_PARTS;
 
-    public static class TableEntryPart implements BaseColumns {
-        public static final String TABLE_NAME_PART = "part";
+    public static class TableEntrySinglePart implements BaseColumns {
+        //for Part obj
+        public static final String COLUMN_NAME_SINGLE_PARTS = "single_parts";
         public static final String COLUMN_NAME_PART_SET_NUM_STRING = "set_num";
-        public static final String COLUMN_NAME_PART_NAME_STRING = "name";
+        public static final String COLUMN_NAME_PART_PART_NUM_STRING = "part_num";
+        public static final String COLUMN_NAME_PART_PART_NAME_STRING = "name";
         public static final String COLUMN_NAME_PART_PART_CAT_ID_INTEGER = "part_cat_id";
         public static final String COLUMN_NAME_PART_PART_URL_STRING = "part_url";
         public static final String COLUMN_NAME_PART_PART_IMG_URL_STRING = "part_img_url";
-        public static final String COLUMN_NAME_PART_PRINT_OF_STRING = "print_of";
+        public static final String COLUMN_NAME_PART_PART_COLOR_STRING = "name";
+
     }
 
-    public static final String SQL_CREATE_TABLE_PART =
-            "CREATE TABLE " + TableEntryPart.TABLE_NAME_PART + " (" +
-                    TableEntryPart._ID + " INTEGER PRIMARY KEY," +
-                    TableEntryPart.COLUMN_NAME_PART_SET_NUM_STRING + " TEXT," +
-                    TableEntryPart.COLUMN_NAME_PART_NAME_STRING + " INTEGER," +
-                    TableEntryPart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER + " INTEGER," +
-                    TableEntryPart.COLUMN_NAME_PART_PART_URL_STRING + " TEXT," +
-                    TableEntryPart.COLUMN_NAME_PART_PART_IMG_URL_STRING + " TEXT," +
-                    TableEntryPart.COLUMN_NAME_PART_PRINT_OF_STRING + " TEXT)";
+    public static final String SQL_CREATE_TABLE_SINGLE_PARTS =
+            "CREATE TABLE " + TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS + " (" +
+                    TableEntrySinglePart._ID + " INTEGER PRIMARY KEY," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING + " TEXT," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING + " TEXT," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING + " TEXT," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER + " INTEGER," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING + " TEXT," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING + " TEXT," +
+                    TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING + " TEXT)";
 
-    public static final String SQL_DELETE_TABLE_PART =
-            "DROP TABLE IF EXISTS " + TableEntryPart.TABLE_NAME_PART;
+    public static final String SQL_DELETE_TABLE_SINGLE_PARTS =
+            "DROP TABLE IF EXISTS " + TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS;
 
     public static class TableEntryColor implements BaseColumns {
         public static final String TABLE_NAME_COLOR = "color";
