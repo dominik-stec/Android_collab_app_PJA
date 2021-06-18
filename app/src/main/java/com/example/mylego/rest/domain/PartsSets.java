@@ -9,7 +9,7 @@ public class PartsSets implements Serializable {
 
     @SerializedName("count")
     @Expose
-    int count;
+    Integer count;
     @SerializedName("next")
     @Expose
     String next;
@@ -20,11 +20,11 @@ public class PartsSets implements Serializable {
     @Expose
     PartsSingleSet[] results = null;
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 

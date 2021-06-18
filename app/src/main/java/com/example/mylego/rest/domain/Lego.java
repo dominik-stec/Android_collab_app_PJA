@@ -9,17 +9,17 @@ public class Lego implements Serializable {
 
     @SerializedName("ext_ids")
     @Expose
-    int[] extIds = null;
+    Integer[] extIds = null;
 
     @SerializedName("ext_descrs")
     @Expose
     String[][] extDescrs = null;
 
-    public int[] getExtIds() {
+    public Integer[] getExtIds() {
         return extIds;
     }
 
-    public void setExtIds(int[] extIds) {
+    public void setExtIds(Integer[] extIds) {
         this.extIds = extIds;
     }
 

@@ -9,11 +9,11 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("id")
     @Expose
-    int id;
+    Integer id;
 
     @SerializedName("inv_part_id")
     @Expose
-    int invPartId;
+    Integer invPartId;
 
     @SerializedName("part")
     @Expose
@@ -29,7 +29,7 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("quantity")
     @Expose
-    int quantity;
+    Integer quantity;
 
     @SerializedName("is_spare")
     @Expose
@@ -41,21 +41,21 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("num_sets")
     @Expose
-    int numSets;
+    Integer numSets;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getInvPartId() {
+    public Integer getInvPartId() {
         return invPartId;
     }
 
-    public void setInvPartId(int invPartId) {
+    public void setInvPartId(Integer invPartId) {
         this.invPartId = invPartId;
     }
 
@@ -83,11 +83,11 @@ public class PartsSingleSet implements Serializable {
         this.setNum = setNum;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -107,11 +107,11 @@ public class PartsSingleSet implements Serializable {
         this.elementId = elementId;
     }
 
-    public int getNumSets() {
+    public Integer getNumSets() {
         return numSets;
     }
 
-    public void setNumSets(int numSets) {
+    public void setNumSets(Integer numSets) {
         this.numSets = numSets;
     }
 }

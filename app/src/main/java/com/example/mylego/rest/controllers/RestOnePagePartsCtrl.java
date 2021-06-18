@@ -70,11 +70,30 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
                 return;
             }
 
-            HashMap<Long, String> setNumMap = new HashMap<>();
-
             partsSets.setResults(response.body().getResults());
 
+            HashMap<Long, String> setNumMap = new HashMap<>();
+
+
             String nextLink = response.body().getNext();
+            String previousLink = response.body().getPrevious();
+            int count = response.body().getCount();
+
+            if(nextLink==null && previousLink==null && count==0) {
+                ++inc;
+                try{
+                    setNum = setNumList.get(inc);
+                } catch(Exception e) {
+                    Log.d("PartsCtrl all null","exception from parts controller");
+                    return;
+                }
+
+
+                Call<PartsSets> callLoop = restApi.getPartsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum,1);
+                callLoop.enqueue(this);
+            }
+
+
 
             if(nextLink != null) {
 
@@ -102,14 +121,14 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
                 Call<PartsSets> callLoop = restApi.getPartsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
                 callLoop.enqueue(this);
 
-            } else if(nextLink == null) {
+            } else if(nextLink == null && count!=0) {
                 IFromRestCallback.onGetOnePageResultPartsFromRestSuccess(partsSets.getResults());
 
                 try{
                     setNum = setNumList.get(inc);
                     ++inc;
                 } catch(Exception e) {
-                    Log.d("MinifigsCtrl2","exception from minifigs controller");
+                    Log.d("PartsCtrl2","exception from parts controller");
                     throw(e);
                 }
 
@@ -129,7 +148,7 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
 
     @Override
     public void onFailure(Call<PartsSets> call, Throwable t) {
-        Log.e("REST error one page","onFailure method error one page read for MinifigsSets");
+        Log.e("REST error one page","onFailure method error one page read for PartSets");
         t.printStackTrace();
     }
 

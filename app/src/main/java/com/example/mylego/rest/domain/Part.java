@@ -17,7 +17,7 @@ public class Part implements Serializable {
 
     @SerializedName("part_cat_id")
     @Expose
-    int partCatId;
+    Integer partCatId;
 
     @SerializedName("part_url")
     @Expose
@@ -51,11 +51,11 @@ public class Part implements Serializable {
         this.name = name;
     }
 
-    public int getPartCatId() {
+    public Integer getPartCatId() {
         return partCatId;
     }
 
-    public void setPartCatId(int partCatId) {
+    public void setPartCatId(Integer partCatId) {
         this.partCatId = partCatId;
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
+import com.example.mylego.database.DbPartsManager;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
@@ -189,6 +190,46 @@ public class RestService extends IntentService {
 
             @Override
             public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+                context = getApplicationContext();
+
+                DbPartsManager db = new DbPartsManager(getApplicationContext());
+
+                Intent progressBar = new Intent("progressBar");
+
+                int count = value.length;
+
+
+                for (int i = 0; i < count; i++) {
+
+//                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
+//                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+//                    String setNum = setNumList.get(RestOnePagePartsCtrl.counter);
+//
+//                    db.setSetNum(setNum);
+
+                    PartsSingleSet partsSingleSet = value[i];
+
+                    db.setId(partsSingleSet.getId());
+                    db.setInvPartId(partsSingleSet.getInvPartId());
+                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setQuantity(partsSingleSet.getQuantity());
+                    db.setSpare(partsSingleSet.isSpare());
+                    db.setElementId(partsSingleSet.getElementId());
+                    db.setNumSets(partsSingleSet.getNumSets());
+
+                    db.commitIntoDb();
+
+                    ++RestOnePagePartsCtrl.counter;
+
+                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                        progressBar.putExtra("progressBarVal", 50+progress/3);
+                        sendBroadcast(progressBar);
+                    }
+
+                }
 
             }
 
