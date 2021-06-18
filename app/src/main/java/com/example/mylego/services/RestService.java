@@ -8,12 +8,15 @@ import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbPartsManager;
 import com.example.mylego.database.DbSetNumManager;
+import com.example.mylego.database.DbSinglePartsManager;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
 import com.example.mylego.rest.controllers.RestOnePagePartsCtrl;
+import com.example.mylego.rest.controllers.RestOnePageSinglePartsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
 
 import java.util.ArrayList;
@@ -272,37 +275,44 @@ public class RestService extends IntentService {
             @Override
             public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
 
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
                 context = getApplicationContext();
 
-                DbPartsManager db = new DbPartsManager(getApplicationContext());
+                DbSinglePartsManager db = new DbSinglePartsManager(getApplicationContext());
 
                 Intent progressBar = new Intent("progressBar");
 
-                int count = value.length;
+                //int count = value.length;
 
+                for (PartsSingleSet sng:
+                     value) {
 
-                for (int i = 0; i < count; i++) {
+                    Part part = sng.getPart();
 
-//                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-//                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
-//                    String setNum = setNumList.get(RestOnePagePartsCtrl.counter);
-//
-//                    db.setSetNum(setNum);
+                    db.setId(part.getId());
 
-                    PartsSingleSet partsSingleSet = value[i];
+                    db.setSetNum(sng.getSetNum());
 
-                    db.setId(partsSingleSet.getId());
-                    db.setInvPartId(partsSingleSet.getInvPartId());
-                    db.setSetNum(partsSingleSet.getSetNum());
-                    db.setSetNum(partsSingleSet.getSetNum());
-                    db.setQuantity(partsSingleSet.getQuantity());
-                    db.setSpare(partsSingleSet.isSpare());
-                    db.setElementId(partsSingleSet.getElementId());
-                    db.setNumSets(partsSingleSet.getNumSets());
+                    db.setPartNum(part.getPartNum());
+                    db.setPartName(part.getPartName());
+                    db.setPartCatId(part.getPartCatId());
+                    db.setPartUrl(part.getPartUrl());
+                    db.setPartImgUrl(part.getPartImgUrl());
+
+                    db.setPartColor(sng.getColor().getName());
 
                     db.commitIntoDb();
 
-                    ++RestOnePagePartsCtrl.counter;
+                    ++RestOnePageSinglePartsCtrl.counter;
+
+                }
+
+
+
 
                     if (RestOnePageBricksCtrl.counter % 100 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
@@ -311,13 +321,6 @@ public class RestService extends IntentService {
                     }
 
                 }
-
-            }
-
-            @Override
-            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
-
-            }
 
         });
 
