@@ -92,6 +92,7 @@ public class RestService extends IntentService {
 
                     startMinifigsRest();
                     startPartsRest();
+                    startSinglePartsRest();
                 }
 
             }
@@ -103,6 +104,11 @@ public class RestService extends IntentService {
 
             @Override
             public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
 
             }
 
@@ -171,6 +177,11 @@ public class RestService extends IntentService {
 
             }
 
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
         });
     }
 
@@ -233,8 +244,86 @@ public class RestService extends IntentService {
 
             }
 
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
         });
+
+
     }
+
+
+    public void startSinglePartsRest() {
+
+        new RestOnePagePartsCtrl(new IFromRestCallback() {
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+                context = getApplicationContext();
+
+                DbPartsManager db = new DbPartsManager(getApplicationContext());
+
+                Intent progressBar = new Intent("progressBar");
+
+                int count = value.length;
+
+
+                for (int i = 0; i < count; i++) {
+
+//                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
+//                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
+//                    String setNum = setNumList.get(RestOnePagePartsCtrl.counter);
+//
+//                    db.setSetNum(setNum);
+
+                    PartsSingleSet partsSingleSet = value[i];
+
+                    db.setId(partsSingleSet.getId());
+                    db.setInvPartId(partsSingleSet.getInvPartId());
+                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setQuantity(partsSingleSet.getQuantity());
+                    db.setSpare(partsSingleSet.isSpare());
+                    db.setElementId(partsSingleSet.getElementId());
+                    db.setNumSets(partsSingleSet.getNumSets());
+
+                    db.commitIntoDb();
+
+                    ++RestOnePagePartsCtrl.counter;
+
+                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                        progressBar.putExtra("progressBarVal", 50+progress/3);
+                        sendBroadcast(progressBar);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+        });
+
+
+    }
+
 
 
 }

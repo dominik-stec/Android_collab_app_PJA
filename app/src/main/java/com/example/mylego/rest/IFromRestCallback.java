@@ -9,5 +9,6 @@ public interface IFromRestCallback {
     void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value);
     void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value);
     void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value);
+    void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value);
 
 }
