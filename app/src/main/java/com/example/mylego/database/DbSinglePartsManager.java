@@ -73,41 +73,42 @@ public class DbSinglePartsManager {
 
     public ArrayList<Part> getSinglePartsBySetNum(String setNum) {
 
-        ArrayList<PartsSingleSet> partsList = new ArrayList<>();
+        ArrayList<Part> partsList = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_INV_PART_ID_INTEGER,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ELEMENT_ID_STRING,
-                CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER
+                CreateTable.TableEntrySinglePart._ID,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING
         };
 
-        String selection = CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING + "=?";
+        String selection = CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING + "=?";
 
         String[] selectionArgs = {setNum};
 
-        Cursor cursor = db.query(CreateTable.TableEntryParts.TABLE_NAME_PARTS, projection, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS, projection, selection, selectionArgs, null, null, null);
 
         if (cursor.moveToFirst()) {
 
             do {
-                PartsSingleSet partsSingleSet = new PartsSingleSet();
+                Part part = new Part();
 
-                partsSingleSet.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
-                partsSingleSet.setInvPartId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
-                partsSingleSet.setSetNum(setNum);
-                partsSingleSet.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER)));
-                boolean isSpare = cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN)) == 1;
-                partsSingleSet.setSpare(isSpare);
-                partsSingleSet.setElementId(cursor.getString(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER))));
-                partsSingleSet.setNumSets(cursor.getInt(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER))));
+                part.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart._ID)));
+                part.setSetNum(setNum);
+                part.setPartNum(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING)));
+                part.setPartName(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING)));
+                part.setPartCatId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER)));
+                part.setPartUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING)));
+                part.setPartImgUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING)));
+                part.setPartColor(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING)));
 
-                partsList.add(partsSingleSet);
+                partsList.add(part);
 
             } while (cursor.moveToNext());
 
@@ -119,16 +120,8 @@ public class DbSinglePartsManager {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
         switch(columnType) {
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_INV_PART_ID_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_INV_PART_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_QUANTITY_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_NUM_SETS_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_CAT_ID_INTEGER point into integer values, columnType must point into string type return values from database, change columnType on string point type.");
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -139,7 +132,7 @@ public class DbSinglePartsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntryParts.TABLE_NAME_PARTS,   // The table to query
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -151,7 +144,7 @@ public class DbSinglePartsManager {
         while(cursor.moveToNext()) {
 
             long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(CreateTable.TableEntryMinifigs._ID));
+                    cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart._ID));
 
             if(itemId > endId) break;
 
@@ -172,10 +165,19 @@ public class DbSinglePartsManager {
         HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
 
         switch (columnType) {
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
-            case CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ELEMENT_ID_STRING:
-                throw new IllegalArgumentException("COLUMN_NAME_PARTS_ELEMENT_ID_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_SET_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_NUM_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_NAME_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_URL_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_IMG_URL_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+            case CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING:
+                throw new IllegalArgumentException("COLUMN_NAME_PART_PART_COLOR_STRING point into string values, columnType must point into integer type return values from database, change columnType on integer point type.");
+
         }
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -186,7 +188,7 @@ public class DbSinglePartsManager {
         };
 
         Cursor cursor = dbRead.query(
-                CreateTable.TableEntryParts.TABLE_NAME_PARTS,   // The table to query
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,         // The values for the WHERE clause

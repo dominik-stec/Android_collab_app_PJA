@@ -126,7 +126,7 @@ public final class CreateTable {
         public static final String COLUMN_NAME_PART_PART_CAT_ID_INTEGER = "part_cat_id";
         public static final String COLUMN_NAME_PART_PART_URL_STRING = "part_url";
         public static final String COLUMN_NAME_PART_PART_IMG_URL_STRING = "part_img_url";
-        public static final String COLUMN_NAME_PART_PART_COLOR_STRING = "name";
+        public static final String COLUMN_NAME_PART_PART_COLOR_STRING = "color_name";
 
     }
 
