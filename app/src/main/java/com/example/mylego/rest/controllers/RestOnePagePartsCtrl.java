@@ -43,16 +43,18 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
         call.enqueue(this);
     }
 
+    // cut maximum number of rest calls
+    public static int rest_limit_weight = 20;
 
     // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = 10;
+    public static int max_iter_num = RestOnePageBricksCtrl.to_insert_row_count / rest_limit_weight;
 
     // how fast REST should read data from API
-    public static int speed_rest_read = 2000;
+    public static int speed_rest_read = 500;
 
 
     // do not change
-    public static int to_insert_row_count = max_iter_num * 100;
+//    public static int to_insert_row_count = max_iter_num * 100;
     // do not change
     public static int counter = 0;
 
@@ -66,7 +68,7 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
         if(response.isSuccessful()) {
 
             //read all need data from rest
-            if(inc == max_iter_num){
+            if(inc >= max_iter_num){
                 return;
             }
 
@@ -78,6 +80,13 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
             String nextLink = response.body().getNext();
             String previousLink = response.body().getPrevious();
             int count = response.body().getCount();
+
+            //loop iteration speed
+            try{
+                Thread.sleep(speed_rest_read);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
 
             if(nextLink==null && previousLink==null && count==0) {
                 ++inc;
@@ -103,12 +112,7 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
                 String nextPage = nextPageRaw.substring(1);
                 int pageNum = Integer.parseInt(nextPage);
 
-                //loop iteration speed
-                try{
-                    Thread.sleep(speed_rest_read);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+
 
                 try{
                     setNum = setNumList.get(inc);
@@ -117,6 +121,7 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
                     return;
                 }
 
+//                --to_insert_row_count;
 
                 Call<PartsSets> callLoop = restApi.getPartsSetByBricksSetNumByPage(TOKEN_ACCESS_KEY, "application/json", setNum, pageNum);
                 callLoop.enqueue(this);

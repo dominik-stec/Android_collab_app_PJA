@@ -36,6 +36,8 @@ public class RestService extends IntentService {
 
     int count;
 
+    public static long totalProgress = 0;
+
     @Override
     protected void onHandleIntent(Intent intent) {
 
@@ -165,8 +167,8 @@ public class RestService extends IntentService {
 
                     ++RestOnePageMinifigsCtrl.counter;
 
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                    if (RestOnePageMinifigsCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePageMinifigsCtrl.counter / RestOnePageMinifigsCtrl.max_iter_num) * 100);
                         progressBar.putExtra("progressBarVal", 50+progress/2/3);
                         sendBroadcast(progressBar);
                     }
@@ -227,7 +229,6 @@ public class RestService extends IntentService {
                     db.setId(partsSingleSet.getId());
                     db.setInvPartId(partsSingleSet.getInvPartId());
                     db.setSetNum(partsSingleSet.getSetNum());
-                    db.setSetNum(partsSingleSet.getSetNum());
                     db.setQuantity(partsSingleSet.getQuantity());
                     db.setSpare(partsSingleSet.isSpare());
                     db.setElementId(partsSingleSet.getElementId());
@@ -237,8 +238,8 @@ public class RestService extends IntentService {
 
                     ++RestOnePagePartsCtrl.counter;
 
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
+                    if (RestOnePagePartsCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePagePartsCtrl.counter / RestOnePagePartsCtrl.max_iter_num) * 100);
                         progressBar.putExtra("progressBarVal", 67+progress/2/3);
                         sendBroadcast(progressBar);
                     }
@@ -314,9 +315,9 @@ public class RestService extends IntentService {
 
 
 
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", 84+progress/2/3);
+                    if (RestOnePageSinglePartsCtrl.counter % 100 == 0) {
+                        long progress = Math.round(((double) RestOnePageSinglePartsCtrl.counter / RestOnePageSinglePartsCtrl.max_iter_num) * 100);
+                        progressBar.putExtra("progressBarVal", 85+progress/2/3);
                         sendBroadcast(progressBar);
                     }
 
