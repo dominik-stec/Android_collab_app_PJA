@@ -9,6 +9,7 @@ import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbPartsManager;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.database.DbSinglePartsManager;
+import com.example.mylego.rest.controllers.RestLimiter;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
 import com.example.mylego.rest.controllers.RestOnePagePartsCtrl;
@@ -312,7 +313,12 @@ public class RestService extends IntentService {
 
                 }
 
-
+//                if(RestLimiter.limiter >= RestLimiter.rest_limit){
+//                    Intent rest = new Intent(getApplicationContext(), RestService.class);
+//                    stopService(rest);
+//                    //call.cancel();
+//                    return;
+//                }
 
 
                     if (RestOnePageSinglePartsCtrl.counter % 100 == 0) {

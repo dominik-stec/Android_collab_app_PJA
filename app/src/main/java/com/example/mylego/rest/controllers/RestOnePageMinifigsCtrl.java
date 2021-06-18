@@ -1,5 +1,6 @@
 package com.example.mylego.rest.controllers;
 
+import android.content.Intent;
 import android.util.Log;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
@@ -62,9 +63,11 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
         if(response.isSuccessful()) {
 
-
             //read all need data from rest
-            if(inc >= max_iter_num){
+            if(RestLimiter.limiter >= RestLimiter.rest_limit){
+                Intent rest = new Intent(RestService.getContext(), RestService.class);
+                RestService.getContext().stopService(rest);
+                call.cancel();
                 return;
             }
 

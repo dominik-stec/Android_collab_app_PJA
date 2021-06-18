@@ -1,5 +1,6 @@
 package com.example.mylego.rest.controllers;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.mylego.database.DbSetNumManager;
@@ -67,8 +68,11 @@ public class RestOnePagePartsCtrl extends RestCtrl implements Callback<PartsSets
 
         if(response.isSuccessful()) {
 
-            //read all need data from rest
-            if(inc >= max_iter_num){
+//            //read all need data from rest
+            if(RestLimiter.limiter >= RestLimiter.rest_limit){
+                Intent rest = new Intent(RestService.getContext(), RestService.class);
+                RestService.getContext().stopService(rest);
+                call.cancel();
                 return;
             }
 

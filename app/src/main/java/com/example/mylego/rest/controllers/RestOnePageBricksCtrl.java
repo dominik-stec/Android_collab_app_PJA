@@ -37,7 +37,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
 
     // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = 1;
+    public static int max_iter_num = 2;
 
     // how fast REST should read data from API
     public static int speed_rest_read = 500;
@@ -75,7 +75,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
 
                 //177 pages max for get full rest data
-                if(pageNum == max_iter_num){
+                if(pageNum > max_iter_num){
                     IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
                     return;
                 }

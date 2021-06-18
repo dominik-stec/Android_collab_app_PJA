@@ -1,7 +1,9 @@
 package com.example.mylego.rest.controllers;
 
+import android.content.Intent;
 import android.util.Log;
 
+import com.example.mylego.MainActivity;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.Part;
@@ -29,6 +31,8 @@ public class RestOnePageSinglePartsCtrl extends RestCtrl implements Callback<Par
 
     public RestOnePageSinglePartsCtrl(IFromRestCallback IFromRestCallback) {
 
+        ++RestLimiter.limiter;
+
         super.start();
 
         this.IFromRestCallback = IFromRestCallback;
@@ -43,10 +47,10 @@ public class RestOnePageSinglePartsCtrl extends RestCtrl implements Callback<Par
     }
 
     // cut maximum number of rest calls
-    public static int rest_limit_weight = 20;
+    public static int rest_limit_weight = 80;
 
     // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = RestOnePageBricksCtrl.to_insert_row_count / rest_limit_weight;
+    public static int max_iter_num = RestOnePageBricksCtrl.to_insert_row_count - rest_limit_weight;
 
     // how fast REST should read data from API
     public static int speed_rest_read = 500;
@@ -66,8 +70,12 @@ public class RestOnePageSinglePartsCtrl extends RestCtrl implements Callback<Par
 
         if(response.isSuccessful()) {
 
-            //read all need data from rest
-            if(inc >= max_iter_num){
+            ++RestLimiter.limiter;
+
+            if(RestLimiter.limiter >= RestLimiter.rest_limit){
+                Intent rest = new Intent(RestService.getContext(), RestService.class);
+                RestService.getContext().stopService(rest);
+                call.cancel();
                 return;
             }
 
@@ -105,6 +113,7 @@ public class RestOnePageSinglePartsCtrl extends RestCtrl implements Callback<Par
 
             if(nextLink != null) {
 
+
                 IFromRestCallback.onGetOnePageResultSinglePartsFromRestSuccess(partsSets.getResults());
 
                 String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
@@ -126,6 +135,8 @@ public class RestOnePageSinglePartsCtrl extends RestCtrl implements Callback<Par
                 callLoop.enqueue(this);
 
             } else if(nextLink == null && count!=0) {
+
+
                 IFromRestCallback.onGetOnePageResultSinglePartsFromRestSuccess(partsSets.getResults());
 
                 try{
