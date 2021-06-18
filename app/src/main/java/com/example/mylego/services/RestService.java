@@ -167,7 +167,7 @@ public class RestService extends IntentService {
 
                     if (RestOnePageBricksCtrl.counter % 100 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", 50+progress/3);
+                        progressBar.putExtra("progressBarVal", 50+progress/2/3);
                         sendBroadcast(progressBar);
                     }
 
@@ -239,7 +239,7 @@ public class RestService extends IntentService {
 
                     if (RestOnePageBricksCtrl.counter % 100 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", 50+progress/3);
+                        progressBar.putExtra("progressBarVal", 67+progress/2/3);
                         sendBroadcast(progressBar);
                     }
 
@@ -316,7 +316,7 @@ public class RestService extends IntentService {
 
                     if (RestOnePageBricksCtrl.counter % 100 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", 50+progress/3);
+                        progressBar.putExtra("progressBarVal", 84+progress/2/3);
                         sendBroadcast(progressBar);
                     }
 

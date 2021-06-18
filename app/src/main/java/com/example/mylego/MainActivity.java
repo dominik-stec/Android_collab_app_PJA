@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //                }
 
                 // should be progressBar==100 after all rest read implements
-                if(progressBar > 50) {
+                if(progressBar == 100) {
                     finish();
                 }
 
