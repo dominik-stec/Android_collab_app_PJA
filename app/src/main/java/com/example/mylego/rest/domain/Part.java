@@ -9,8 +9,6 @@ public class Part implements Serializable {
 
     Integer id;
 
-    @SerializedName("set_num")
-    @Expose
     String setNum;
 
     @SerializedName("part_num")
@@ -33,8 +31,6 @@ public class Part implements Serializable {
     @Expose
     String partImgUrl;
 
-    @SerializedName("color")
-    @Expose
     String partColor;
 
     public Integer getId() {

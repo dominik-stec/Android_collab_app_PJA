@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
+import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSets;
+import com.example.mylego.rest.domain.PartsSingleSet;
 import com.example.mylego.services.RestService;
 
 import java.util.ArrayList;

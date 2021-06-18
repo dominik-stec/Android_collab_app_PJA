@@ -23,7 +23,7 @@ public class PartsSingleSet implements Serializable {
     @Expose
     Color color = null;
 
-    @SerializedName("set_sum")
+    @SerializedName("set_num")
     @Expose
     String setNum;
 

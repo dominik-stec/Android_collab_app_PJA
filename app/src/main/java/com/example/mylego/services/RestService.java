@@ -260,7 +260,7 @@ public class RestService extends IntentService {
 
     public void startSinglePartsRest() {
 
-        new RestOnePagePartsCtrl(new IFromRestCallback() {
+        new RestOnePageSinglePartsCtrl(new IFromRestCallback() {
 
             @Override
             public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
@@ -286,16 +286,16 @@ public class RestService extends IntentService {
 
                 Intent progressBar = new Intent("progressBar");
 
-                //int count = value.length;
 
-                for (PartsSingleSet sng:
-                     value) {
+                int count = value.length;
 
-                    Part part = sng.getPart();
+                for (int i=0; i<count; i++) {
+
+                    Part part = value[i].getPart();
 
                     db.setId(part.getId());
 
-                    db.setSetNum(sng.getSetNum());
+                    db.setSetNum(value[i].getSetNum());
 
                     db.setPartNum(part.getPartNum());
                     db.setPartName(part.getPartName());
@@ -303,7 +303,7 @@ public class RestService extends IntentService {
                     db.setPartUrl(part.getPartUrl());
                     db.setPartImgUrl(part.getPartImgUrl());
 
-                    db.setPartColor(sng.getColor().getName());
+                    db.setPartColor(value[i].getColor().getName());
 
                     db.commitIntoDb();
 

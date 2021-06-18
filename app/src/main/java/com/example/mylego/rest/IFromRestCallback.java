@@ -2,6 +2,7 @@ package com.example.mylego.rest;
 
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
 
 public interface IFromRestCallback {
