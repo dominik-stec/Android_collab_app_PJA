@@ -71,7 +71,7 @@ public class DbSinglePartsManager {
         return newRowId;
     }
 
-    public ArrayList<PartsSingleSet> getPartsSingleSetBySetNum(String setNum) {
+    public ArrayList<Part> getSinglePartsBySetNum(String setNum) {
 
         ArrayList<PartsSingleSet> partsList = new ArrayList<>();
 

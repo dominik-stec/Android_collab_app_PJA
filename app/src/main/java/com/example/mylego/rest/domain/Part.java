@@ -7,13 +7,19 @@ import java.io.Serializable;
 
 public class Part implements Serializable {
 
+    Integer id;
+
+    @SerializedName("set_num")
+    @Expose
+    String setNum;
+
     @SerializedName("part_num")
     @Expose
     String partNum;
 
     @SerializedName("name")
     @Expose
-    String name;
+    String partName;
 
     @SerializedName("part_cat_id")
     @Expose
@@ -27,13 +33,25 @@ public class Part implements Serializable {
     @Expose
     String partImgUrl;
 
-    @SerializedName("external_ids")
+    @SerializedName("color")
     @Expose
-    ExternalIdsPart externalIds;
+    String partColor;
 
-    @SerializedName("print_of")
-    @Expose
-    String printOf;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getSetNum() {
+        return setNum;
+    }
+
+    public void setSetNum(String setNum) {
+        this.setNum = setNum;
+    }
 
     public String getPartNum() {
         return partNum;
@@ -43,12 +61,12 @@ public class Part implements Serializable {
         this.partNum = partNum;
     }
 
-    public String getName() {
-        return name;
+    public String getPartName() {
+        return partName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPartName(String partName) {
+        this.partName = partName;
     }
 
     public Integer getPartCatId() {
@@ -75,19 +93,11 @@ public class Part implements Serializable {
         this.partImgUrl = partImgUrl;
     }
 
-    public ExternalIdsPart getExternalIdsPart() {
-        return externalIds;
+    public String getPartColor() {
+        return partColor;
     }
 
-    public void setExternalIdsPart(ExternalIdsPart externalIdsPart) {
-        this.externalIds = externalIdsPart;
-    }
-
-    public String getPrintOf() {
-        return printOf;
-    }
-
-    public void setPrintOf(String printOf) {
-        this.printOf = printOf;
+    public void setPartColor(String partColor) {
+        this.partColor = partColor;
     }
 }
