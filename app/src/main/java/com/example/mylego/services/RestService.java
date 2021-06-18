@@ -3,7 +3,6 @@ package com.example.mylego.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbPartsManager;
@@ -19,7 +18,6 @@ import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
 import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
-
 import java.util.ArrayList;
 
 
@@ -36,8 +34,6 @@ public class RestService extends IntentService {
     }
 
     int count;
-
-    public static long totalProgress = 0;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -74,7 +70,6 @@ public class RestService extends IntentService {
 
                     ++RestOnePageBricksCtrl.counter;
 
-
                     if (RestOnePageBricksCtrl.counter % 25 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
                         progressBar.putExtra("progressBarVal", progress/2);
@@ -87,7 +82,7 @@ public class RestService extends IntentService {
 
                 }
 
-                // run minifigs rest after load sets data
+                // run other rests after load sets data
                 if(RestOnePageBricksCtrl.to_insert_row_count==RestOnePageBricksCtrl.counter) {
 
                     try{
@@ -143,8 +138,6 @@ public class RestService extends IntentService {
 
                 DbMinifigsManager db = new DbMinifigsManager(getApplicationContext());
 
-                Intent progressBar = new Intent("progressBar");
-
                 int count = value.length;
 
 
@@ -167,12 +160,6 @@ public class RestService extends IntentService {
                     db.commitIntoDb();
 
                     ++RestOnePageMinifigsCtrl.counter;
-
-//                    if (RestOnePageMinifigsCtrl.counter % 100 == 0) {
-//                        long progress = Math.round(((double) RestOnePageMinifigsCtrl.counter / RestOnePageMinifigsCtrl.max_iter_num) * 100);
-//                        progressBar.putExtra("progressBarVal", 50+progress/2/3);
-//                        sendBroadcast(progressBar);
-//                    }
 
                 }
 
@@ -212,18 +199,10 @@ public class RestService extends IntentService {
 
                 DbPartsManager db = new DbPartsManager(getApplicationContext());
 
-                Intent progressBar = new Intent("progressBar");
-
                 int count = value.length;
 
 
                 for (int i = 0; i < count; i++) {
-
-//                    DbSetNumManager dbSetNum = new DbSetNumManager(RestService.getContext());
-//                    ArrayList<String> setNumList = dbSetNum.selectAllQueries();
-//                    String setNum = setNumList.get(RestOnePagePartsCtrl.counter);
-//
-//                    db.setSetNum(setNum);
 
                     PartsSingleSet partsSingleSet = value[i];
 
@@ -238,12 +217,6 @@ public class RestService extends IntentService {
                     db.commitIntoDb();
 
                     ++RestOnePagePartsCtrl.counter;
-
-//                    if (RestOnePagePartsCtrl.counter % 100 == 0) {
-//                        long progress = Math.round(((double) RestOnePagePartsCtrl.counter / RestOnePagePartsCtrl.max_iter_num) * 100);
-//                        progressBar.putExtra("progressBarVal", 67+progress/2/3);
-//                        sendBroadcast(progressBar);
-//                    }
 
                 }
 
@@ -312,14 +285,6 @@ public class RestService extends IntentService {
                     ++RestOnePageSinglePartsCtrl.counter;
 
                 }
-
-//                if(RestLimiter.limiter >= RestLimiter.rest_limit){
-//                    Intent rest = new Intent(getApplicationContext(), RestService.class);
-//                    stopService(rest);
-//                    //call.cancel();
-//                    return;
-//                }
-
 
                     if (RestLimiter.limiter % 2 == 0) {
                         long progress = Math.round(((double) RestLimiter.limiter / RestLimiter.rest_limit) * 100);

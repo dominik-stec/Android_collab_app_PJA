@@ -5,18 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
-import com.example.mylego.rest.domain.BrickLink;
-import com.example.mylego.rest.domain.BrickOwl;
-import com.example.mylego.rest.domain.Color;
-import com.example.mylego.rest.domain.ExternalIdsColor;
-import com.example.mylego.rest.domain.ExternalIdsPart;
-import com.example.mylego.rest.domain.LDraw;
-import com.example.mylego.rest.domain.Lego;
 import com.example.mylego.rest.domain.Part;
-import com.example.mylego.rest.domain.PartsSingleSet;
-import com.example.mylego.rest.domain.Peeron;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

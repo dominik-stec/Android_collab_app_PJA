@@ -1,17 +1,12 @@
 package com.example.mylego.ui.sets;
 
 import android.app.Application;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
-
 import java.util.HashMap;
 import java.util.Map;
 

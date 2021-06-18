@@ -5,7 +5,6 @@ import android.util.Log;
 import com.example.mylego.database.DbSetNumManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSets;
-import com.example.mylego.rest.domain.MinifigsSingleSet;
 import com.example.mylego.services.RestService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,21 +38,14 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
         call.enqueue(this);
     }
 
-    // cut maximum number of rest calls
-    public static int rest_limit_weight = 20;
-
-    // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = RestOnePageBricksCtrl.to_insert_row_count / rest_limit_weight;
 
     // how fast REST should read data from API
     public static int speed_rest_read = 500;
 
 
     // do not change
-//    public static int to_insert_row_count = max_iter_num * 100;
-    // do not change
     public static int counter = 0;
-
+    // do not change
     public static int inc = 1;
 
     String setNum = "";
@@ -63,15 +55,13 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
 
         if(response.isSuccessful()) {
 
-            //read all need data from rest
+            //limit data
             if(RestLimiter.limiter >= RestLimiter.rest_limit){
                 Intent rest = new Intent(RestService.getContext(), RestService.class);
                 RestService.getContext().stopService(rest);
                 call.cancel();
                 return;
             }
-
-            HashMap<Long, String> setNumMap = new HashMap<>();
 
             minifigsSets.setResults(response.body().getResults());
 
@@ -91,7 +81,6 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
                 String nextPageRaw = nextLink.replaceAll("[^0-9]", "");
                 String nextPage = nextPageRaw.substring(1);
                 int pageNum = Integer.parseInt(nextPage);
-
 
 
                 try{
@@ -133,10 +122,6 @@ public class RestOnePageMinifigsCtrl extends RestCtrl implements Callback<Minifi
     public void onFailure(Call<MinifigsSets> call, Throwable t) {
         Log.e("REST error one page","onFailure method error one page read for MinifigsSets");
         t.printStackTrace();
-    }
-
-    public MinifigsSingleSet[] getOnePageSetList() {
-        return minifigsSets.getResults();
     }
 
 }

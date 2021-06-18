@@ -31,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Initilise Database: " + progressBar + " %", Toast.LENGTH_SHORT).show();
 
-//                if(progressBar == 100) {
-//                    finish();
-//                }
-
-                // should be progressBar==100 after all rest read implements
                 if(progressBar == 100) {
                     finish();
                 }
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         rest = new Intent(this, RestService.class);
 
         startService(rest);
-
     }
 
     @Override

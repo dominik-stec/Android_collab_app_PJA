@@ -5,7 +5,6 @@ import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
-import com.example.mylego.rest.domain.BricksSingleSet;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.Call;
@@ -57,7 +56,7 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
             String nextLink = response.body().getNext();
 
-            //177 loop iteration for get full rest data
+            //177 callback-loop iteration for get full rest data
             try{
                 Thread.sleep(speed_rest_read);
             } catch(InterruptedException e) {
@@ -100,10 +99,6 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
     public void onFailure(Call<BricksSets> call, Throwable t) {
         Log.e("REST error one page","onFailure method error one page read");
         t.printStackTrace();
-    }
-
-    public BricksSingleSet[] getOnePageBricksList() {
-        return bricksSets.getResults();
     }
 
     public boolean isDatabaseEmpty() {
