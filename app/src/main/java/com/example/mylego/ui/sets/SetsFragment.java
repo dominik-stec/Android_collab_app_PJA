@@ -34,21 +34,10 @@ public class SetsFragment extends Fragment {
 
         // Add example list
         ArrayList<SetsSingleItem> exampleList = new ArrayList<>();
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 1", "Line 2"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 3", "Line 4"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 5", "Line 6"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 7", "Line 8"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 9", "Line 10"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 11", "Line 12"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 13", "Line 14"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 15", "Line 16"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 17", "Line 18"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 19", "Line 20"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 21", "Line 22"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 23", "Line 24"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 25", "Line 26"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 27", "Line 28"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "Line 29", "Line 30"));
+        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295 Porsche 911", "2021", "1458"));
+        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10281 Bonsai Tree", "2021", "878"));
+        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10289 Bird of Paradise", "2021", "1173"));
+        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10280 Flower Bouquet", "2021", "756"));
 
 
         setsViewModel =

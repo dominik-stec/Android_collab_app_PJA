@@ -12,4 +12,10 @@
     <string name="my_sets_owned">Amount of owned sets</string>
     <string name="btn_show">Show list</string>
     <string name="example_number">12</string>
+    <string name="set_num">setNum + setName</string>
+    <string name="set_year">setYear</string>
+    <string name="set_num_parts">setNumParts</string>
+    <string name="btn_add_to_wishlist">Add to wishlist</string>
+    <string name="btn_add_to_my_collection">Add to my collection</string>
+    <string name="img_description">set image</string>
 </resources>

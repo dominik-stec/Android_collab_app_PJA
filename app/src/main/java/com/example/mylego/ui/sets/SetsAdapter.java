@@ -18,13 +18,15 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHol
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
+        public TextView mSetNumAndSetNameTextView;
+        public TextView mSetYearTextView;
+        public TextView mSetNumPartsTextView;
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
+            mSetNumAndSetNameTextView = itemView.findViewById(R.id.set_num_and_set_name);
+            mSetYearTextView = itemView.findViewById(R.id.set_year);
+            mSetNumPartsTextView = itemView.findViewById(R.id.set_num_parts);
         }
     }
     public SetsAdapter(ArrayList<SetsSingleItem> exampleList) {
@@ -41,8 +43,9 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHol
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         SetsSingleItem currentItem = mExampleList.get(position);
         holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+        holder.mSetNumAndSetNameTextView.setText(currentItem.getSetNumAndSetName());
+        holder.mSetYearTextView.setText(currentItem.getSetYear());
+        holder.mSetNumPartsTextView.setText(currentItem.getSetNumParts());
     }
     @Override
     public int getItemCount() {

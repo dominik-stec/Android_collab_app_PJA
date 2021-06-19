@@ -10,7 +10,7 @@ public class SetsViewModel extends ViewModel {
 
     public SetsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is sets fragment");
+        mText.setValue("Search sets");
     }
 
     public LiveData<String> getText() {
