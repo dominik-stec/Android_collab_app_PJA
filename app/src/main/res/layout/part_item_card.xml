@@ -20,46 +20,38 @@
             android:padding="2dp" />
 
         <TextView
-            android:id="@+id/set_num_and_set_name"
+            android:id="@+id/part_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="44dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/imageView"
-            android:text="@string/set_num"
+            android:text="@string/part_num"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/set_year"
+            android:id="@+id/part_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/set_num_and_set_name"
+            android:layout_below="@id/part_num"
             android:layout_marginStart="47dp"
             android:layout_marginTop="9dp"
             android:layout_toEndOf="@+id/imageView"
-            android:text="@string/set_year"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/set_num_parts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="65dp"
-            android:layout_toEndOf="@id/imageView"
-            android:text="@string/set_num_parts" />
+            android:text="@string/part_name"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_add_to_wishlist"
             android:layout_width="119dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="91dp"
             android:text="@string/btn_add_to_wishlist"
-            tools:layout_toEndOf="@id/set_num_and_set_name" />
+            tools:layout_toEndOf="@id/part_name" />
 
         <Button
             android:id="@+id/btn_add_to_collection"

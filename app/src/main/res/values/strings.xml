@@ -18,4 +18,6 @@
     <string name="btn_add_to_wishlist">Add to wishlist</string>
     <string name="btn_add_to_my_collection">Add to my collection</string>
     <string name="img_description">set image</string>
+    <string name="part_num">part Num</string>
+    <string name="part_name">part Name</string>
 </resources>

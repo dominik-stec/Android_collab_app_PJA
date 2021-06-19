@@ -10,7 +10,7 @@ public class PartsViewModel extends ViewModel {
 
     public PartsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is parts fragment");
+        mText.setValue("Search parts");
     }
 
     public LiveData<String> getText() {
