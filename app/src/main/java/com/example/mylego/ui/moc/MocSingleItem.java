@@ -17,7 +17,7 @@ public class MocSingleItem {
     public String getMocName() {
         return mMocName;
     }
-    public String getmMocPartsNumber() {
+    public String getMocPartsNumber() {
         return mMocPartsNumber;
     }
 
