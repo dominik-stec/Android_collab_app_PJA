@@ -29,31 +29,64 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/header_my_parts"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/owned_parts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/owned_parts" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wanted_sets"
         android:layout_width="203dp"
         android:layout_height="182dp"
         android:layout_marginStart="33dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="45dp"
-        android:layout_marginBottom="29dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/text_my_collection2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/owned_sets"
         app:layout_constraintTop_toBottomOf="@+id/text_my_collection">
+
+        <TextView
+            android:id="@+id/title_wanted_sets_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:text="@string/my_sets_wishlist"
+            app:layout_constraintBottom_toTopOf="@+id/text_wanted_sets_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_wanted_sets_number"
+            android:layout_width="38dp"
+            android:layout_height="39dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/example_number"
+            app:layout_constraintBottom_toTopOf="@+id/btn_show_wanted_sets"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_wanted_sets_number" />
+
+        <Button
+            android:id="@+id/btn_show_wanted_sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/btn_show"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_wanted_sets_number" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/owned_sets"
         android:layout_width="228dp"
         android:layout_height="199dp"
         android:layout_marginStart="16dp"
@@ -64,7 +97,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_my_collection">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/title_sets_number"
             android:layout_width="130dp"
             android:layout_height="51dp"
             android:layout_marginStart="85dp"
@@ -74,13 +107,13 @@
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/text_sets_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_show_owned_sets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="67dp"
@@ -89,35 +122,110 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/text_sets_number" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/text_sets_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="81dp"
             android:layout_marginEnd="89dp"
             android:text="@string/example_number"
             android:textSize="48sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/btn_show_owned_sets"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/title_sets_number" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="399dp"
-        android:layout_height="270dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginEnd="31dp"
+        android:id="@+id/owned_parts"
+        android:layout_width="215dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="20dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_my_collection2">
 
+        <TextView
+            android:id="@+id/title_owned_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_parts_owned"
+            app:layout_constraintBottom_toTopOf="@+id/text_owned_parts_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_owned_parts_number"
+            android:layout_width="46dp"
+            android:layout_height="40dp"
+            android:text="@string/example_number"
+            app:layout_constraintBottom_toTopOf="@+id/btn_show_owned_parts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_owned_parts" />
+
+        <Button
+            android:id="@+id/btn_show_owned_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="62dp"
+            android:layout_marginEnd="37dp"
+            android:text="@string/btn_show"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_owned_parts_number" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wanted_parts"
+        android:layout_width="219dp"
+        android:layout_height="206dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="286dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toEndOf="@+id/owned_parts"
+        app:layout_constraintTop_toBottomOf="@+id/text_my_collection2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/title_wanted_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_parts_wishlist"
+            app:layout_constraintBottom_toTopOf="@+id/text_wanted_parts_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_wanted_parts_number"
+            android:layout_width="46dp"
+            android:layout_height="45dp"
+            android:text="@string/example_number"
+            app:layout_constraintBottom_toTopOf="@+id/btn_show_wanted_parts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_wanted_parts" />
+
+        <Button
+            android:id="@+id/btn_show_wanted_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_show"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_wanted_parts_number" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
