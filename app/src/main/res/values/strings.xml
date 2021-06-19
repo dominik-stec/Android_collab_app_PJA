@@ -23,4 +23,8 @@
     <string name="my_parts_owned">Amount of owned sets</string>
     <string name="my_parts_wishlist">Number of parts on wishlist</string>
     <string name="btn_create_moc">Create new MOC</string>
+    <string name="btn_moc_edit">Edit</string>
+    <string name="btn_moc_remove">Remove</string>
+    <string name="moc_name">My MOC name</string>
+    <string name="moc_parts_num">My MOC parts number</string>
 </resources>
