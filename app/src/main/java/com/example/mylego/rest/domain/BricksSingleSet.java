@@ -6,10 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class BricksSingleSet implements Serializable {
+    @SerializedName("_id")
+    @Expose
+    long _id;
 
     @SerializedName("set_num")
     @Expose
-    String setNum;
+    String set_number;
 
     @SerializedName("name")
     @Expose
@@ -21,30 +24,48 @@ public class BricksSingleSet implements Serializable {
 
     @SerializedName("theme_id")
     @Expose
-    int themeId;
+    int theme_id;
 
     @SerializedName("num_parts")
     @Expose
-    int numParts;
+    int number_of_parts;
 
     @SerializedName("set_img_url")
     @Expose
-    String setImgUrl;
+    String image_url;
 
     @SerializedName("set_url")
     @Expose
-    String setUrl;
+    String set_url;
 
     @SerializedName("last_modified_dt")
     @Expose
-    String lastModifiedDt;
+    String modification_date;
 
-    public String getSetNum() {
-        return setNum;
+    public BricksSingleSet() { }
+
+    public BricksSingleSet(long id, String setNum, String name, int year, int themeId, int numParts, String setImgUrl, String setUrl, String lastModifiedDt) {
+        this._id = id;
+        this.set_number = setNum;
+        this.name = name;
+        this.year = year;
+        this.theme_id = themeId;
+        this.number_of_parts = numParts;
+        this.image_url = setImgUrl;
+        this.set_url = setUrl;
+        this.modification_date = lastModifiedDt;
     }
 
-    public void setSetNum(String setNum) {
-        this.setNum = setNum;
+    public long get_id() { return _id; }
+
+    public void set_id(long _id) { this._id = _id; }
+
+    public String getSet_number() {
+        return set_number;
+    }
+
+    public void setSet_number(String setNum) {
+        this.set_number = setNum;
     }
 
     public String getName() {
@@ -63,43 +84,43 @@ public class BricksSingleSet implements Serializable {
         this.year = year;
     }
 
-    public int getThemeId() {
-        return themeId;
+    public int getTheme_id() {
+        return theme_id;
     }
 
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
+    public void setTheme_id(int themeId) {
+        this.theme_id = themeId;
     }
 
-    public int getNumParts() {
-        return numParts;
+    public int getNumber_of_parts() {
+        return number_of_parts;
     }
 
-    public void setNumParts(int numParts) {
-        this.numParts = numParts;
+    public void setNumber_of_parts(int numParts) {
+        this.number_of_parts = numParts;
     }
 
-    public String getSetImgUrl() {
-        return setImgUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setSetImgUrl(String setImgUrl) {
-        this.setImgUrl = setImgUrl;
+    public void setImage_url(String setImgUrl) {
+        this.image_url = setImgUrl;
     }
 
-    public String getSetUrl() {
-        return setUrl;
+    public String getSet_url() {
+        return set_url;
     }
 
-    public void setSetUrl(String setUrl) {
-        this.setUrl = setUrl;
+    public void setSet_url(String setUrl) {
+        this.set_url = setUrl;
     }
 
-    public String getLastModifiedDt() {
-        return lastModifiedDt;
+    public String getModification_date() {
+        return modification_date;
     }
 
-    public void setLastModifiedDt(String lastModifiedDt) {
-        this.lastModifiedDt = lastModifiedDt;
+    public void setModification_date(String lastModifiedDt) {
+        this.modification_date = lastModifiedDt;
     }
 }

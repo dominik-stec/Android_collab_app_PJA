@@ -3,7 +3,7 @@ package com.example.mylego.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbSetNumManager;
@@ -51,14 +51,14 @@ public class RestService extends IntentService {
 
                     BricksSingleSet bricksSingleSets = value[i];
 
-                    db.setSetNumber(bricksSingleSets.getSetNum());
+                    db.setSetNumber(bricksSingleSets.getSet_number());
                     db.setName(bricksSingleSets.getName());
                     db.setYear(bricksSingleSets.getYear());
-                    db.setThemeId(bricksSingleSets.getThemeId());
-                    db.setNumberOfParts(bricksSingleSets.getNumParts());
-                    db.setImageUrl(bricksSingleSets.getSetImgUrl());
-                    db.setSetUrl(bricksSingleSets.getSetUrl());
-                    db.setModificationDate(bricksSingleSets.getLastModifiedDt());
+                    db.setThemeId(bricksSingleSets.getTheme_id());
+                    db.setNumberOfParts(bricksSingleSets.getNumber_of_parts());
+                    db.setImageUrl(bricksSingleSets.getImage_url());
+                    db.setSetUrl(bricksSingleSets.getSet_url());
+                    db.setModificationDate(bricksSingleSets.getModification_date());
 
                     db.commitIntoDb();
 
@@ -72,7 +72,7 @@ public class RestService extends IntentService {
                     }
 
                     //fill set_num database table
-                    dbSetNum.setSetNum(bricksSingleSets.getSetNum());
+                    dbSetNum.setSetNum(bricksSingleSets.getSet_number());
                     dbSetNum.commitIntoDb();
 
                 }
