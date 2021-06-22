@@ -42,8 +42,8 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHol
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         SetsSingleItem currentItem = mExampleList.get(position);
-        holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mSetNumAndSetNameTextView.setText(currentItem.getSetNumAndSetName());
+        //holder.mImageView.setImageResource(currentItem.getImageResource());
+        holder.mSetNumAndSetNameTextView.setText(String.format("%s %s", currentItem.getSetNum(), currentItem.getSetName()));
         holder.mSetYearTextView.setText(currentItem.getSetYear());
         holder.mSetNumPartsTextView.setText(currentItem.getSetNumParts());
     }

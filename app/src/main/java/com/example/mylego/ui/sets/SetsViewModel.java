@@ -44,10 +44,18 @@ public class SetsViewModel extends AndroidViewModel {
         return mText;
     }
 
-    public BricksSingleSet getBrickSingleSetBySetNum(String setNumber) {
-        return _setsFromDbSearch
-                .stream()
-                .filter(set -> set.getSet_number().equals(setNumber))
-                .collect(Collectors.toList()).get(0);
+    public ArrayList<BricksSingleSet> getSetsFromDbSearch() {
+        return this._setsFromDbSearch;
     }
+
+    public ArrayList<BricksSingleSet> getAllSetsFromDb() {
+        return this._setsFromDbAll;
+    }
+
+//    public BricksSingleSet getBrickSingleSetBySetNum(String setNumber) {
+//        return _setsFromDbSearch
+//                .stream()
+//                .filter(set -> set.getSet_number().equals(setNumber))
+//                .collect(Collectors.toList()).get(0);
+//    }
 }

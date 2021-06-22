@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylego.databinding.FragmentSetsBinding;
 import com.example.mylego.R;
+import com.example.mylego.rest.domain.BricksSingleSet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -28,28 +29,20 @@ public class SetsFragment extends Fragment {
     private SetsViewModel _setsViewModel;
     private FragmentSetsBinding _binding;
 
-    //private ArrayList<Map<String, String>> _setsFromDbSearch;
-
     // Add RecyclerView
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private ArrayList<BricksSingleSet> _allSetsFromDb;
 
-        //_setsFromDbSearch = _setsViewModel.setsFromDbSearch;
-
-        // Add example list
-        ArrayList<SetsSingleItem> exampleList = new ArrayList<>();
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295 Porsche 911", "2021", "1458"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10281 Bonsai Tree", "2021", "878"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10289 Bird of Paradise", "2021", "1173"));
-        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10280 Flower Bouquet", "2021", "756"));
-
-
-        setsViewModel =
-                new ViewModelProvider(this).get(SetsViewModel.class);
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        _setsViewModel = new ViewModelProvider(this).get(SetsViewModel.class);
+        _allSetsFromDb = _setsViewModel.getAllSetsFromDb();
 
         _binding = FragmentSetsBinding.inflate(inflater, container, false);
         View root = _binding.getRoot();
@@ -63,6 +56,17 @@ public class SetsFragment extends Fragment {
             }
         });
 
+        // Add example list
+        ArrayList<SetsSingleItem> exampleList = new ArrayList<>();
+//        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295", "Porsche 911", "2021", "1458"));
+//        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10281", "Bonsai Tree","2021", "878"));
+//        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10289", "Bird of Paradise","2021", "1173"));
+//        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10280", "Flower Bouquet","2021", "756"));
+
+        for (BricksSingleSet singleSet : _allSetsFromDb) {
+            exampleList.add(bricksSingleSetAdapter(singleSet));
+        }
+
         // Create RecyclerView
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -72,7 +76,6 @@ public class SetsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return root;
-
     }
 
     @Override
@@ -84,6 +87,16 @@ public class SetsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         _binding = null;
+    }
+
+    public SetsSingleItem bricksSingleSetAdapter(BricksSingleSet singleSet) {
+        SetsSingleItem result = new SetsSingleItem();
+        result.setSetNum(singleSet.getSet_number());
+        result.setSetName(singleSet.getName());
+        result.setSetYear(String.valueOf(singleSet.getYear()));
+        result.setImageResource(singleSet.getImage_url());
+
+        return result;
     }
 
 //    public void searchForSetBySetName(String name) {
