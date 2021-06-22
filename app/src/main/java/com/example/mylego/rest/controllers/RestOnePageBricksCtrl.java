@@ -5,7 +5,6 @@ import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.BricksSets;
-import com.example.mylego.rest.domain.BricksSingleSet;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.Call;
@@ -37,10 +36,10 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
 
     // number of rest iteration -> 1 iteration == 100 Bricks sets read from API
-    public static int max_iter_num = 3;
+    public static int max_iter_num = 2;
 
     // how fast REST should read data from API
-    public static int speed_rest_read = 2000;
+    public static int speed_rest_read = 500;
 
 
     // do not change
@@ -57,6 +56,13 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
 
             String nextLink = response.body().getNext();
 
+            //177 callback-loop iteration for get full rest data
+            try{
+                Thread.sleep(speed_rest_read);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
             if(nextLink != null) {
 
                 IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
@@ -65,15 +71,10 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
                 String nextPage = nextPageRaw.substring(1);
                 int pageNum = Integer.parseInt(nextPage);
 
-                //177 loop iteration for get full rest data
-                try{
-                    Thread.sleep(speed_rest_read);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+
 
                 //177 pages max for get full rest data
-                if(pageNum == max_iter_num){
+                if(pageNum > max_iter_num){
                     IFromRestCallback.onGetOnePageResultFromRestSuccess(bricksSets.getResults());
                     return;
                 }
@@ -98,10 +99,6 @@ public class RestOnePageBricksCtrl extends RestCtrl implements Callback<BricksSe
     public void onFailure(Call<BricksSets> call, Throwable t) {
         Log.e("REST error one page","onFailure method error one page read");
         t.printStackTrace();
-    }
-
-    public BricksSingleSet[] getOnePageBricksList() {
-        return bricksSets.getResults();
     }
 
     public boolean isDatabaseEmpty() {

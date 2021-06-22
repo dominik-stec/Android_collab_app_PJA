@@ -27,16 +27,11 @@ public class MainActivity extends AppCompatActivity {
             if (bundle != null) {
 
                 progressBar = (long)bundle.get("progressBarVal");
-                if(progressBar > 100) progressBar = 100;
+                if(progressBar > 80) progressBar = 100;
 
-                Toast.makeText(getApplicationContext(), "Initilise Database: " + progressBar + " %", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Initilise Database: " + progressBar + " %", Toast.LENGTH_SHORT).show();
 
-//                if(progressBar == 100) {
-//                    finish();
-//                }
-
-                // should be progressBar==100 after all rest read implements
-                if(progressBar > 50) {
+                if(progressBar == 100) {
                     finish();
                 }
 
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         rest = new Intent(this, RestService.class);
 
         startService(rest);
-
     }
 
     @Override

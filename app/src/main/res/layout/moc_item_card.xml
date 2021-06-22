@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="91dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/img_description"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/moc_set_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@string/moc_name"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/moc_parts_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="65dp"
+            android:layout_toEndOf="@id/imageView"
+            android:text="@string/moc_parts_num" />
+
+        <Button
+            android:id="@+id/btn_moc_delete"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="88dp"
+            android:text="@string/btn_moc_remove"
+            tools:layout_toEndOf="@id/moc_set_name" />
+
+        <Button
+            android:id="@+id/btn_moc_edit"
+            android:layout_width="136dp"
+            android:layout_height="52dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="91dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@string/btn_moc_edit" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="91dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/img_description"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/set_num_and_set_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@string/set_num"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/set_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/set_num_and_set_name"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@string/set_year"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/set_num_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="65dp"
+            android:layout_toEndOf="@id/imageView"
+            android:text="@string/set_num_parts" />
+
+        <Button
+            android:id="@+id/btn_add_to_wishlist"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="88dp"
+            android:text="@string/btn_add_to_wishlist"
+            tools:layout_toEndOf="@id/set_num_and_set_name" />
+
+        <Button
+            android:id="@+id/btn_add_to_collection"
+            android:layout_width="136dp"
+            android:layout_height="52dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="91dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="@string/btn_add_to_my_collection" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

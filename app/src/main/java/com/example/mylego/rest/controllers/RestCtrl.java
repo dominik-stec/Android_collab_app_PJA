@@ -1,13 +1,10 @@
 package com.example.mylego.rest.controllers;
 
 import android.app.Application;
-
 import com.example.mylego.rest.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

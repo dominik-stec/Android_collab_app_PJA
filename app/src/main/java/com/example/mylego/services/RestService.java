@@ -3,15 +3,21 @@ package com.example.mylego.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
+import com.example.mylego.database.DbPartsManager;
 import com.example.mylego.database.DbSetNumManager;
+import com.example.mylego.database.DbSinglePartsManager;
+import com.example.mylego.rest.controllers.RestLimiter;
 import com.example.mylego.rest.controllers.RestOnePageBricksCtrl;
 import com.example.mylego.rest.controllers.RestOnePageMinifigsCtrl;
+import com.example.mylego.rest.controllers.RestOnePagePartsCtrl;
+import com.example.mylego.rest.controllers.RestOnePageSinglePartsCtrl;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.IFromRestCallback;
 import com.example.mylego.rest.domain.MinifigsSingleSet;
+import com.example.mylego.rest.domain.Part;
+import com.example.mylego.rest.domain.PartsSingleSet;
 import java.util.ArrayList;
 
 
@@ -64,8 +70,7 @@ public class RestService extends IntentService {
 
                     ++RestOnePageBricksCtrl.counter;
 
-
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
+                    if (RestOnePageBricksCtrl.counter % 25 == 0) {
                         long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
                         progressBar.putExtra("progressBarVal", progress/2);
                         sendBroadcast(progressBar);
@@ -77,7 +82,7 @@ public class RestService extends IntentService {
 
                 }
 
-                // run minifigs rest after load sets data
+                // run other rests after load sets data
                 if(RestOnePageBricksCtrl.to_insert_row_count==RestOnePageBricksCtrl.counter) {
 
                     try{
@@ -87,12 +92,24 @@ public class RestService extends IntentService {
                     }
 
                     startMinifigsRest();
+                    startPartsRest();
+                    startSinglePartsRest();
                 }
 
             }
 
             @Override
             public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
 
             }
 
@@ -121,8 +138,6 @@ public class RestService extends IntentService {
 
                 DbMinifigsManager db = new DbMinifigsManager(getApplicationContext());
 
-                Intent progressBar = new Intent("progressBar");
-
                 int count = value.length;
 
 
@@ -146,16 +161,144 @@ public class RestService extends IntentService {
 
                     ++RestOnePageMinifigsCtrl.counter;
 
-                    if (RestOnePageBricksCtrl.counter % 100 == 0) {
-                        long progress = Math.round(((double) RestOnePageBricksCtrl.counter / RestOnePageBricksCtrl.to_insert_row_count) * 100);
-                        progressBar.putExtra("progressBarVal", 50+progress/3);
-                        sendBroadcast(progressBar);
-                    }
-
                 }
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
 
             }
 
         });
     }
+
+    public void startPartsRest() {
+
+        new RestOnePagePartsCtrl(new IFromRestCallback() {
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+                context = getApplicationContext();
+
+                DbPartsManager db = new DbPartsManager(getApplicationContext());
+
+                int count = value.length;
+
+
+                for (int i = 0; i < count; i++) {
+
+                    PartsSingleSet partsSingleSet = value[i];
+
+                    db.setId(partsSingleSet.getId());
+                    db.setInvPartId(partsSingleSet.getInvPartId());
+                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setQuantity(partsSingleSet.getQuantity());
+                    db.setSpare(partsSingleSet.isSpare());
+                    db.setElementId(partsSingleSet.getElementId());
+                    db.setNumSets(partsSingleSet.getNumSets());
+
+                    db.commitIntoDb();
+
+                    ++RestOnePagePartsCtrl.counter;
+
+                }
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+        });
+
+
+    }
+
+
+    public void startSinglePartsRest() {
+
+        new RestOnePageSinglePartsCtrl(new IFromRestCallback() {
+
+            @Override
+            public void onGetOnePageResultFromRestSuccess(BricksSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultMinifigsFromRestSuccess(MinifigsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultPartsFromRestSuccess(PartsSingleSet[] value) {
+
+            }
+
+            @Override
+            public void onGetOnePageResultSinglePartsFromRestSuccess(PartsSingleSet[] value) {
+
+                context = getApplicationContext();
+
+                DbSinglePartsManager db = new DbSinglePartsManager(getApplicationContext());
+
+                Intent progressBar = new Intent("progressBar");
+
+
+                int count = value.length;
+
+                for (int i=0; i<count; i++) {
+
+                    Part part = value[i].getPart();
+
+                    db.setId(part.getId());
+
+                    db.setSetNum(value[i].getSetNum());
+
+                    db.setPartNum(part.getPartNum());
+                    db.setPartName(part.getPartName());
+                    db.setPartCatId(part.getPartCatId());
+                    db.setPartUrl(part.getPartUrl());
+                    db.setPartImgUrl(part.getPartImgUrl());
+
+                    db.setPartColor(value[i].getColor().getName());
+
+                    db.commitIntoDb();
+
+                    ++RestOnePageSinglePartsCtrl.counter;
+
+                }
+
+                    if (RestLimiter.limiter % 2 == 0) {
+                        long progress = Math.round(((double) RestLimiter.limiter / RestLimiter.rest_limit) * 100);
+                        progressBar.putExtra("progressBarVal", 50+progress/2);
+                        sendBroadcast(progressBar);
+                    }
+
+                }
+
+        });
+
+
+    }
+
+
+
 }

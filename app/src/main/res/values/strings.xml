@@ -6,4 +6,25 @@
     <string name="title_parts">Parts</string>
     <string name="title_my_collection">My Collection</string>
     <string name="title_moc">MOC</string>
+    <string name="header_my_sets">My Sets</string>
+    <string name="header_my_parts">My Parts</string>
+    <string name="my_sets_wishlist">Number of sets on wishlist</string>
+    <string name="my_sets_owned">Amount of owned sets</string>
+    <string name="btn_show">Show list</string>
+    <string name="example_number">12</string>
+    <string name="set_num">setNum + setName</string>
+    <string name="set_year">setYear</string>
+    <string name="set_num_parts">setNumParts</string>
+    <string name="btn_add_to_wishlist">Add to wishlist</string>
+    <string name="btn_add_to_my_collection">Add to my collection</string>
+    <string name="img_description">set image</string>
+    <string name="part_num">part Num</string>
+    <string name="part_name">part Name</string>
+    <string name="my_parts_owned">Amount of owned sets</string>
+    <string name="my_parts_wishlist">Number of parts on wishlist</string>
+    <string name="btn_create_moc">Create new MOC</string>
+    <string name="btn_moc_edit">Edit</string>
+    <string name="btn_moc_remove">Remove</string>
+    <string name="moc_name">My MOC name</string>
+    <string name="moc_parts_num">My MOC parts number</string>
 </resources>
