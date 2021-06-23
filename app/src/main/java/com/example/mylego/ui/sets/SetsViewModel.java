@@ -1,6 +1,7 @@
 package com.example.mylego.ui.sets;
 
 import android.app.Application;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -20,6 +21,7 @@ import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.domain.BricksSingleSet;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -61,17 +63,12 @@ public class SetsViewModel extends AndroidViewModel {
         //_setsFromDbSearch = db.getSetsByName("Gears");
         _setsFromDbAll = db.getAllSets(50);
 
-//        if (_setsFromDbAll.size() == 50) {
+        if (_setsFromDbAll.size() == 50) {
+            loadSetsImages();
 //            Log.d("SetsView-dbEntries", "50 entries from db");
-//            ArrayList<URL> urlsList = new ArrayList<>();
-//            for (BricksSingleSet singleSet : _setsFromDbAll) {
-//                Log.d("SetsView-dbEntries", String.format("Adding URL: %s", singleSet.getImage_url()));
-//                urlsList.add(stringToURL(singleSet.getImage_url()));
-//            }
-//            URL[] urls = new URL[ urlsList.size() ];
-//            urlsList.toArray(urls);
-//            new AsyncImageDownload().execute(urls);
-//        }
+//
+            //new AsyncImageDownload().execute(urls);
+        }
     }
 
 //    public LiveData<ArrayList<ImageView>> getImages() {
@@ -88,56 +85,105 @@ public class SetsViewModel extends AndroidViewModel {
         return this._setsFromDbAll;
     }
 
-    //== private methods ===========================================================================
-//    private final class AsyncImageDownload extends AsyncTask<URL, Void, ArrayList<ImageView>> {
-//        ArrayList<ImageView> images = new ArrayList<>();
-//
-//        @Override
-//        protected ArrayList<ImageView> doInBackground(URL... urls) {
-//            Log.d("AsyncImageDownload", "Image downloading running");
-//            for (URL url : urls) {
-//                Log.d("AsyncImageDownload", String.format("Opening URL: %s", url));
-//                ImageView downloadedImage = new ImageView(getApplication().getApplicationContext());
-//
-//                if (url == null) {
-//                    Log.d("AsyncImageDownload", "null URL");
-//                    downloadedImage.setImageResource(R.drawable.ic_baseline_web_asset_24);
-//                    images.add(downloadedImage);
-//                } else {
-//                    try {
-//                        InputStream downloadedImageStream = url.openStream();
-//                        Bitmap decodedImage = BitmapFactory.decodeStream(downloadedImageStream);
-//                        downloadedImage.setImageBitmap(decodedImage);
-//                        images.add(downloadedImage);
-//                        downloadedImageStream.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//            return images;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(ArrayList<ImageView> result) {
-//            Log.d("AsyncImageDownload", "Images ready, posting...");
-//            _preloadedImages.postValue(result);
-//        }
-//    }
     //==============================================================================================
-//    protected URL stringToURL(String urlString) {
-//        if (urlString == null) {
-//            Log.e("MalformedURL", "URL is NULL");
-//        } else {
-//            try {
-//                return new URL(urlString);
-//            } catch (MalformedURLException e) {
-//                Log.e("MalformedURL", e.getMessage());
-//                e.printStackTrace();
-//            }
+    public void loadSetsImages() {
+        Log.d("SetsView-loadSetsImages", "==> loadSetsImages()");
+        URL[] urlsList = getImagesURLs(_setsFromDbAll);
+    }
+
+    //==============================================================================================
+    public URL[] getImagesURLs(ArrayList<BricksSingleSet> listOfSets) {
+        ArrayList<URL> urlsList = new ArrayList<>();
+        for (BricksSingleSet singleSet : listOfSets) {
+            Log.d("SetsView-dbEntries", String.format("Adding URL: %s", singleSet.getImage_url()));
+            urlsList.add(stringToURL(singleSet.getImage_url()));
+        }
+        URL[] urls = new URL[ urlsList.size() ];
+        return urlsList.toArray(urls);
+    }
+    //==============================================================================================
+    public String[] getSetsNumbers(ArrayList<BricksSingleSet> listOfSets) {
+        ArrayList<String> setsNumbersList = new ArrayList<>();
+        for (BricksSingleSet singleSet : listOfSets) {
+            Log.d("SetsView-dbEntries", String.format("Adding setNumber: %s", singleSet.getSet_number()));
+            setsNumbersList.add(singleSet.getSet_number());
+        }
+        String[] setsNumbers = new String[ setsNumbersList.size() ];
+        return setsNumbersList.toArray(setsNumbers);
+    }
+    //==============================================================================================
+//    public Map<String, URL> urlsWithSetsNums(URL[] urls, String[] setNumbers) {
+//        Map<String, URL> dataMap = new HashMap<>();
+//        for (int i = 0; i < urls.length; i++) {
+//
 //        }
-//        return null;
 //    }
+
+    //== private methods ===========================================================================
+    private final class AsyncImageDownload extends AsyncTask<URL, Void, ArrayList<Bitmap>> {
+        @Override
+        protected ArrayList<Bitmap> doInBackground(URL... urls) {
+            Log.d("AsyncImageDownload", "Image downloading running");
+
+            ArrayList<Bitmap> bitmaps = new ArrayList<>();
+
+            for (int i = 0; i < urls.length; i++) {
+                Log.d("AsyncImageDownload", String.format("Opening URL: %s", urls[i]));
+
+                URL currentUrl = urls[i];
+                Bitmap currentBmp = null;
+
+                if (currentUrl == null) {
+                    currentBmp = BitmapFactory.decodeResource(
+                            getApplication().getResources(),
+                            R.drawable.ic_baseline_web_asset_24
+                    );
+                    bitmaps.add(currentBmp);
+                } else {
+                    try {
+                        InputStream imageToDownload = currentUrl.openStream();
+                        BufferedInputStream bufferedImage = new BufferedInputStream(imageToDownload);
+                        currentBmp = BitmapFactory.decodeStream(bufferedImage);
+                        bitmaps.add(currentBmp);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return bitmaps;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> result) {
+            Log.d("AsyncImageDownload", "Images ready, posting...");
+            saveImagesToInternalStorage(result);
+            //_preloadedImages.postValue(result);
+        }
+    }
+    //==============================================================================================
+    protected URL stringToURL(String urlString) {
+        if (urlString == null) {
+            Log.e("MalformedURL", "URL is NULL");
+        } else {
+            try {
+                return new URL(urlString);
+            } catch (MalformedURLException e) {
+                Log.e("MalformedURL", e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    //==============================================================================================
+    public void saveImagesToInternalStorage(ArrayList<Bitmap> bitmaps) {
+        for (Bitmap bmp : bitmaps) {
+            saveBitmapToInternalStorage(bmp);
+        }
+    }
+    //==============================================================================================
+    public void saveBitmapToInternalStorage(Bitmap bmp) {
+
+    }
 //
 //    public void findAllImageViews(ViewGroup rootView) {
 //        ViewGroup root = (ViewGroup) rootView;
