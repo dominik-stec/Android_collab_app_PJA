@@ -15,20 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylego.R;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import retrofit2.http.Url;
 
 public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHolder> {
 
     private ArrayList<SetsSingleItem> mExampleList;
-    private AsyncTask<?,?,?> task;
+    //private AsyncTask<?,?,?> task;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
@@ -55,11 +51,11 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHol
     }
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
-        //Map<String, ImageView> imageParams = new HashMap<>();
+        Map<String, ImageView> imageParams = new HashMap<>();
         SetsSingleItem currentItem = mExampleList.get(position);
-        //imageParams.put(currentItem.getImageResource(), holder.mImageView);
-        //new ImageDownloader().execute(imageParams);
-        holder.mImageView.setImageResource(currentItem.getImageResource());
+        imageParams.put(currentItem.getImageUrl(), holder.mImageView);
+        new ImageDownloader().execute(imageParams);
+        //holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mSetNumAndSetNameTextView.setText(String.format("%s %s", currentItem.getSetNum(), currentItem.getSetName()));
         holder.mSetYearTextView.setText(currentItem.getSetYear());
         holder.mSetNumPartsTextView.setText(currentItem.getSetNumParts());
@@ -72,45 +68,57 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.ExampleViewHol
     //==============================================================================================
     private final class ImageDownloader extends AsyncTask<Map<String, ImageView>, Void, Bitmap> {
         URL imageUrl = null;
-        ImageView bitmap;
+        String urlString = null;
+        ImageView image = null;
+        Bitmap bitmap = null;
 
         @Override
         protected Bitmap doInBackground(Map<String, ImageView>... params) {
-            for (Map.Entry<String, ImageView> entry : params[0].entrySet()) {
+            Log.d("AsyncImageDownload", "==> BackgroudnTask");
+            for (Map.Entry<String, ImageView> imageParams : params[0].entrySet()) {
+                urlString = imageParams.getKey();
+                image = imageParams.getValue();
+            }
+
+            imageUrl = stringToURL(urlString);
+
+            Log.d("AsyncImageDownload", String.format("Processing url: %s", imageUrl));
+
+            if (imageUrl == null) {
+                Log.d("AsyncImageDownload", "null URL, using default image icon.");
+            } else {
                 try {
-                    imageUrl = new URL(entry.getKey());
-                } catch (MalformedURLException e) {
-                    Log.e("Img-Downloader", e.getMessage());
+                    bitmap = BitmapFactory.decodeStream(imageUrl.openStream());
+                } catch (IOException e) {
+                    Log.e("Img-downloader", e.getMessage());
                     e.printStackTrace();
                 }
-                bitmap = entry.getValue();
             }
-
-            Bitmap resultImage = null;
-            try {
-                int retry = 0;
-                InputStream is = null;
-                do {
-                    is = imageUrl.openStream();
-                    retry++;
-                } while (is == null || retry == 4);
-
-                if (is == null) {
-                    Log.e("Img-downloader", "URL input stream == null");
-                }
-
-                resultImage = BitmapFactory.decodeStream(imageUrl.openStream());
-
-            } catch (IOException e) {
-                Log.e("Img-downloader", e.getMessage());
-                e.printStackTrace();
-            }
-            return resultImage;
+            return bitmap;
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            bitmap.setImageBitmap(result);
+            Log.d("AsyncImageDownload", "Image downloaded successfully");
+            if (imageUrl == null) {
+                image.setImageResource(R.drawable.ic_baseline_web_asset_24);
+            } else {
+                image.setImageBitmap(bitmap);
+            }
         }
+    }
+    //==============================================================================================
+    protected URL stringToURL(String urlString) {
+        if (urlString == null) {
+            Log.e("MalformedURL", "URL is NULL");
+        } else {
+            try {
+                return new URL(urlString);
+            } catch (MalformedURLException e) {
+                Log.e("MalformedURL", e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

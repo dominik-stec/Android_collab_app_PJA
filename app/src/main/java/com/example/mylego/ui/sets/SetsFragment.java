@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,15 +44,6 @@ public class SetsFragment extends Fragment {
         _binding = FragmentSetsBinding.inflate(inflater, container, false);
         View root = _binding.getRoot();
 
-        final TextView textView = _binding.textSets;
-
-        _setsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
         // Add example list
         ArrayList<SetsSingleItem> exampleList = new ArrayList<>();
 //        exampleList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295", "Porsche 911", "2021", "1458"));
@@ -70,6 +62,21 @@ public class SetsFragment extends Fragment {
         mAdapter = new SetsAdapter(exampleList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        final TextView textView = _binding.textSets;
+
+//        _setsViewModel.getImages().observe(getViewLifecycleOwner(), new Observer<ArrayList<ImageView>>() {
+//            @Override
+//            public void onChanged(@Nullable ArrayList<ImageView> imageViews) {
+//            }
+//        });
+
+        _setsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
 
         return root;
     }
@@ -90,6 +97,7 @@ public class SetsFragment extends Fragment {
         result.setSetNum(singleSet.getSet_number());
         result.setSetName(singleSet.getName());
         result.setSetYear(String.valueOf(singleSet.getYear()));
+        result.setImageUrl(singleSet.getImage_url());
         result.setImageResource(R.drawable.ic_baseline_web_asset_24);
 
         return result;
