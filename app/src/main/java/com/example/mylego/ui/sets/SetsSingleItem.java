@@ -2,15 +2,15 @@ package com.example.mylego.ui.sets;
 
 public class SetsSingleItem {
 
-    private String imageResource;
     private String setNum;
     private String setName;
     private String setYear;
     private String setNumParts;
+    private int imageResource;
 
     public SetsSingleItem() { }
 
-    public SetsSingleItem(String setNum, String setName, String setYear, String setNumParts, String imageResource) {
+    public SetsSingleItem(String setNum, String setName, String setYear, String setNumParts, int imageResource) {
         this.setNum = setNum;
         this.setName = setName;
         this.setYear = setYear;
@@ -29,7 +29,7 @@ public class SetsSingleItem {
     public String getSetNumParts() {
         return setNumParts;
     }
-    public String getImageResource() {
+    public int getImageResource() {
         return imageResource;
     }
 
@@ -45,7 +45,7 @@ public class SetsSingleItem {
     public void setSetNumParts(String numParts) {
         this.setNumParts = numParts;
     }
-    public void setImageResource(String imageUrl) {
-        this.imageResource = imageUrl;
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 }

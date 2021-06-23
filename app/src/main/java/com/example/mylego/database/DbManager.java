@@ -2,6 +2,7 @@ package com.example.mylego.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
@@ -235,10 +236,13 @@ public class DbManager {
         return queryResult;
     }
 
-    //----------------------------------------------------------------------------------------------
-    public ArrayList<BricksSingleSet> getAllSets() {
+    public  ArrayList<BricksSingleSet> getAllSets() {
+        return getAllSets(0);
+    }
+    //==============================================================================================
+    public ArrayList<BricksSingleSet> getAllSets(int limit) {
         ArrayList<BricksSingleSet> results = new ArrayList<>();
-        ArrayList<Map<String, String>> entriesAsMap = getAllEntries();
+        ArrayList<Map<String, String>> entriesAsMap = getAllEntries(limit);
 
         entriesAsMap.forEach(entryAsMapItem -> {
             BricksSingleSet entryAsSingleSetObject = convertMapSetToBricksSingleSet(entryAsMapItem);
@@ -248,8 +252,12 @@ public class DbManager {
         return results;
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     public ArrayList<Map<String, String>> getAllEntries() {
+        return getAllEntries(0);
+    }
+    // =============================================================================================
+    public ArrayList<Map<String, String>> getAllEntries(int limit) {
         Log.d("DEBUG", String.format("==> getAllSets"));
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -266,7 +274,8 @@ public class DbManager {
                 selectionArgs,          // The values for the WHERE clause
                 null,           // don't group the rows
                 null,            // don't filter by row groups
-                sortOrder
+                sortOrder,
+                limit > 0 ? String.valueOf(limit) : null
         );
 
         return getQueryResults(cursor);

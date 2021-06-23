@@ -1,7 +1,6 @@
 package com.example.mylego.ui.sets;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,6 @@ import com.example.mylego.databinding.FragmentSetsBinding;
 import com.example.mylego.R;
 import com.example.mylego.rest.domain.BricksSingleSet;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
 
 public class SetsFragment extends Fragment {
@@ -42,7 +38,7 @@ public class SetsFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         _setsViewModel = new ViewModelProvider(this).get(SetsViewModel.class);
-        _allSetsFromDb = _setsViewModel.getAllSetsFromDb();
+        _allSetsFromDb = _setsViewModel.getSetsFromDb();
 
         _binding = FragmentSetsBinding.inflate(inflater, container, false);
         View root = _binding.getRoot();
@@ -94,7 +90,7 @@ public class SetsFragment extends Fragment {
         result.setSetNum(singleSet.getSet_number());
         result.setSetName(singleSet.getName());
         result.setSetYear(String.valueOf(singleSet.getYear()));
-        result.setImageResource(singleSet.getImage_url());
+        result.setImageResource(R.drawable.ic_baseline_web_asset_24);
 
         return result;
     }

@@ -37,7 +37,7 @@ public class SetsViewModel extends AndroidViewModel {
         mText.postValue(setNames);
 
         _setsFromDbSearch = db.getSetsByName("Gears");
-        _setsFromDbAll = db.getAllSets();
+        _setsFromDbAll = db.getAllSets(50);
     }
 
     public LiveData<String> getText() {
@@ -48,7 +48,8 @@ public class SetsViewModel extends AndroidViewModel {
         return this._setsFromDbSearch;
     }
 
-    public ArrayList<BricksSingleSet> getAllSetsFromDb() {
+    public ArrayList<BricksSingleSet> getSetsFromDb() {
+
         return this._setsFromDbAll;
     }
 
