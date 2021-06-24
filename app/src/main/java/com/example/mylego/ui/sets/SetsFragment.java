@@ -1,6 +1,8 @@
 package com.example.mylego.ui.sets;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class SetsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private ArrayList<BricksSingleSet> _allSetsFromDb;
+    private ArrayList<Uri> _thumbnailsPathsList;
 
     public View onCreateView(
             @NonNull LayoutInflater inflater,
@@ -65,11 +68,12 @@ public class SetsFragment extends Fragment {
 
         final TextView textView = _binding.textSets;
 
-//        _setsViewModel.getImages().observe(getViewLifecycleOwner(), new Observer<ArrayList<ImageView>>() {
-//            @Override
-//            public void onChanged(@Nullable ArrayList<ImageView> imageViews) {
-//            }
-//        });
+        _setsViewModel.getThumbnailsPathsList().observe(getViewLifecycleOwner(), new Observer<ArrayList<Uri>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Uri> uriList) {
+                logThumbnailsPaths(uriList);
+            }
+        });
 
         _setsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -101,6 +105,12 @@ public class SetsFragment extends Fragment {
         result.setImageResource(R.drawable.ic_baseline_web_asset_24);
 
         return result;
+    }
+    //==============================================================================================
+    public void logThumbnailsPaths(ArrayList<Uri> thumbnails) {
+        for (Uri th : thumbnails) {
+            Log.d("SetsFragment-logThumbnailsPaths", String.format("Thumbnail Path: %s", th.getPath()));
+        }
     }
 
 //    public void searchForSetBySetName(String name) {
