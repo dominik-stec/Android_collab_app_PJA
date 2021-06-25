@@ -1,5 +1,6 @@
 package com.example.mylego.ui.moc;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -91,6 +93,31 @@ public class MyOwnCreationFragment extends Fragment {
             }
         });
 
+        //
+        Button addNewMoc;
+        addNewMoc = root.findViewById(R.id.btn_create_moc);
+
+        addNewMoc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(root.getContext());
+                dialog.setContentView(R.layout.add_new_moc); //layout for dialog
+                dialog.setTitle("Add new MOC");
+                dialog.setCancelable(false); //none-dismiss when touching outside Dialog
+
+                // set the custom dialog components - texts and image
+                EditText addMocName = (EditText) dialog.findViewById(R.id.add_moc_name);
+                EditText addMocNumParts = (EditText) dialog.findViewById(R.id.add_moc_parts_num);
+
+                View btnAdd = dialog.findViewById(R.id.btn_moc_add);
+                View btnCancel = dialog.findViewById(R.id.btn_moc_cancel);
+
+                btnCancel.setOnClickListener(onCancelListener(dialog));
+
+                dialog.show();
+            }
+
+        });
+
         return root;
     }
 
@@ -105,6 +132,15 @@ public class MyOwnCreationFragment extends Fragment {
         }
 
         mAdapter.filterList(filteredList);
+    }
+
+    private View.OnClickListener onCancelListener(final Dialog dialog) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        };
     }
 
     @Override
