@@ -10,15 +10,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.mylego.R;
 import com.example.mylego.databinding.FragmentMocBinding;
-import com.example.mylego.ui.parts.PartSingleItem;
-import com.example.mylego.ui.parts.PartsAdapter;
+import com.example.mylego.ui.moc.MocAdapter;
 
 import java.util.ArrayList;
 
@@ -30,14 +37,15 @@ public class MyOwnCreationFragment extends Fragment {
 
     // Add RecyclerView
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MocAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<MocSingleItem> exampleList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         // Add example list
-        ArrayList<MocSingleItem> exampleList = new ArrayList<>();
+        exampleList = new ArrayList<>();
         exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "House", "220"));
         exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "Crazy Rabbit", "50"));
         exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "Tower", "120"));
@@ -65,7 +73,38 @@ public class MyOwnCreationFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        EditText editText = root.findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
         return root;
+    }
+
+
+    private void filter(String text) {
+        ArrayList<MocSingleItem> filteredList = new ArrayList<>();
+
+        for (MocSingleItem item : exampleList) {
+            if (item.getMocName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        mAdapter.filterList(filteredList);
     }
 
     @Override
