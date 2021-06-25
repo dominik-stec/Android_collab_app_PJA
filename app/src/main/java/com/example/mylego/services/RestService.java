@@ -207,12 +207,12 @@ public class RestService extends IntentService {
                     PartsSingleSet partsSingleSet = value[i];
 
                     db.setId(partsSingleSet.getId());
-                    db.setInvPartId(partsSingleSet.getInvPartId());
-                    db.setSetNum(partsSingleSet.getSetNum());
+                    db.setInvPartId(partsSingleSet.getInv_part_id());
+                    db.setSetNum(partsSingleSet.getSet_num());
                     db.setQuantity(partsSingleSet.getQuantity());
-                    db.setSpare(partsSingleSet.isSpare());
-                    db.setElementId(partsSingleSet.getElementId());
-                    db.setNumSets(partsSingleSet.getNumSets());
+                    db.setSpare(partsSingleSet.isIs_spare());
+                    db.setElementId(partsSingleSet.getElement_id());
+                    db.setNumSets(partsSingleSet.getNum_sets());
 
                     db.commitIntoDb();
 
@@ -270,7 +270,7 @@ public class RestService extends IntentService {
 
                     db.setId(part.getId());
 
-                    db.setSetNum(value[i].getSetNum());
+                    db.setSetNum(value[i].getSet_num());
 
                     db.setPartNum(part.getPartNum());
                     db.setPartName(part.getPartName());

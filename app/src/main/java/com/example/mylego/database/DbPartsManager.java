@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
+
 import com.example.mylego.rest.domain.BrickLink;
 import com.example.mylego.rest.domain.BrickOwl;
+import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.domain.Color;
 import com.example.mylego.rest.domain.ExternalIdsColor;
 import com.example.mylego.rest.domain.ExternalIdsPart;
@@ -16,9 +19,14 @@ import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
 import com.example.mylego.rest.domain.Peeron;
 
-import java.sql.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DbPartsManager {
 
@@ -76,8 +84,7 @@ public class DbPartsManager {
     String elementId;
     int numSets;
 
-
-
+    //=== CONSTRUCTORS =============================================================================
     public DbPartsManager(Context context) {
         this.dbHelper = new DbHelper(context);
 
@@ -90,11 +97,9 @@ public class DbPartsManager {
         Lego lego = new Lego();
         Peeron peeron = new Peeron();
         LDraw lDraw = new LDraw();
-
     }
 
-
-
+    //=== PUBLIC METHODS ===========================================================================
     public long commitIntoDb() {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
@@ -115,7 +120,9 @@ public class DbPartsManager {
         return newRowId;
     }
 
+    //==============================================================================================
     public ArrayList<PartsSingleSet> getPartsSingleSetBySetNum(String setNum) {
+        Log.d("DbPartsManager-getPartsSingleSetBySetNum", String.format("==> Getting parts for set: %s", setNum));
 
         ArrayList<PartsSingleSet> partsList = new ArrayList<>();
 
@@ -131,34 +138,127 @@ public class DbPartsManager {
                 CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER
         };
 
-        String selection = CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING + "=?";
+        String selection = null;
+        String[] selectionArgs = null;
 
-        String[] selectionArgs = {setNum};
-
-        Cursor cursor = db.query(CreateTable.TableEntryParts.TABLE_NAME_PARTS, projection, selection, selectionArgs, null, null, null);
-
-        if (cursor.moveToFirst()) {
-
-            do {
-                PartsSingleSet partsSingleSet = new PartsSingleSet();
-
-                partsSingleSet.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
-                partsSingleSet.setInvPartId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
-                partsSingleSet.setSetNum(setNum);
-                partsSingleSet.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER)));
-                boolean isSpare = cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN)) == 1;
-                partsSingleSet.setSpare(isSpare);
-                partsSingleSet.setElementId(cursor.getString(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER))));
-                partsSingleSet.setNumSets(cursor.getInt(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER))));
-
-                partsList.add(partsSingleSet);
-
-            } while (cursor.moveToNext());
-
+        if (setNum != null) {
+            selection = CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING + "=?";
+            selectionArgs = new String[] { setNum };
         }
+
+        Cursor cursor = db.query(
+                CreateTable.TableEntryParts.TABLE_NAME_PARTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Map<String, String>> queryResults = getQueryResults(cursor);
+
+        for (Map<String, String> partsSet : queryResults) {
+            partsList.add(convertMapSetToPartsSingleSet(partsSet));
+        }
+
+
+//        if (cursor.moveToFirst()) {
+//            do {
+//                PartsSingleSet partsSingleSet = new PartsSingleSet();
+//
+//                partsSingleSet.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
+//                partsSingleSet.setInv_part_id(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ID_INTEGER)));
+//                partsSingleSet.setSet_num(setNum);
+//                partsSingleSet.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_QUANTITY_INTEGER)));
+//                boolean isSpare = cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_IS_SPARE_BOOLEAN)) == 1;
+//                partsSingleSet.setIs_spare(isSpare);
+//                partsSingleSet.setElement_id(cursor.getString(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_ELEMENT_ID_STRING))));
+//                partsSingleSet.setNum_sets(cursor.getInt(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntryParts.COLUMN_NAME_PARTS_NUM_SETS_INTEGER))));
+//
+//                partsList.add(partsSingleSet);
+//
+//            } while (cursor.moveToNext());
+//
+//        }
         return partsList;
     }
 
+    //==============================================================================================
+    public ArrayList<Map<String, String>> getQueryResults(Cursor cursor) {
+        Log.d("DbPartsManager-getQueryResults", String.format("==> getQueryResults"));
+        ArrayList<Map<String, String>> results = new ArrayList<>();
+
+        cursor.moveToFirst();
+        for (int rowIndex = 0; rowIndex < cursor.getCount(); rowIndex++) {
+            Map<String, String> rowData;
+            rowData = getQueryResultAsSingleDbRow(cursor);
+            results.add(rowData);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return results;
+    }
+
+    //==============================================================================================
+    public Map<String, String> getQueryResultAsSingleDbRow(Cursor cursor) {
+        Map<String, String> result = new HashMap<>();
+
+        for (int columnIndex = 0; columnIndex < cursor.getColumnCount(); columnIndex++) {
+            String currentCursorColumnName = cursor.getColumnName(columnIndex);
+            String currentCursorColumnValue = cursor.getString(columnIndex);
+            Log.d("DbPartsManager-getQueryResultAsSingleDbRow", String.format("Column name: %s\tValue: %s", currentCursorColumnName, currentCursorColumnValue));
+            result.put(currentCursorColumnName, currentCursorColumnValue);
+        }
+        return result;
+    }
+
+    //==============================================================================================
+    public PartsSingleSet convertMapSetToPartsSingleSet(Map<String, String> singleSetAsMap) {
+        Log.d("DbPartsManager-convertMapSetToPartsSingleSet", String.format("==> convertMapSetToPartsSingleSet"));
+        PartsSingleSet singleSet = new PartsSingleSet();
+        List<Method> singleSetMethods = Arrays.asList(singleSet.getClass().getDeclaredMethods());
+
+        for (Map.Entry<String, String> singleSetDbColumnAsEntry : singleSetAsMap.entrySet()) {
+            String columnName = singleSetDbColumnAsEntry.getKey().toLowerCase();
+            String columnValue = singleSetDbColumnAsEntry.getValue();
+
+            Method singleSetMatchedMethod = singleSetMethods
+                    .stream()
+                    .filter(method -> method
+                            .getName()
+                            .toLowerCase()
+                            .equals(String.format("set%s", columnName)))
+                    .collect(Collectors.toList()).get(0);
+
+            Class<?> singleSetMethodParameterType = singleSetMatchedMethod.getParameterTypes()[0];
+
+            Object parsedColumnValue = castColumnValueToType(singleSetMethodParameterType, columnValue);
+
+            try {
+                singleSetMatchedMethod.invoke(singleSet, parsedColumnValue);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return singleSet;
+    }
+
+    //==============================================================================================
+    public <Any> Any castColumnValueToType(Class<?> type, String columnValue) {
+        return (Any) (
+                type.getName().equals("java.lang.Integer")
+                        ? Integer.parseInt(columnValue)
+                        : (
+                                type.getName().equals("boolean")
+                                        ? Boolean.parseBoolean(columnValue)
+                                        : columnValue
+                )
+        );
+    }
+
+    //==============================================================================================
     public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
@@ -258,10 +358,10 @@ public class DbPartsManager {
         return queryResult;
     }
 
+    //=== GETTERS/SETTERS ==========================================================================
     public DbHelper getDbHelper() {
         return dbHelper;
     }
-
     public void setDbHelper(DbHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
@@ -269,7 +369,6 @@ public class DbPartsManager {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -277,7 +376,6 @@ public class DbPartsManager {
     public int getInvPartId() {
         return invPartId;
     }
-
     public void setInvPartId(int invPartId) {
         this.invPartId = invPartId;
     }
@@ -285,7 +383,6 @@ public class DbPartsManager {
     public String getSetNum() {
         return setNum;
     }
-
     public void setSetNum(String setNum) {
         this.setNum = setNum;
     }
@@ -293,7 +390,6 @@ public class DbPartsManager {
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -301,7 +397,6 @@ public class DbPartsManager {
     public boolean isSpare() {
         return isSpare;
     }
-
     public void setSpare(boolean spare) {
         isSpare = spare;
     }
@@ -309,7 +404,6 @@ public class DbPartsManager {
     public String getElementId() {
         return elementId;
     }
-
     public void setElementId(String elementId) {
         this.elementId = elementId;
     }
@@ -317,7 +411,6 @@ public class DbPartsManager {
     public int getNumSets() {
         return numSets;
     }
-
     public void setNumSets(int numSets) {
         this.numSets = numSets;
     }
@@ -326,7 +419,6 @@ public class DbPartsManager {
     public Part getPart() {
         return part;
     }
-
     public void setPart(Part part) {
         this.part = part;
     }
@@ -334,7 +426,6 @@ public class DbPartsManager {
     public String getPartNum() {
         return partNum;
     }
-
     public void setPartNum(String partNum) {
         this.partNum = partNum;
     }
@@ -342,7 +433,6 @@ public class DbPartsManager {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -350,7 +440,6 @@ public class DbPartsManager {
     public int getPartCatId() {
         return partCatId;
     }
-
     public void setPartCatId(int partCatId) {
         this.partCatId = partCatId;
     }
@@ -358,7 +447,6 @@ public class DbPartsManager {
     public String getPartUrl() {
         return partUrl;
     }
-
     public void setPartUrl(String partUrl) {
         this.partUrl = partUrl;
     }
@@ -366,7 +454,6 @@ public class DbPartsManager {
     public String getPartImgUrl() {
         return partImgUrl;
     }
-
     public void setPartImgUrl(String partImgUrl) {
         this.partImgUrl = partImgUrl;
     }

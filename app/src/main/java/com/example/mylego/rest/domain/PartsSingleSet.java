@@ -13,7 +13,7 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("inv_part_id")
     @Expose
-    Integer invPartId;
+    Integer inv_part_id;
 
     @SerializedName("part")
     @Expose
@@ -25,7 +25,7 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("set_num")
     @Expose
-    String setNum;
+    String set_num;
 
     @SerializedName("quantity")
     @Expose
@@ -33,15 +33,15 @@ public class PartsSingleSet implements Serializable {
 
     @SerializedName("is_spare")
     @Expose
-    boolean isSpare;
+    boolean is_spare;
 
     @SerializedName("element_id")
     @Expose
-    String elementId;
+    String element_id;
 
     @SerializedName("num_sets")
     @Expose
-    Integer numSets;
+    Integer num_sets;
 
     public Integer getId() {
         return id;
@@ -51,12 +51,12 @@ public class PartsSingleSet implements Serializable {
         this.id = id;
     }
 
-    public Integer getInvPartId() {
-        return invPartId;
+    public Integer getInv_part_id() {
+        return inv_part_id;
     }
 
-    public void setInvPartId(Integer invPartId) {
-        this.invPartId = invPartId;
+    public void setInv_part_id(Integer invPartId) {
+        this.inv_part_id = invPartId;
     }
 
     public Part getPart() {
@@ -75,12 +75,12 @@ public class PartsSingleSet implements Serializable {
         this.color = color;
     }
 
-    public String getSetNum() {
-        return setNum;
+    public String getSet_num() {
+        return set_num;
     }
 
-    public void setSetNum(String setNum) {
-        this.setNum = setNum;
+    public void setSet_num(String setNum) {
+        this.set_num = setNum;
     }
 
     public Integer getQuantity() {
@@ -91,27 +91,27 @@ public class PartsSingleSet implements Serializable {
         this.quantity = quantity;
     }
 
-    public boolean isSpare() {
-        return isSpare;
+    public boolean isIs_spare() {
+        return is_spare;
     }
 
-    public void setSpare(boolean spare) {
-        isSpare = spare;
+    public void setIs_spare(boolean spare) {
+        is_spare = spare;
     }
 
-    public String getElementId() {
-        return elementId;
+    public String getElement_id() {
+        return element_id;
     }
 
-    public void setElementId(String elementId) {
-        this.elementId = elementId;
+    public void setElement_id(String elementId) {
+        this.element_id = elementId;
     }
 
-    public Integer getNumSets() {
-        return numSets;
+    public Integer getNum_sets() {
+        return num_sets;
     }
 
-    public void setNumSets(Integer numSets) {
-        this.numSets = numSets;
+    public void setNum_sets(Integer numSets) {
+        this.num_sets = numSets;
     }
 }

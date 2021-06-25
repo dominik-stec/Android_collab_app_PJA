@@ -23,6 +23,7 @@ import com.example.mylego.R;
 import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.rest.domain.BricksSingleSet;
+import com.example.mylego.ui.Utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -46,9 +47,9 @@ public class SetsViewModel extends AndroidViewModel {
     public SetsViewModel(@NonNull Application application) {
         super(application);
 
-        _thumbnailsPathsList = new MutableLiveData<>();
+        DbManager db = new DbManager(application.getApplicationContext());
 
-        DbManager db = new DbManager(getApplication().getApplicationContext());
+        _thumbnailsPathsList = new MutableLiveData<>();
 
         _setsFromDbAll = db.getAllSets(50);
         if (_setsFromDbAll.size() == 50) {
@@ -56,16 +57,16 @@ public class SetsViewModel extends AndroidViewModel {
         }
     }
     //=== PUBLIC METHODS ===========================================================================
-    public LiveData<ArrayList<Uri>> getThumbnailsPathsList() {
-        return this._thumbnailsPathsList;
-    }
-
-    //==============================================================================================
     public ArrayList<BricksSingleSet> getSetsFromDb() {
         return this._setsFromDbAll;
     }
 
     //==============================================================================================
+    public LiveData<ArrayList<Uri>> getThumbnailsPathsList() {
+        return this._thumbnailsPathsList;
+    }
+
+    //=== PRIVATE METHODS ==========================================================================
     private final class AsyncImageDownload extends AsyncTask<Map<String, URL>, Void, Map<String, Bitmap>> {
         public Context appContext = getApplication().getApplicationContext();
 
@@ -84,7 +85,7 @@ public class SetsViewModel extends AndroidViewModel {
                 Bitmap currentBmp = null;
 
                 if (currentUrl == null) {
-                    currentBmp = convertToBmp(appContext, R.drawable.ic_baseline_web_asset_24);
+                    currentBmp = Utils.convertVectorDrawableToBmp(appContext, R.drawable.ic_baseline_web_asset_24);
                 } else {
                     try {
                         InputStream imageToDownload = currentUrl.openStream();
@@ -102,11 +103,11 @@ public class SetsViewModel extends AndroidViewModel {
         @Override
         protected void onPostExecute(Map<String, Bitmap> result) {
             Log.d("SetsView-AsyncImageDownload", "Images ready, posting...");
-            _thumbnailsPathsList.postValue(saveBitmapsToInternalStorage(result));
+            _thumbnailsPathsList.postValue(Utils.saveBitmapsToInternalStorage(appContext, result, "SetsImages"));
         }
     }
 
-    //=== PRIVATE METHODS ==========================================================================
+    //==============================================================================================
     private void loadSetsImages() {
         Log.d("SetsView-loadSetsImages", "==> loadSetsImages()");
         URL[] urlsArray = getImagesURLs(_setsFromDbAll);
@@ -135,7 +136,7 @@ public class SetsViewModel extends AndroidViewModel {
         ArrayList<URL> urlsList = new ArrayList<>();
         for (BricksSingleSet singleSet : listOfSets) {
             //Log.d("SetsView-getImagesURLs", String.format("Adding URL: %s", singleSet.getImage_url()));
-            urlsList.add(convertStringToURL(singleSet.getImage_url()));
+            urlsList.add(Utils.convertStringToURL(singleSet.getImage_url()));
         }
         URL[] urls = new URL[ urlsList.size() ];
         return urlsList.toArray(urls);
@@ -151,68 +152,8 @@ public class SetsViewModel extends AndroidViewModel {
         String[] setsNumbers = new String[ setsNumbersList.size() ];
         return setsNumbersList.toArray(setsNumbers);
     }
-
     //==============================================================================================
-    public Bitmap convertToBmp(Context context, int drawableId) {
-        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
 
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-
-    }
-    //==============================================================================================
-    protected URL convertStringToURL(String urlString) {
-        if (urlString == null) {
-            Log.e("MalformedURL", "URL is NULL");
-        } else {
-            try {
-                return new URL(urlString);
-            } catch (MalformedURLException e) {
-                Log.e("MalformedURL", e.getMessage());
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-    //==============================================================================================
-    public ArrayList<Uri> saveBitmapsToInternalStorage(Map<String, Bitmap> bitmaps) {
-        ArrayList<Uri> imagesPathsList = new ArrayList<>();
-        for (Map.Entry<String, Bitmap> currentBmpSet : bitmaps.entrySet()) {
-            String currentSetNum = currentBmpSet.getKey();
-            Bitmap currentBmp = currentBmpSet.getValue();
-
-            imagesPathsList.add(saveBitmapToInternalStorage(currentSetNum, currentBmp));
-        }
-        return imagesPathsList;
-    }
-    //==============================================================================================
-    public Uri saveBitmapToInternalStorage(String setNum, Bitmap bmp) {
-        ContextWrapper context = new ContextWrapper(getApplication().getApplicationContext());
-        File imageFile = context.getDir("Images", Context.MODE_PRIVATE);
-        imageFile = new File(imageFile, String.format("Thumbnail_%s.jpg", setNum));
-
-        try {
-            OutputStream writeToImageFile = null;
-            writeToImageFile = new FileOutputStream(imageFile);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 60, writeToImageFile);
-            writeToImageFile.flush();
-            writeToImageFile.close();
-        } catch (FileNotFoundException e) {
-            Log.e("SetsView-saveBitmapToInternalStorage", String.format("FileNotFoundException: %s", e.getMessage()));
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.e("SetsView-saveBitmapToInternalStorage", String.format("IOException: %s", e.getMessage()));
-            e.printStackTrace();
-        }
-
-        Uri imageFilePath = Uri.parse(imageFile.getAbsolutePath());
-        return imageFilePath;
-    }
     //=== SAVED FOR FUTURE, MAY BE USEFUL ==========================================================
 //    private final ArrayList<BricksSingleSet> _setsFromDbSearch = new ArrayList<>();
 //

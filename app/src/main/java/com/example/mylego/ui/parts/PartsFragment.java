@@ -16,51 +16,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylego.R;
 import com.example.mylego.databinding.FragmentPartsBinding;
-import com.example.mylego.ui.sets.SetsAdapter;
-import com.example.mylego.ui.sets.SetsSingleItem;
 
 import java.util.ArrayList;
 
 public class PartsFragment extends Fragment {
 
-    private PartsViewModel partsViewModel;
-    private FragmentPartsBinding binding;
+    private PartsViewModel _partsViewModel;
+    private FragmentPartsBinding _binding;
 
     // Add RecyclerView
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView _recyclerView;
+    private RecyclerView.Adapter _adapter;
+    private RecyclerView.LayoutManager _layoutManager;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        // Add example list
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        _binding = FragmentPartsBinding.inflate(inflater, container, false);
+        View root = _binding.getRoot();
+
+        _partsViewModel = new ViewModelProvider(this).get(PartsViewModel.class);
+
         ArrayList<PartSingleItem> exampleList = new ArrayList<>();
         exampleList.add(new PartSingleItem(R.drawable.ic_baseline_web_asset_24, "Plate 2 x 3", "3021"));
         exampleList.add(new PartSingleItem(R.drawable.ic_baseline_web_asset_24, "Brick 2 x 4", "3001 / 15589"));
         exampleList.add(new PartSingleItem(R.drawable.ic_baseline_web_asset_24, "Slope 1 x 2", "3040 / 6270"));
         exampleList.add(new PartSingleItem(R.drawable.ic_baseline_web_asset_24, "Tile 2 x 2 with Groove", "3068 / 63327"));
 
-        partsViewModel =
-                new ViewModelProvider(this).get(PartsViewModel.class);
-
-        binding = FragmentPartsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textParts;
-        partsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-        // Create RecyclerView
-        mRecyclerView = root.findViewById(R.id.partsRecyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(root.getContext());
-        mAdapter = new PartsAdapter(exampleList);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        _recyclerView = root.findViewById(R.id.partsRecyclerView);
+        _recyclerView.setHasFixedSize(true);
+        _layoutManager = new LinearLayoutManager(root.getContext());
+        _adapter = new PartsAdapter(exampleList);
+        _recyclerView.setLayoutManager(_layoutManager);
+        _recyclerView.setAdapter(_adapter);
 
         return root;
     }
@@ -68,6 +58,6 @@ public class PartsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        _binding = null;
     }
 }
