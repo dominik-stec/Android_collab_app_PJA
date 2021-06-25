@@ -39,45 +39,23 @@ import java.util.Map;
 
 //change from ViewModel to AndroidViewModel for get access to getApplicationContext() method
 public class SetsViewModel extends AndroidViewModel {
-    //private AsyncTask<?, ?, ?> downloadImages;
-    //private final ArrayList<BricksSingleSet> _setsFromDbSearch;
-    //ArrayList<ImageView> setImages = new ArrayList<>();
-    //private MutableLiveData<ArrayList<ImageView>> _preloadedImages;
-
     private MutableLiveData<ArrayList<Uri>> _thumbnailsPathsList;
     private final ArrayList<BricksSingleSet> _setsFromDbAll;
-    private final MutableLiveData<String> mText;
 
-    String setNames = "SAMPLE SETS NAMES: ";
-
+    //=== CONSTRUCTORS =============================================================================
     public SetsViewModel(@NonNull Application application) {
         super(application);
 
-        //read from database
-        DbManager db = new DbManager(getApplication().getApplicationContext());
-        HashMap<Long, String> setName = db.selectStringQuery(CreateTable.TableEntry.COLUMN_NAME_NAME_STRING, 0, 5);
-        for (Map.Entry<Long, String> entry : setName.entrySet()) {
-            setNames = setNames.concat(entry.getValue() + ", ");
-        }
-
         _thumbnailsPathsList = new MutableLiveData<>();
-        mText = new MutableLiveData<>();
 
-        mText.postValue(setNames);
-
+        DbManager db = new DbManager(getApplication().getApplicationContext());
 
         _setsFromDbAll = db.getAllSets(50);
         if (_setsFromDbAll.size() == 50) {
             loadSetsImages();
         }
     }
-
-//    public LiveData<ArrayList<ImageView>> getImages() {
-//        return _preloadedImages;
-//    }
-    public LiveData<String> getText() {
-        return mText;
-    }
+    //=== PUBLIC METHODS ===========================================================================
     public LiveData<ArrayList<Uri>> getThumbnailsPathsList() {
         return this._thumbnailsPathsList;
     }
@@ -86,56 +64,8 @@ public class SetsViewModel extends AndroidViewModel {
     public ArrayList<BricksSingleSet> getSetsFromDb() {
         return this._setsFromDbAll;
     }
-//    public ArrayList<BricksSingleSet> getSetsFromDbSearch() {
-//        return this._setsFromDbSearch;
-//    }
 
     //==============================================================================================
-    public void loadSetsImages() {
-        Log.d("SetsView-loadSetsImages", "==> loadSetsImages()");
-        URL[] urlsArray = getImagesURLs(_setsFromDbAll);
-        String[] setsNumbersArray = getSetsNumbers(_setsFromDbAll);
-
-        Map<String, URL> setsNumWithURLs = getSetsNumsWithURLs(setsNumbersArray, urlsArray);
-
-        for (Map.Entry<String, URL> entry : setsNumWithURLs.entrySet()) {
-            Log.d("SetsView-loadSetsImages", String.format("SetNum as key: %s | SetURL as value: %s", entry.getKey(), entry.getValue()));
-        }
-        new AsyncImageDownload().execute(setsNumWithURLs);
-
-    }
-
-    //==============================================================================================
-    public URL[] getImagesURLs(ArrayList<BricksSingleSet> listOfSets) {
-        ArrayList<URL> urlsList = new ArrayList<>();
-        for (BricksSingleSet singleSet : listOfSets) {
-            Log.d("SetsView-getImagesURLs", String.format("Adding URL: %s", singleSet.getImage_url()));
-            urlsList.add(convertStringToURL(singleSet.getImage_url()));
-        }
-        URL[] urls = new URL[ urlsList.size() ];
-        return urlsList.toArray(urls);
-    }
-    //==============================================================================================
-    public String[] getSetsNumbers(ArrayList<BricksSingleSet> listOfSets) {
-        ArrayList<String> setsNumbersList = new ArrayList<>();
-        for (BricksSingleSet singleSet : listOfSets) {
-            Log.d("SetsView-getSetsNumbers", String.format("Adding setNumber: %s", singleSet.getSet_number()));
-            setsNumbersList.add(singleSet.getSet_number());
-        }
-        String[] setsNumbers = new String[ setsNumbersList.size() ];
-        return setsNumbersList.toArray(setsNumbers);
-    }
-    //==============================================================================================
-    public Map<String, URL> getSetsNumsWithURLs(String[] setNumbers, URL[] urls) {
-        Log.d("SetsView-getSetsNumsWithURLs", String.format("==> Preparing map"));
-        Map<String, URL> dataMap = new HashMap<>();
-        for (int i = 0; i < urls.length; i++) {
-            dataMap.put(setNumbers[i], urls[i]);
-        }
-        return dataMap;
-    }
-
-    //== private methods ===========================================================================
     private final class AsyncImageDownload extends AsyncTask<Map<String, URL>, Void, Map<String, Bitmap>> {
         public Context appContext = getApplication().getApplicationContext();
 
@@ -147,7 +77,7 @@ public class SetsViewModel extends AndroidViewModel {
             Map<String, Bitmap> resultDataMap = new HashMap<>();
 
             for (Map.Entry<String, URL> currentSetData : dataMap.entrySet()) {
-                Log.d("AsyncImageDownload", String.format("Processing URL for set: %s", currentSetData.getKey()));
+                //Log.d("AsyncImageDownload", String.format("Processing URL for set: %s", currentSetData.getKey()));
 
                 URL currentUrl = currentSetData.getValue();
                 String currentSetNumber = currentSetData.getKey();
@@ -171,12 +101,57 @@ public class SetsViewModel extends AndroidViewModel {
 
         @Override
         protected void onPostExecute(Map<String, Bitmap> result) {
-            Log.d("AsyncImageDownload", "Images ready, posting...");
+            Log.d("SetsView-AsyncImageDownload", "Images ready, posting...");
             _thumbnailsPathsList.postValue(saveBitmapsToInternalStorage(result));
-
-            //_preloadedImages.postValue(result);
         }
     }
+
+    //=== PRIVATE METHODS ==========================================================================
+    private void loadSetsImages() {
+        Log.d("SetsView-loadSetsImages", "==> loadSetsImages()");
+        URL[] urlsArray = getImagesURLs(_setsFromDbAll);
+        String[] setsNumbersArray = getSetsNumbers(_setsFromDbAll);
+
+        Map<String, URL> setsNumWithURLs = getSetsNumsWithURLs(setsNumbersArray, urlsArray);
+
+//        for (Map.Entry<String, URL> entry : setsNumWithURLs.entrySet()) {
+//            Log.d("SetsView-loadSetsImages", String.format("SetNum as key: %s | SetURL as value: %s", entry.getKey(), entry.getValue()));
+//        }
+        new AsyncImageDownload().execute(setsNumWithURLs);
+    }
+
+    //==============================================================================================
+    private Map<String, URL> getSetsNumsWithURLs(String[] setNumbers, URL[] urls) {
+        Log.d("SetsView-getSetsNumsWithURLs", String.format("==> Preparing map"));
+        Map<String, URL> dataMap = new HashMap<>();
+        for (int i = 0; i < urls.length; i++) {
+            dataMap.put(setNumbers[i], urls[i]);
+        }
+        return dataMap;
+    }
+
+    //==============================================================================================
+    private URL[] getImagesURLs(ArrayList<BricksSingleSet> listOfSets) {
+        ArrayList<URL> urlsList = new ArrayList<>();
+        for (BricksSingleSet singleSet : listOfSets) {
+            //Log.d("SetsView-getImagesURLs", String.format("Adding URL: %s", singleSet.getImage_url()));
+            urlsList.add(convertStringToURL(singleSet.getImage_url()));
+        }
+        URL[] urls = new URL[ urlsList.size() ];
+        return urlsList.toArray(urls);
+    }
+
+    //==============================================================================================
+    private String[] getSetsNumbers(ArrayList<BricksSingleSet> listOfSets) {
+        ArrayList<String> setsNumbersList = new ArrayList<>();
+        for (BricksSingleSet singleSet : listOfSets) {
+            //Log.d("SetsView-getSetsNumbers", String.format("Adding setNumber: %s", singleSet.getSet_number()));
+            setsNumbersList.add(singleSet.getSet_number());
+        }
+        String[] setsNumbers = new String[ setsNumbersList.size() ];
+        return setsNumbersList.toArray(setsNumbers);
+    }
+
     //==============================================================================================
     public Bitmap convertToBmp(Context context, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(context, drawableId);
@@ -236,7 +211,12 @@ public class SetsViewModel extends AndroidViewModel {
         }
 
         Uri imageFilePath = Uri.parse(imageFile.getAbsolutePath());
-        Log.d("SetsView-saveBitmapToInternalStorage", String.format("Saved image path: %s", imageFilePath));
         return imageFilePath;
     }
+    //=== SAVED FOR FUTURE, MAY BE USEFUL ==========================================================
+//    private final ArrayList<BricksSingleSet> _setsFromDbSearch = new ArrayList<>();
+//
+//    public ArrayList<BricksSingleSet> getSetsFromDbSearch() {
+//        return this._setsFromDbSearch;
+//    }
 }

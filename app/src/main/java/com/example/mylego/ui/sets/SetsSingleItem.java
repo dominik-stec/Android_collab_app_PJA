@@ -1,6 +1,6 @@
 package com.example.mylego.ui.sets;
 
-import android.widget.ImageView;
+import android.net.Uri;
 
 public class SetsSingleItem {
 
@@ -10,24 +10,10 @@ public class SetsSingleItem {
     private String setNumParts;
     private String imageUrl;
     private int imageResource;
+    private Uri thumbnailPath;
 
     public SetsSingleItem() { }
 
-    public SetsSingleItem(String setNum, String setName, String setYear, String setNumParts, String imageUrl) {
-        this.setNum = setNum;
-        this.setName = setName;
-        this.setYear = setYear;
-        this.setNumParts = setNumParts;
-        this.imageUrl = imageUrl;
-    }
-
-    public SetsSingleItem(String setNum, String setName, String setYear, String setNumParts, int imageResource) {
-        this.setNum = setNum;
-        this.setName = setName;
-        this.setYear = setYear;
-        this.setNumParts = setNumParts;
-        this.imageResource = imageResource;
-    }
     public String getSetNum() {
         return setNum;
     }
@@ -45,6 +31,9 @@ public class SetsSingleItem {
     }
     public int getImageResource() {
         return imageResource;
+    }
+    public Uri getThumbnailPath() {
+        return thumbnailPath;
     }
 
     public void setSetNum(String num) {
@@ -64,5 +53,8 @@ public class SetsSingleItem {
     }
     public void setImageResource(int imageResource) {
         this.imageResource = imageResource;
+    }
+    public void setThumbnailPath(Uri thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
     }
 }
