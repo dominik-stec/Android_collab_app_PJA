@@ -27,4 +27,6 @@
     <string name="btn_moc_remove">Remove</string>
     <string name="moc_name">My MOC name</string>
     <string name="moc_parts_num">My MOC parts number</string>
+    <string name="btn_moc_add">Add</string>
+    <string name="btn_moc_cancel">Cancel</string>
 </resources>
