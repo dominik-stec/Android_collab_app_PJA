@@ -1,0 +1,165 @@
+generic_x86_arm:/ $ monkey -p com.example.mylego -v 500
+  bash arg: -p
+  bash arg: com.example.mylego
+  bash arg: -v
+  bash arg: 500
+args: [-p, com.example.mylego, -v, 500]
+ arg: "-p"
+ arg: "com.example.mylego"
+ arg: "-v"
+ arg: "500"
+data="com.example.mylego"
+:Monkey: seed=1624756088595 count=500
+:AllowPackage: com.example.mylego
+:IncludeCategory: android.intent.category.LAUNCHER
+:IncludeCategory: android.intent.category.MONKEY
+// Event percentages:
+//   0: 15.0%
+//   1: 10.0%
+//   2: 2.0%
+//   3: 15.0%
+//   4: -0.0%
+//   5: -0.0%
+//   6: 25.0%
+//   7: 15.0%
+//   8: 2.0%
+//   9: 2.0%
+//   10: 1.0%
+//   11: 13.0%
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.example.mylego/.BottomMenu;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.mylego/.BottomMenu } in package com.example.mylego
+:Sending Touch (ACTION_DOWN): 0:(984.0,349.0)
+:Sending Touch (ACTION_UP): 0:(993.761,333.63443)
+:Sending Touch (ACTION_DOWN): 0:(176.0,1951.0)
+:Sending Touch (ACTION_UP): 0:(111.7021,2005.0028)
+:Sending Touch (ACTION_DOWN): 0:(274.0,1582.0)
+:Sending Touch (ACTION_UP): 0:(278.15906,1595.8523)
+:Sending Flip keyboardOpen=false
+Got IOException performing flipjava.io.FileNotFoundException: /dev/input/event0: open failed: EACCES (Permission denied)
+    // Injection Failed
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.example.mylego/.BottomMenu;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.mylego/.BottomMenu } in package com.example.mylego
+:Sending Trackball (ACTION_MOVE): 0:(2.0,3.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(736.0,906.0)
+:Sending Touch (ACTION_UP): 0:(717.70886,907.7248)
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.example.mylego/.BottomMenu;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.mylego/.BottomMenu } in package com.example.mylego
+:Sending Touch (ACTION_DOWN): 0:(1034.0,1757.0)
+:Sending Touch (ACTION_UP): 0:(1035.1337,1765.7279)
+:Sending Touch (ACTION_DOWN): 0:(231.0,1114.0)
+:Sending Touch (ACTION_UP): 0:(232.478,1108.934)
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,-1.0)
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,0.0)
+:Sending Trackball (ACTION_MOVE): 0:(2.0,4.0)
+:Sending Trackball (ACTION_MOVE): 0:(1.0,3.0)
+    //[calendar_time:2021-06-26 21:31:25.121  system_uptime:1855759]
+    // Sending event #100
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(849.0,1566.0)
+:Sending Touch (ACTION_UP): 0:(866.5146,1564.3079)
+:Sending Touch (ACTION_DOWN): 0:(232.0,2018.0)
+:Sending Touch (ACTION_UP): 0:(272.7679,1950.3702)
+:Sending Trackball (ACTION_MOVE): 0:(-3.0,-3.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(343.0,70.0)
+:Sending Touch (ACTION_UP): 0:(341.49414,39.89205)
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,-3.0)
+:Sending Touch (ACTION_DOWN): 0:(519.0,640.0)
+:Sending Touch (ACTION_UP): 0:(519.12067,642.81683)
+:Sending Trackball (ACTION_MOVE): 0:(-5.0,4.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Flip keyboardOpen=true
+Got IOException performing flipjava.io.FileNotFoundException: /dev/input/event0: open failed: EACCES (Permission denied)
+    // Injection Failed
+:Sending Touch (ACTION_DOWN): 0:(35.0,1271.0)
+:Sending Touch (ACTION_UP): 0:(38.349365,1267.2874)
+:Sending Touch (ACTION_DOWN): 0:(96.0,214.0)
+:Sending Touch (ACTION_UP): 0:(105.912186,209.74362)
+:Sending Touch (ACTION_DOWN): 0:(499.0,390.0)
+:Sending Touch (ACTION_UP): 0:(504.66043,464.85388)
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.example.mylego/.BottomMenu;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.mylego/.BottomMenu } in package com.example.mylego
+:Sending Trackball (ACTION_MOVE): 0:(0.0,-4.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(755.0,666.0)
+    //[calendar_time:2021-06-26 21:31:26.498  system_uptime:1857049]
+    // Sending event #200
+:Sending Touch (ACTION_UP): 0:(708.3911,741.2355)
+:Sending Touch (ACTION_DOWN): 0:(839.0,1589.0)
+:Sending Touch (ACTION_UP): 0:(840.0762,1580.2386)
+:Sending Touch (ACTION_DOWN): 0:(741.0,1986.0)
+:Sending Touch (ACTION_UP): 0:(731.773,1981.2404)
+:Sending Trackball (ACTION_MOVE): 0:(-5.0,0.0)
+:Sending Trackball (ACTION_MOVE): 0:(-1.0,2.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(770.0,765.0)
+:Sending Touch (ACTION_UP): 0:(759.89746,778.5321)
+:Sending Trackball (ACTION_MOVE): 0:(-5.0,-2.0)
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,-5.0)
+:Sending Touch (ACTION_DOWN): 0:(595.0,368.0)
+:Sending Touch (ACTION_UP): 0:(590.80695,379.33124)
+:Sending Touch (ACTION_DOWN): 0:(325.0,66.0)
+:Sending Touch (ACTION_UP): 0:(344.49146,130.68698)
+:Sending Touch (ACTION_DOWN): 0:(1053.0,1189.0)
+:Sending Touch (ACTION_UP): 0:(1051.5374,1190.5157)
+:Sending Trackball (ACTION_MOVE): 0:(-1.0,3.0)
+:Sending Touch (ACTION_DOWN): 0:(950.0,741.0)
+:Sending Touch (ACTION_UP): 0:(942.25116,765.011)
+:Sending Touch (ACTION_DOWN): 0:(710.0,22.0)
+    //[calendar_time:2021-06-26 21:31:28.838  system_uptime:1859390]
+    // Sending event #300
+:Sending Touch (ACTION_UP): 0:(748.8084,23.275438)
+:Sending Touch (ACTION_DOWN): 0:(644.0,585.0)
+:Sending Touch (ACTION_UP): 0:(639.37024,582.5271)
+:Sending Touch (ACTION_DOWN): 0:(389.0,416.0)
+:Sending Touch (ACTION_UP): 0:(401.20654,353.64325)
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,-1.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Touch (ACTION_DOWN): 0:(973.0,655.0)
+:Sending Touch (ACTION_UP): 0:(872.5539,674.86523)
+:Sending Touch (ACTION_DOWN): 0:(913.0,1234.0)
+:Sending Touch (ACTION_UP): 0:(914.36316,1233.9575)
+:Sending Touch (ACTION_DOWN): 0:(75.0,906.0)
+:Sending Touch (ACTION_UP): 0:(78.006226,905.4021)
+:Sending Touch (ACTION_DOWN): 0:(327.0,144.0)
+:Sending Touch (ACTION_UP): 0:(319.268,155.60933)
+:Sending Touch (ACTION_DOWN): 0:(356.0,1836.0)
+:Sending Touch (ACTION_UP): 0:(343.78308,1874.5548)
+:Sending Touch (ACTION_DOWN): 0:(966.0,117.0)
+:Sending Touch (ACTION_UP): 0:(958.998,95.37618)
+:Sending Trackball (ACTION_MOVE): 0:(4.0,-5.0)
+:Sending Flip keyboardOpen=false
+Got IOException performing flipjava.io.FileNotFoundException: /dev/input/event0: open failed: EACCES (Permission denied)
+    // Injection Failed
+:Sending Flip keyboardOpen=true
+Got IOException performing flipjava.io.FileNotFoundException: /dev/input/event0: open failed: EACCES (Permission denied)
+    // Injection Failed
+:Sending Trackball (ACTION_MOVE): 0:(-4.0,1.0)
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.example.mylego/.BottomMenu;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.mylego/.BottomMenu } in package com.example.mylego
+:Sending Touch (ACTION_DOWN): 0:(811.0,985.0)
+:Sending Touch (ACTION_UP): 0:(832.7882,970.5184)
+:Sending Touch (ACTION_DOWN): 0:(753.0,863.0)
+    //[calendar_time:2021-06-26 21:31:30.303  system_uptime:1860854]
+    // Sending event #400
+:Sending Touch (ACTION_UP): 0:(836.8467,952.2338)
+:Sending Trackball (ACTION_MOVE): 0:(4.0,-4.0)
+:Sending Touch (ACTION_DOWN): 0:(132.0,543.0)
+:Sending Touch (ACTION_UP): 0:(188.90482,525.84375)
+:Sending Touch (ACTION_DOWN): 0:(469.0,1002.0)
+:Sending Touch (ACTION_UP): 0:(409.0396,954.4608)
+:Sending Trackball (ACTION_MOVE): 0:(2.0,3.0)
+:Sending Trackball (ACTION_UP): 0:(0.0,0.0)
+:Sending Trackball (ACTION_MOVE): 0:(2.0,-4.0)
+:Sending Touch (ACTION_DOWN): 0:(23.0,726.0)
+:Sending Touch (ACTION_UP): 0:(43.970966,783.7977)
+:Sending Touch (ACTION_DOWN): 0:(967.0,270.0)
+:Sending Touch (ACTION_UP): 0:(962.7321,263.48898)
+:Sending Touch (ACTION_DOWN): 0:(378.0,1660.0)
+:Sending Touch (ACTION_UP): 0:(379.46106,1655.7216)
+Events injected: 500
+:Sending rotation degree=0, persist=false
+:Dropped: keys=0 pointers=0 trackballs=0 flips=4 rotations=0
+## Network stats: elapsed time=10463ms (0ms mobile, 0ms wifi, 10463ms not connected)
+// Monkey finished

@@ -44,5 +44,5 @@ REST:
 ## Project requirements
 ### Testing
 - 3 unit tests
-- log from monkey test
+- log from monkey test (provided in repo - monkey_log.txt)
 - 3 espresso tests

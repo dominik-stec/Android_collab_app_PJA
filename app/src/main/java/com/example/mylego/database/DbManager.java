@@ -261,7 +261,7 @@ public class DbManager {
 
     // =============================================================================================
     public ArrayList<Map<String, String>> getAllEntries(int limit) {
-        Log.d("DEBUG", String.format("==> getAllSets"));
+        //Log.d("DEBUG", String.format("==> getAllSets"));
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
@@ -299,7 +299,7 @@ public class DbManager {
 
     // ---------------------------------------------------------------------------------------------
     public ArrayList<Map<String, String>> getEntriesByName(String setName) {
-        Log.d("DEBUG", String.format("==> getEntryByName: %s", setName));
+        //Log.d("DEBUG", String.format("==> getEntryByName: %s", setName));
 
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
 
@@ -334,7 +334,7 @@ public class DbManager {
 
     //==============================================================================================
     public ArrayList<Map<String, String>> getQueryResults(Cursor cursor) {
-        Log.d("DEBUG", String.format("==> getQueryResults"));
+        //Log.d("DEBUG", String.format("==> getQueryResults"));
         ArrayList<Map<String, String>> results = new ArrayList<>();
 
         cursor.moveToFirst();
@@ -356,7 +356,7 @@ public class DbManager {
         for (int columnIndex = 0; columnIndex < cursor.getColumnCount(); columnIndex++) {
             String currentCursorColumnName = cursor.getColumnName(columnIndex);
             String currentCursorColumnValue = cursor.getString(columnIndex);
-            Log.d("DEBUG", String.format("Column name: %s\tValue: %s", currentCursorColumnName, currentCursorColumnValue));
+            //Log.d("DEBUG", String.format("Column name: %s\tValue: %s", currentCursorColumnName, currentCursorColumnValue));
             result.put(currentCursorColumnName, currentCursorColumnValue);
         }
         return result;
