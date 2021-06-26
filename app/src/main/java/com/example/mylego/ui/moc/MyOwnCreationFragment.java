@@ -59,13 +59,13 @@ public class MyOwnCreationFragment extends Fragment {
         binding = FragmentMocBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textMoc;
-        myOwnCreationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        final TextView textView = binding.textMoc;
+//        myOwnCreationViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
 
         // Create RecyclerView
         mRecyclerView = root.findViewById(R.id.mocRecyclerView);
