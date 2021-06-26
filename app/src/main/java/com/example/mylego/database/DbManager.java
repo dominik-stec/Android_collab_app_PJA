@@ -256,6 +256,7 @@ public class DbManager {
     public ArrayList<Map<String, String>> getAllEntries() {
         return getAllEntries(0);
     }
+
     // =============================================================================================
     public ArrayList<Map<String, String>> getAllEntries(int limit) {
         Log.d("DEBUG", String.format("==> getAllSets"));
@@ -329,7 +330,7 @@ public class DbManager {
         return getQueryResults(cursor);
     }
 
-    //----------------------------------------------------------------------------------------------
+    //==============================================================================================
     public ArrayList<Map<String, String>> getQueryResults(Cursor cursor) {
         Log.d("DEBUG", String.format("==> getQueryResults"));
         ArrayList<Map<String, String>> results = new ArrayList<>();
@@ -346,7 +347,7 @@ public class DbManager {
         return results;
     }
 
-    //----------------------------------------------------------------------------------------------
+    //==============================================================================================
     public Map<String, String> getQueryResultAsSingleDbRow(Cursor cursor) {
         Map<String, String> result = new HashMap<>();
 
@@ -359,7 +360,7 @@ public class DbManager {
         return result;
     }
 
-    //----------------------------------------------------------------------------------------------
+    //==============================================================================================
     public BricksSingleSet convertMapSetToBricksSingleSet(Map<String, String> singleSetAsMap) {
         BricksSingleSet singleSet = new BricksSingleSet();
         List<Method> singleSetMethods = Arrays.asList(singleSet.getClass().getDeclaredMethods());

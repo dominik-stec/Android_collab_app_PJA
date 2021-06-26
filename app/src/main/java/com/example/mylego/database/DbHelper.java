@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the com.example.mylego.database schema, you must increment the com.example.mylego.database version.
-    public static final int DATABASE_VERSION = 80;
+    public static final int DATABASE_VERSION = 90;
     public static final String DATABASE_NAME = "BricksSet.db";
 
     public DbHelper(Context context) {
@@ -21,6 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CreateTable.SQL_CREATE_TABLE_COLOR);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_PART);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_COLOR);
+        db.execSQL(CreateTable.SQL_CREATE_TABLE_MY_SETS);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This com.example.mylego.database is only a cache for online data, so its upgrade policy is
@@ -33,6 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CreateTable.SQL_DELETE_TABLE_COLOR);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_SUBTABLES_PART);
         db.execSQL(CreateTable.SQL_DELETE_TABLE_SUBTABLES_COLOR);
+        db.execSQL(CreateTable.SQL_DELETE_TABLE_MY_SETS);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

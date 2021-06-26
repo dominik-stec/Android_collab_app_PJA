@@ -40,11 +40,11 @@ public class SetsFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        _setsViewModel = new ViewModelProvider(this).get(SetsViewModel.class);
-        _allSetsFromDb = _setsViewModel.getSetsFromDb();
-
         _binding = FragmentSetsBinding.inflate(inflater, container, false);
         View root = _binding.getRoot();
+
+        _setsViewModel = new ViewModelProvider(this).get(SetsViewModel.class);
+        _allSetsFromDb = _setsViewModel.getSetsFromDb();
 
         // recyclerViewSetsList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295", "Porsche 911", "2021", "1458"));
         ArrayList<SetsSingleItem> recyclerViewSetsList = new ArrayList<>();
@@ -75,16 +75,12 @@ public class SetsFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         _binding = null;
     }
 
+    //==============================================================================================
     public SetsSingleItem bricksSingleSetAdapter(BricksSingleSet singleSet, ArrayList<Uri> thumbnailList) {
         SetsSingleItem result = new SetsSingleItem();
         result.setSetNum(singleSet.getSet_number());
@@ -101,8 +97,8 @@ public class SetsFragment extends Fragment {
 
         return result;
     }
-    //==============================================================================================
 
+    //==============================================================================================
     public Uri findThumbnailPath(String setNumToMatch, ArrayList<Uri> thumbnailList) {
         return thumbnailList
                 .stream()

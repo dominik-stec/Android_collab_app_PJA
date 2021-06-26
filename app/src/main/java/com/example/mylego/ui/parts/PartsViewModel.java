@@ -14,13 +14,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mylego.R;
-import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
-import com.example.mylego.database.DbPartsManager;
 import com.example.mylego.database.DbSinglePartsManager;
 import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.domain.Part;
-import com.example.mylego.rest.domain.PartsSingleSet;
 import com.example.mylego.ui.Utils;
 
 import java.io.BufferedInputStream;
@@ -36,13 +33,13 @@ public class PartsViewModel extends AndroidViewModel {
 
 
 
-    private boolean _partsInDbSetsOnly = false;
+    private final boolean _partsInDbSetsOnly = false;
 
 
 
 
+    private final ArrayList<Part> _partsForAllDbSets;
     private ArrayList<BricksSingleSet> _setsFromDbAll = null;
-    private Map<String, ArrayList<Part>> _partsForAllDbSets;
 
     private MutableLiveData<ArrayList<Uri>> _thumbnailsPathsList;
 
@@ -53,13 +50,17 @@ public class PartsViewModel extends AndroidViewModel {
         DbManager dbSets = new DbManager(application.getApplicationContext());
         DbSinglePartsManager dbParts = new DbSinglePartsManager(application.getApplicationContext());
 
+        _thumbnailsPathsList = new MutableLiveData<>();
+
         if (_partsInDbSetsOnly) {
             _setsFromDbAll = dbSets.getAllSets(50);
             if (_setsFromDbAll.size() == 50) {
                 _partsForAllDbSets = getPartsForAllSets(dbParts, _setsFromDbAll);
+                loadPartsImages();
             }
         } else {
             _partsForAllDbSets = getPartsForAllSets(dbParts);
+            loadPartsImages();
         }
     }
 
@@ -69,7 +70,7 @@ public class PartsViewModel extends AndroidViewModel {
     }
 
     //==============================================================================================
-    public Map<String, ArrayList<Part>> getPartsForAllDbSets() {
+    public ArrayList<Part> getPartsFromDb() {
         return this._partsForAllDbSets;
     }
 
@@ -115,21 +116,66 @@ public class PartsViewModel extends AndroidViewModel {
         @Override
         protected void onPostExecute(Map<String, Bitmap> result) {
             Log.d("SetsView-AsyncImageDownload", "Images ready, posting...");
-            //_thumbnailsPathsList.postValue(Utils.saveBitmapsToInternalStorage(appContext, result, "PartsImages"));
+            _thumbnailsPathsList.postValue(Utils.saveBitmapsToInternalStorage(appContext, result, "PartsImages"));
         }
     }
 
+    private void loadPartsImages() {
+        Log.d("SetsView-loadSetsImages", "==> loadSetsImages()");
+        URL[] urlsArray = getImagesURLs(_partsForAllDbSets);
+        String[] numbersArray = getPartsNumbers(_partsForAllDbSets);
+
+        Map<String, URL> numbersWithURLsAsMap = getPartsNumsWithURLs(numbersArray, urlsArray);
+
+//        for (Map.Entry<String, URL> entry : setsNumWithURLs.entrySet()) {
+//            Log.d("SetsView-loadSetsImages", String.format("SetNum as key: %s | SetURL as value: %s", entry.getKey(), entry.getValue()));
+//        }
+        new AsyncImageDownload().execute(numbersWithURLsAsMap);
+    }
+
     //==============================================================================================
-    private Map<String, ArrayList<Part>> getPartsForAllSets(DbSinglePartsManager partsDb) {
+    private Map<String, URL> getPartsNumsWithURLs(String[] setNumbers, URL[] urls) {
+        Log.d("SetsView-getSetsNumsWithURLs", String.format("==> Preparing map"));
+        Map<String, URL> dataMap = new HashMap<>();
+        for (int i = 0; i < urls.length; i++) {
+            dataMap.put(setNumbers[i], urls[i]);
+        }
+        return dataMap;
+    }
+
+    //==============================================================================================
+    private URL[] getImagesURLs(ArrayList<Part> listOfParts) {
+        ArrayList<URL> urlsList = new ArrayList<>();
+        for (Part singlePart : listOfParts) {
+            Log.d("SetsView-getImagesURLs", String.format("Adding URL: %s", singlePart.getPart_img_url()));
+            urlsList.add(Utils.convertStringToURL(singlePart.getPart_img_url()));
+        }
+        URL[] urls = new URL[ urlsList.size() ];
+        return urlsList.toArray(urls);
+    }
+
+    //==============================================================================================
+    private String[] getPartsNumbers(ArrayList<Part> listOfParts) {
+        ArrayList<String> partsNumbersList = new ArrayList<>();
+        for (Part singlePart : listOfParts) {
+            //Log.d("SetsView-getSetsNumbers", String.format("Adding setNumber: %s", singleSet.getSet_number()));
+            partsNumbersList.add(singlePart.getPart_num());
+        }
+        String[] numbersList = new String[ partsNumbersList.size() ];
+        return partsNumbersList.toArray(numbersList);
+    }
+
+    //==============================================================================================
+    private ArrayList<Part> getPartsForAllSets(DbSinglePartsManager partsDb) {
         return getPartsForAllSets(partsDb, null);
     }
     //==============================================================================================
-    private Map<String, ArrayList<Part>> getPartsForAllSets(
+    private ArrayList<Part> getPartsForAllSets(
             DbSinglePartsManager partsDb,
             ArrayList<BricksSingleSet> setsListFromDb
     ) {
-        Map<String, ArrayList<Part>> result = new HashMap<>();
-        Map<String, ArrayList<Part>> allPartsFromSets = new HashMap<>();
+        ArrayList<Part> result = new ArrayList<>();
+        ArrayList<Part> allPartsFromSets = new ArrayList<>();
         ArrayList<Part> allPartsFromDb = new ArrayList<>();
 
         if (setsListFromDb == null) {
@@ -139,12 +185,12 @@ public class PartsViewModel extends AndroidViewModel {
             for (Part partSet : allPartsFromDb) {
                 Log.d("PartsView-getPartsForAllSets", String.format("Part from set: %s", partSet.getSet_num()));
             }
-            result.put("All-Parts", allPartsFromDb);
+            result = allPartsFromDb;
         } else {
             for (BricksSingleSet singleSet : setsListFromDb) {
                 String currentSetNum = singleSet.getSet_number();
                 Log.d("PartsView-getPartsForAllSets", String.format("Current set: %s", currentSetNum));
-                allPartsFromSets.put(currentSetNum, partsDb.getSinglePartsBySetNum(currentSetNum));
+                allPartsFromSets = partsDb.getSinglePartsBySetNum(currentSetNum);
             }
             result = allPartsFromSets;
         }

@@ -12,41 +12,48 @@ import com.example.mylego.R;
 
 import java.util.ArrayList;
 
-public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.ExampleViewHolder> {
+public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.PartsListItemViewHolder> {
+    private ArrayList<PartSingleItem> _partsDataList;
 
-    private ArrayList<PartSingleItem> mExampleList;
+    public static class PartsListItemViewHolder extends RecyclerView.ViewHolder {
+        public ImageView thumbnailImageView;
+        public TextView partNumTextView;
+        public TextView partNameTextView;
 
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mPartNumTextView;
-        public TextView mPartNameTextView;
-        public ExampleViewHolder(View itemView) {
+        public PartsListItemViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mPartNumTextView = itemView.findViewById(R.id.part_num);
-            mPartNameTextView = itemView.findViewById(R.id.part_name);
+            thumbnailImageView = itemView.findViewById(R.id.imageView);
+            partNumTextView = itemView.findViewById(R.id.part_num);
+            partNameTextView = itemView.findViewById(R.id.part_name);
         }
     }
-    public PartsAdapter(ArrayList<PartSingleItem> exampleList) {
-        mExampleList = exampleList;
+    public PartsAdapter(ArrayList<PartSingleItem> partsDataList) {
+        _partsDataList = partsDataList;
     }
 
     @Override
-    public PartsAdapter.ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.part_item_card, parent, false);
-        PartsAdapter.ExampleViewHolder evh = new PartsAdapter.ExampleViewHolder(v);
-        return evh;
+    public PartsListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View listItem = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.part_item_card, parent, false);
+        return new PartsListItemViewHolder(listItem);
     }
     @Override
-    public void onBindViewHolder(PartsAdapter.ExampleViewHolder holder, int position) {
-        PartSingleItem currentItem = mExampleList.get(position);
-        holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mPartNumTextView.setText(currentItem.getPartNumber());
-        holder.mPartNameTextView.setText(currentItem.getPartName());
+    public void onBindViewHolder(PartsListItemViewHolder holder, int itemPosition) {
+        PartSingleItem currentItem = _partsDataList.get(itemPosition);
+
+        holder.partNumTextView.setText(currentItem.getPartNumber());
+        holder.partNameTextView.setText(currentItem.getPartName());
+
+        if (currentItem.getThumbnailPath() != null) {
+            holder.thumbnailImageView.setImageURI(currentItem.getThumbnailPath());
+        } else {
+            holder.thumbnailImageView.setImageResource(currentItem.getImageResource());
+        }
     }
     @Override
     public int getItemCount() {
-        return mExampleList.size();
+        return _partsDataList.size();
     }
 
 }

@@ -43,6 +43,7 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.SetsListItemVi
     @Override
     public void onBindViewHolder(SetsListItemViewHolder holder, int itemPosition) {
         SetsSingleItem currentItem = _setsDataList.get(itemPosition);
+
         holder.setNumAndSetNameTextView.setText(String.format("%s %s", currentItem.getSetNum(), currentItem.getSetName()));
         holder.setYearTextView.setText(currentItem.getSetYear());
         holder.setNumPartsTextView.setText(currentItem.getSetNumParts());
