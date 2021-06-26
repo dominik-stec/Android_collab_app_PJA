@@ -53,10 +53,9 @@
             android:id="@+id/set_num_parts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/set_year"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/imageView"
+            android:layout_alignBottom="@+id/set_year"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
             android:text="@string/set_num_parts" />
 
         <LinearLayout

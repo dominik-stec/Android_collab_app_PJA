@@ -29,4 +29,5 @@
     <string name="moc_parts_num">My MOC parts number</string>
     <string name="btn_moc_add">Add</string>
     <string name="btn_moc_cancel">Cancel</string>
+    <string name="moc_text_search_placeholder">Search name</string>
 </resources>

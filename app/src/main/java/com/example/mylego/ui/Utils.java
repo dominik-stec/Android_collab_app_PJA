@@ -23,18 +23,6 @@ import java.util.Map;
 public class Utils {
     public Utils() { }
 
-    public static Bitmap convertVectorDrawableToBmp(Context context, int drawableId) {
-        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
-
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
-
     //==============================================================================================
     public static URL convertStringToURL(String urlString) {
         if (urlString == null) {
@@ -49,6 +37,23 @@ public class Utils {
         }
         return null;
     }
+
+    //==============================================================================================
+    public static Bitmap convertVectorDrawableToBmp(Context context, int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+
+        Bitmap bitmap = Bitmap.createBitmap(
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888
+        );
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
     //==============================================================================================
     public static ArrayList<Uri> saveBitmapsToInternalStorage(Context appContext, Map<String, Bitmap> bitmaps, String desiredDirName) {
         ArrayList<Uri> imagesPathsList = new ArrayList<>();

@@ -46,7 +46,7 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.SetsListItemVi
 
         holder.setNumAndSetNameTextView.setText(String.format("%s %s", currentItem.getSetNum(), currentItem.getSetName()));
         holder.setYearTextView.setText(currentItem.getSetYear());
-        holder.setNumPartsTextView.setText(currentItem.getSetNumParts());
+        holder.setNumPartsTextView.setText(String.format("(%s)", currentItem.getSetNumParts()));
 
         if (currentItem.getThumbnailPath() != null) {
             holder.thumbnailImageView.setImageURI(currentItem.getThumbnailPath());

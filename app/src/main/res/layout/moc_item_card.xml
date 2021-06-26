@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     app:barrierMargin="4dp"
-    app:cardBackgroundColor="#14673AB7">
+    app:cardBackgroundColor="#14673AB7"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,25 +48,27 @@
             android:text="@string/moc_parts_num"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-        <Button
-            android:id="@+id/btn_moc_delete"
-            android:layout_width="128dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="115dp"
-            android:insetLeft="16dp"
-            android:text="@string/btn_moc_remove"/>
 
-        <Button
-            android:id="@+id/btn_moc_edit"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="115dp"
-            android:insetLeft="16dp"
-            android:text="@string/btn_moc_edit" />
+            <Button
+                android:id="@+id/btn_moc_delete"
+                android:layout_width="128dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="115dp"
+                android:insetLeft="16dp"
+                android:text="@string/btn_moc_remove" />
+
+            <Button
+                android:id="@+id/btn_moc_edit"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="115dp"
+                android:insetLeft="16dp"
+                android:text="@string/btn_moc_edit" />
 
         </LinearLayout>
     </RelativeLayout>

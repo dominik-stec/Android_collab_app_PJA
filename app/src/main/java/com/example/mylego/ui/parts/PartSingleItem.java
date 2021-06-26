@@ -3,17 +3,15 @@ package com.example.mylego.ui.parts;
 import android.net.Uri;
 
 public class PartSingleItem {
-    private int imageResource;
+
     private String partNumber;
     private String partName;
     private String imageUrl;
+    private int imageRes;
     private Uri thumbnailPath;
 
     public PartSingleItem() { }
 
-    public int getImageResource() {
-        return imageResource;
-    }
     public String getPartNumber() {
         return partNumber;
     }
@@ -23,12 +21,15 @@ public class PartSingleItem {
     public String getImageUrl() {
         return imageUrl;
     }
+    public int getImageRes() {
+        return imageRes;
+    }
     public Uri getThumbnailPath() {
         return thumbnailPath;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+    public void setImageRes(int imageResource) {
+        this.imageRes = imageResource;
     }
     public void setPartNumber(String partNumber) {
         this.partNumber = partNumber;

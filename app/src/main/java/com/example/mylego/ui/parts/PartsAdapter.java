@@ -48,7 +48,7 @@ public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.PartsListIte
         if (currentItem.getThumbnailPath() != null) {
             holder.thumbnailImageView.setImageURI(currentItem.getThumbnailPath());
         } else {
-            holder.thumbnailImageView.setImageResource(currentItem.getImageResource());
+            holder.thumbnailImageView.setImageResource(currentItem.getImageRes());
         }
     }
     @Override

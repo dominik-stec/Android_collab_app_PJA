@@ -24,7 +24,7 @@ public class BottomMenu extends AppCompatActivity {
 
         //initialise database and come back here
         //only once if database not exist
-        if(!isTableExists("brick_set")) {
+        if(!dbTableExists("brick_set")) {
             int INIT_DATABASE = 1;
             Intent i = new Intent(this, MainActivity.class);
             startActivityForResult(i, INIT_DATABASE);
@@ -46,7 +46,7 @@ public class BottomMenu extends AppCompatActivity {
 
     }
 
-    public boolean isTableExists(String tableName) {
+    public boolean dbTableExists(String tableName) {
         SQLiteDatabase mDatabase = openOrCreateDatabase("BricksSet.db", Context.MODE_PRIVATE,null);
 
         Cursor c = null;

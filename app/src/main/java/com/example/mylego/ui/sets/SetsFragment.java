@@ -83,11 +83,13 @@ public class SetsFragment extends Fragment {
     //==============================================================================================
     public SetsSingleItem bricksSingleSetAdapter(BricksSingleSet singleSet, ArrayList<Uri> thumbnailList) {
         SetsSingleItem result = new SetsSingleItem();
+
         result.setSetNum(singleSet.getSet_number());
         result.setSetName(singleSet.getName());
         result.setSetYear(String.valueOf(singleSet.getYear()));
+        result.setSetNumParts(String.valueOf(singleSet.getNumber_of_parts()));
         result.setImageUrl(singleSet.getImage_url());
-        result.setImageResource(R.drawable.ic_baseline_web_asset_24);
+        result.setImageResource(R.drawable.ic_noun_lego_brick_847002);
 
         if (thumbnailList != null) {
             //Log.d("SetsFragment-bricksSingleSetAdapter", String.format("Uri list NOT NULL"));

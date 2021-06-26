@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylego.R;
 import com.example.mylego.databinding.FragmentPartsBinding;
-import com.example.mylego.rest.domain.BricksSingleSet;
 import com.example.mylego.rest.domain.Part;
-import com.example.mylego.ui.sets.SetsSingleItem;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -45,17 +43,11 @@ public class PartsFragment extends Fragment {
         _partsViewModel = new ViewModelProvider(this).get(PartsViewModel.class);
         _allPartsFromDb = _partsViewModel.getPartsFromDb();
 
-        // recyclerViewSetsList.add(new SetsSingleItem(R.drawable.ic_baseline_web_asset_24, "10295", "Porsche 911", "2021", "1458"));
+        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Plate 2 x 3", "3021"));
         ArrayList<PartSingleItem> recyclerViewPartsList = new ArrayList<>();
         for (Part singlePart : _allPartsFromDb) {
             recyclerViewPartsList.add(singlePartAdapter(singlePart, _thumbnailsPathsList));
         }
-
-        // ArrayList<PartSingleItem> exampleList = new ArrayList<>();
-        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Plate 2 x 3", "3021"));
-        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Brick 2 x 4", "3001 / 15589"));
-        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Slope 1 x 2", "3040 / 6270"));
-        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Tile 2 x 2 with Groove", "3068 / 63327"));
 
         _recyclerView = root.findViewById(R.id.partsRecyclerView);
         _recyclerView.setHasFixedSize(true);
@@ -88,10 +80,11 @@ public class PartsFragment extends Fragment {
     //==============================================================================================
     public PartSingleItem singlePartAdapter(Part singlePart, ArrayList<Uri> thumbnailList) {
         PartSingleItem result = new PartSingleItem();
+
         result.setPartNumber(singlePart.getPart_num());
         result.setPartName(singlePart.getName());
         result.setImageUrl(singlePart.getPart_img_url());
-        result.setImageResource(R.drawable.ic_baseline_web_asset_24);
+        result.setImageRes(R.drawable.ic_noun_lego_brick_847002);
 
         if (thumbnailList != null) {
             //Log.d("SetsFragment-bricksSingleSetAdapter", String.format("Uri list NOT NULL"));

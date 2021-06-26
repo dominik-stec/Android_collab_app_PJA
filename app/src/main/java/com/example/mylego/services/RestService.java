@@ -3,6 +3,8 @@ package com.example.mylego.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.mylego.BottomMenu;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbMinifigsManager;
 import com.example.mylego.database.DbPartsManager;
@@ -114,12 +116,6 @@ public class RestService extends IntentService {
             }
 
             });
-
-
-
-
-
-
     }
 
     public void startMinifigsRest() {

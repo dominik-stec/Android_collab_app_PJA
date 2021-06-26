@@ -98,7 +98,7 @@ public class PartsViewModel extends AndroidViewModel {
                 Bitmap currentBmp = null;
 
                 if (currentUrl == null) {
-                    currentBmp = Utils.convertVectorDrawableToBmp(appContext, R.drawable.ic_baseline_web_asset_24);
+                    currentBmp = Utils.convertVectorDrawableToBmp(appContext, R.drawable.ic_noun_lego_brick_847002);
                 } else {
                     try {
                         InputStream imageToDownload = currentUrl.openStream();
