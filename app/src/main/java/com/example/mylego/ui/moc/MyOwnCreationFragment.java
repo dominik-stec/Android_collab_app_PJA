@@ -48,10 +48,10 @@ public class MyOwnCreationFragment extends Fragment {
 
         // Add example list
         exampleList = new ArrayList<>();
-        exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "House", "220"));
-        exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "Crazy Rabbit", "50"));
-        exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "Tower", "120"));
-        exampleList.add(new MocSingleItem(R.drawable.ic_baseline_web_asset_24, "Moc 123", "123"));
+        exampleList.add(new MocSingleItem(R.drawable.ic_noun_legos_1133413, "House", "220"));
+        exampleList.add(new MocSingleItem(R.drawable.ic_noun_lego_106255, "Crazy Rabbit", "50"));
+        exampleList.add(new MocSingleItem(R.drawable.ic_noun_legos_1133413, "Tower", "120"));
+        exampleList.add(new MocSingleItem(R.drawable.ic_noun_lego_106255, "Moc 123", "123"));
 
         myOwnCreationViewModel =
                 new ViewModelProvider(this).get(MyOwnCreationViewModel.class);
