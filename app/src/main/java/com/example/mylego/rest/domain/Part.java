@@ -7,93 +7,93 @@ import java.io.Serializable;
 
 public class Part implements Serializable {
 
-    Integer id;
+    Integer _id;
 
-    String setNum;
+    String set_num;
 
     @SerializedName("part_num")
     @Expose
-    String partNum;
+    String part_num;
 
     @SerializedName("name")
     @Expose
-    String partName;
+    String name;
 
     @SerializedName("part_cat_id")
     @Expose
-    Integer partCatId;
+    Integer part_cat_id;
 
     @SerializedName("part_url")
     @Expose
-    String partUrl;
+    String part_url;
 
     @SerializedName("part_img_url")
     @Expose
-    String partImgUrl;
+    String part_img_url;
 
-    String partColor;
+    String color_name;
 
-    public Integer getId() {
-        return id;
+    public Integer get_id() {
+        return _id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void set_id(Integer id) {
+        this._id = id;
     }
 
-    public String getSetNum() {
-        return setNum;
+    public String getSet_num() {
+        return set_num;
     }
 
-    public void setSetNum(String setNum) {
-        this.setNum = setNum;
+    public void setSet_num(String setNum) {
+        this.set_num = setNum;
     }
 
-    public String getPartNum() {
-        return partNum;
+    public String getPart_num() {
+        return part_num;
     }
 
-    public void setPartNum(String partNum) {
-        this.partNum = partNum;
+    public void setPart_num(String partNum) {
+        this.part_num = partNum;
     }
 
-    public String getPartName() {
-        return partName;
+    public String getName() {
+        return name;
     }
 
-    public void setPartName(String partName) {
-        this.partName = partName;
+    public void setName(String partName) {
+        this.name = partName;
     }
 
-    public Integer getPartCatId() {
-        return partCatId;
+    public Integer getPart_cat_id() {
+        return part_cat_id;
     }
 
-    public void setPartCatId(Integer partCatId) {
-        this.partCatId = partCatId;
+    public void setPart_cat_id(Integer partCatId) {
+        this.part_cat_id = partCatId;
     }
 
-    public String getPartUrl() {
-        return partUrl;
+    public String getPart_url() {
+        return part_url;
     }
 
-    public void setPartUrl(String partUrl) {
-        this.partUrl = partUrl;
+    public void setPart_url(String partUrl) {
+        this.part_url = partUrl;
     }
 
-    public String getPartImgUrl() {
-        return partImgUrl;
+    public String getPart_img_url() {
+        return part_img_url;
     }
 
-    public void setPartImgUrl(String partImgUrl) {
-        this.partImgUrl = partImgUrl;
+    public void setPart_img_url(String partImgUrl) {
+        this.part_img_url = partImgUrl;
     }
 
-    public String getPartColor() {
-        return partColor;
+    public String getColor_name() {
+        return color_name;
     }
 
-    public void setPartColor(String partColor) {
-        this.partColor = partColor;
+    public void setColor_name(String partColor) {
+        this.color_name = partColor;
     }
 }

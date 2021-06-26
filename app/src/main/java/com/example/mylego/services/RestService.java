@@ -268,15 +268,15 @@ public class RestService extends IntentService {
 
                     Part part = value[i].getPart();
 
-                    db.setId(part.getId());
+                    db.setId(part.get_id());
 
                     db.setSetNum(value[i].getSet_num());
 
-                    db.setPartNum(part.getPartNum());
-                    db.setPartName(part.getPartName());
-                    db.setPartCatId(part.getPartCatId());
-                    db.setPartUrl(part.getPartUrl());
-                    db.setPartImgUrl(part.getPartImgUrl());
+                    db.setPartNum(part.getPart_num());
+                    db.setPartName(part.getName());
+                    db.setPartCatId(part.getPart_cat_id());
+                    db.setPartUrl(part.getPart_url());
+                    db.setPartImgUrl(part.getPart_img_url());
 
                     db.setPartColor(value[i].getColor().getName());
 

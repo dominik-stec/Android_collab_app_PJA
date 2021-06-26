@@ -17,7 +17,9 @@ import com.example.mylego.R;
 import com.example.mylego.database.CreateTable;
 import com.example.mylego.database.DbManager;
 import com.example.mylego.database.DbPartsManager;
+import com.example.mylego.database.DbSinglePartsManager;
 import com.example.mylego.rest.domain.BricksSingleSet;
+import com.example.mylego.rest.domain.Part;
 import com.example.mylego.rest.domain.PartsSingleSet;
 import com.example.mylego.ui.Utils;
 
@@ -31,9 +33,16 @@ import java.util.Map;
 
 public class PartsViewModel extends AndroidViewModel {
 
-    private ArrayList<BricksSingleSet> _setsFromDbAll = null;
-    private Map<String, ArrayList<PartsSingleSet>> _partsForAllDbSets;
+
+
+
     private boolean _partsInDbSetsOnly = false;
+
+
+
+
+    private ArrayList<BricksSingleSet> _setsFromDbAll = null;
+    private Map<String, ArrayList<Part>> _partsForAllDbSets;
 
     private MutableLiveData<ArrayList<Uri>> _thumbnailsPathsList;
 
@@ -42,7 +51,7 @@ public class PartsViewModel extends AndroidViewModel {
         super(application);
 
         DbManager dbSets = new DbManager(application.getApplicationContext());
-        DbPartsManager dbParts = new DbPartsManager(application.getApplicationContext());
+        DbSinglePartsManager dbParts = new DbSinglePartsManager(application.getApplicationContext());
 
         if (_partsInDbSetsOnly) {
             _setsFromDbAll = dbSets.getAllSets(50);
@@ -60,7 +69,7 @@ public class PartsViewModel extends AndroidViewModel {
     }
 
     //==============================================================================================
-    public Map<String, ArrayList<PartsSingleSet>> getPartsForAllDbSets() {
+    public Map<String, ArrayList<Part>> getPartsForAllDbSets() {
         return this._partsForAllDbSets;
     }
 
@@ -111,31 +120,31 @@ public class PartsViewModel extends AndroidViewModel {
     }
 
     //==============================================================================================
-    private Map<String, ArrayList<PartsSingleSet>> getPartsForAllSets(DbPartsManager partsDb) {
+    private Map<String, ArrayList<Part>> getPartsForAllSets(DbSinglePartsManager partsDb) {
         return getPartsForAllSets(partsDb, null);
     }
     //==============================================================================================
-    private Map<String, ArrayList<PartsSingleSet>> getPartsForAllSets(
-            DbPartsManager partsDb,
+    private Map<String, ArrayList<Part>> getPartsForAllSets(
+            DbSinglePartsManager partsDb,
             ArrayList<BricksSingleSet> setsListFromDb
     ) {
-        Map<String, ArrayList<PartsSingleSet>> result = new HashMap<>();
-        Map<String, ArrayList<PartsSingleSet>> allPartsFromSets = new HashMap<>();
-        ArrayList<PartsSingleSet> allPartsFromDb = new ArrayList<>();
+        Map<String, ArrayList<Part>> result = new HashMap<>();
+        Map<String, ArrayList<Part>> allPartsFromSets = new HashMap<>();
+        ArrayList<Part> allPartsFromDb = new ArrayList<>();
 
         if (setsListFromDb == null) {
             Log.d("PartsView-getPartsForAllSets", String.format("setsListFromDb.isEmpty()"));
-            allPartsFromDb = partsDb.getPartsSingleSetBySetNum(null);
+            allPartsFromDb = partsDb.getSinglePartsBySetNum(null);
 
-            for (PartsSingleSet partsSet : allPartsFromDb) {
-                Log.d("PartsView-getPartsForAllSets", String.format("Part from set: %s", partsSet.getSet_num()));
+            for (Part partSet : allPartsFromDb) {
+                Log.d("PartsView-getPartsForAllSets", String.format("Part from set: %s", partSet.getSet_num()));
             }
             result.put("All-Parts", allPartsFromDb);
         } else {
             for (BricksSingleSet singleSet : setsListFromDb) {
                 String currentSetNum = singleSet.getSet_number();
                 Log.d("PartsView-getPartsForAllSets", String.format("Current set: %s", currentSetNum));
-                allPartsFromSets.put(currentSetNum, partsDb.getPartsSingleSetBySetNum(currentSetNum));
+                allPartsFromSets.put(currentSetNum, partsDb.getSinglePartsBySetNum(currentSetNum));
             }
             result = allPartsFromSets;
         }

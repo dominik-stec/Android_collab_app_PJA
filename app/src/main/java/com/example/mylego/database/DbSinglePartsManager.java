@@ -5,9 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
+
 import com.example.mylego.rest.domain.Part;
+import com.example.mylego.rest.domain.PartsSingleSet;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DbSinglePartsManager {
 
@@ -22,6 +32,7 @@ public class DbSinglePartsManager {
     String partImgUrl;
     String partColor;
 
+    //=== CONSTRUCTORS =============================================================================
     public DbSinglePartsManager(Context context) {
         this.dbHelper = new DbHelper(context);
 
@@ -36,8 +47,7 @@ public class DbSinglePartsManager {
 
     }
 
-
-
+    //=== PUBLIC METHODS ===========================================================================
     public long commitIntoDb() {
         // Gets the data repository in write mode
         SQLiteDatabase dbWrite = dbHelper.getWritableDatabase();
@@ -60,51 +70,7 @@ public class DbSinglePartsManager {
         return newRowId;
     }
 
-    public ArrayList<Part> getSinglePartsBySetNum(String setNum) {
-
-        ArrayList<Part> partsList = new ArrayList<>();
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        String[] projection = {
-                CreateTable.TableEntrySinglePart._ID,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING,
-                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING
-        };
-
-        String selection = CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING + "=?";
-
-        String[] selectionArgs = {setNum};
-
-        Cursor cursor = db.query(CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS, projection, selection, selectionArgs, null, null, null);
-
-        if (cursor.moveToFirst()) {
-
-            do {
-                Part part = new Part();
-
-                part.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart._ID)));
-                part.setSetNum(setNum);
-                part.setPartNum(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING)));
-                part.setPartName(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING)));
-                part.setPartCatId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER)));
-                part.setPartUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING)));
-                part.setPartImgUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING)));
-                part.setPartColor(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING)));
-
-                partsList.add(part);
-
-            } while (cursor.moveToNext());
-
-        }
-        return partsList;
-    }
-
+    //==============================================================================================
     public HashMap<Long, String> selectStringQuery(String columnType, int startId, int endId) {
         HashMap<Long, String> queryResult = new HashMap<Long, String>();
 
@@ -149,6 +115,7 @@ public class DbSinglePartsManager {
         return queryResult;
     }
 
+    //==============================================================================================
     public HashMap<Long, Integer> selectNumberQuery(String columnType, int startId, int endId) {
 
         HashMap<Long, Integer> queryResult = new HashMap<Long, Integer>();
@@ -205,6 +172,143 @@ public class DbSinglePartsManager {
         return queryResult;
     }
 
+    //==============================================================================================
+    public ArrayList<Part> getSinglePartsBySetNum(String setNum) {
+        Log.d("DbSinglePartsManager-getSinglePartsBySetNum", String.format("==> Getting parts for set: %s", setNum));
+
+        ArrayList<Part> partsList = new ArrayList<>();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                CreateTable.TableEntrySinglePart._ID,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_SET_NUM_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING,
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING
+        };
+
+        String selection = null;
+        String[] selectionArgs = null;
+
+        if (setNum != null) {
+            selection = CreateTable.TableEntryParts.COLUMN_NAME_PARTS_SET_NUM_STRING + "=?";
+            selectionArgs = new String[] { setNum };
+        }
+
+        Cursor cursor = db.query(
+                CreateTable.TableEntrySinglePart.COLUMN_NAME_SINGLE_PARTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Map<String, String>> queryResults = getQueryResults(cursor);
+
+        for (Map<String, String> partsSet : queryResults) {
+            partsList.add(convertMapSetToPartsSingleSet(partsSet));
+        }
+
+//        if (cursor.moveToFirst()) {
+//
+//            do {
+//                Part part = new Part();
+//
+//                part.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart._ID)));
+//                part.setSetNum(setNum);
+//                part.setPartNum(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NUM_STRING)));
+//                part.setPartName(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_NAME_STRING)));
+//                part.setPartCatId(cursor.getInt(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_CAT_ID_INTEGER)));
+//                part.setPartUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_URL_STRING)));
+//                part.setPartImgUrl(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_IMG_URL_STRING)));
+//                part.setPartColor(cursor.getString(cursor.getColumnIndexOrThrow(CreateTable.TableEntrySinglePart.COLUMN_NAME_PART_PART_COLOR_STRING)));
+//
+//                partsList.add(part);
+//
+//            } while (cursor.moveToNext());
+//
+//        }
+        return partsList;
+    }
+
+    //=== PRIVATE METHODS ==========================================================================
+    private ArrayList<Map<String, String>> getQueryResults(Cursor cursor) {
+        Log.d("DbSinglePartsManager-getSinglePartsBySetNum", String.format("==> getQueryResults"));
+        ArrayList<Map<String, String>> results = new ArrayList<>();
+
+        cursor.moveToFirst();
+        for (int rowIndex = 0; rowIndex < cursor.getCount(); rowIndex++) {
+            Map<String, String> rowData;
+            rowData = getQueryResultAsSingleDbRow(cursor);
+            results.add(rowData);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return results;
+    }
+
+    //==============================================================================================
+    private Map<String, String> getQueryResultAsSingleDbRow(Cursor cursor) {
+        Map<String, String> result = new HashMap<>();
+
+        for (int columnIndex = 0; columnIndex < cursor.getColumnCount(); columnIndex++) {
+            String currentCursorColumnName = cursor.getColumnName(columnIndex);
+            String currentCursorColumnValue = cursor.getString(columnIndex);
+            Log.d("DbSinglePartsManager-getSinglePartsBySetNum", String.format("Column name: %s\tValue: %s", currentCursorColumnName, currentCursorColumnValue));
+            result.put(currentCursorColumnName, currentCursorColumnValue);
+        }
+        return result;
+    }
+
+    //==============================================================================================
+    private Part convertMapSetToPartsSingleSet(Map<String, String> partAsMap) {
+        Log.d("DbPartsManager-convertMapSetToPartsSingleSet", String.format("==> convertMapSetToPartsSingleSet"));
+        Part singlePart = new Part();
+        List<Method> singlePartMethods = Arrays.asList(singlePart.getClass().getDeclaredMethods());
+
+        for (Map.Entry<String, String> singlePartDbColumnAsEntry : partAsMap.entrySet()) {
+            String columnName = singlePartDbColumnAsEntry.getKey().toLowerCase();
+            String columnValue = singlePartDbColumnAsEntry.getValue();
+
+            Method singlePartMatchedMethod = singlePartMethods
+                    .stream()
+                    .filter(method -> method
+                            .getName()
+                            .toLowerCase()
+                            .equals(String.format("set%s", columnName)))
+                    .collect(Collectors.toList())
+                    .get(0);
+
+            Class<?> singlePartMethodParameterType = singlePartMatchedMethod.getParameterTypes()[0];
+
+            Object parsedColumnValue = castColumnValueToType(singlePartMethodParameterType, columnValue);
+
+            try {
+                singlePartMatchedMethod.invoke(singlePart, parsedColumnValue);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return singlePart;
+    }
+
+    //==============================================================================================
+    private <Any> Any castColumnValueToType(Class<?> type, String columnValue) {
+        return (Any) (
+                type.getName().equals("java.lang.Integer")
+                        ? Integer.parseInt(columnValue)
+                        : columnValue
+        );
+    }
+
+    //=== GETTERS/SETTERS ==========================================================================
     public DbHelper getDbHelper() {
         return dbHelper;
     }
