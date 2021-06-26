@@ -51,6 +51,12 @@ public class PartsFragment extends Fragment {
             recyclerViewPartsList.add(singlePartAdapter(singlePart, _thumbnailsPathsList));
         }
 
+        // ArrayList<PartSingleItem> exampleList = new ArrayList<>();
+        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Plate 2 x 3", "3021"));
+        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Brick 2 x 4", "3001 / 15589"));
+        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Slope 1 x 2", "3040 / 6270"));
+        // exampleList.add(new PartSingleItem(R.drawable.ic_noun_lego_brick_847002, "Tile 2 x 2 with Groove", "3068 / 63327"));
+
         _recyclerView = root.findViewById(R.id.partsRecyclerView);
         _recyclerView.setHasFixedSize(true);
         _layoutManager = new LinearLayoutManager(root.getContext());

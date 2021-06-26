@@ -35,11 +35,11 @@ public class MyOwnCreationViewModel extends AndroidViewModel {
 //            if(parts!="") break;
 //        }
 
-        mText = new MutableLiveData<>();
-        mText.setValue(parts);
+//        mText = new MutableLiveData<>();
+//        mText.setValue(parts);
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+//    public LiveData<String> getText() {
+//        return mText;
+//    }
 }
