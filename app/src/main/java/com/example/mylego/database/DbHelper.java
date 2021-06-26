@@ -21,7 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CreateTable.SQL_CREATE_TABLE_COLOR);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_PART);
         db.execSQL(CreateTable.SQL_CREATE_TABLE_SUBTABLES_COLOR);
-        db.execSQL(CreateTable.SQL_CREATE_TABLE_MY_SETS);
+        db.execSQL(CreateTable.SQL_CREATE_TABLE_MY_COLLECTION);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This com.example.mylego.database is only a cache for online data, so its upgrade policy is

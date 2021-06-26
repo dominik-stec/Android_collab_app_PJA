@@ -236,9 +236,11 @@ public class DbManager {
         return queryResult;
     }
 
+    //==============================================================================================
     public  ArrayList<BricksSingleSet> getAllSets() {
         return getAllSets(0);
     }
+
     //==============================================================================================
     public ArrayList<BricksSingleSet> getAllSets(int limit) {
         ArrayList<BricksSingleSet> results = new ArrayList<>();

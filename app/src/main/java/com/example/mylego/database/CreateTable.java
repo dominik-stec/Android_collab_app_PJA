@@ -7,8 +7,8 @@ public final class CreateTable {
     // make the constructor private.
     private CreateTable() {}
 
-    public static class TableMySets implements BaseColumns {
-        public static final String TABLE_NAME = "my_sets";
+    public static class TableMyCollection implements BaseColumns {
+        public static final String TABLE_NAME = "my_collection";
         public static final String COLUMN_NAME_SET_NUM_STRING = "set_number";
         public static final String COLUMN_NAME_NAME_STRING = "name";
         public static final String COLUMN_NAME_YEAR_INTEGER = "year";
@@ -19,20 +19,20 @@ public final class CreateTable {
         public static final String COLUMN_NAME_LAST_MODIFIED_DT_STRING = "modification_date";
     }
 
-    public static final String SQL_CREATE_TABLE_MY_SETS =
-            "CREATE TABLE " + TableMySets.TABLE_NAME + " (" +
-                    TableMySets._ID + " INTEGER PRIMARY KEY," +
-                    TableMySets.COLUMN_NAME_SET_NUM_STRING + " TEXT," +
-                    TableMySets.COLUMN_NAME_NAME_STRING + " TEXT," +
-                    TableMySets.COLUMN_NAME_YEAR_INTEGER + " INTEGER," +
-                    TableMySets.COLUMN_NAME_THEME_ID_INTEGER + " INTEGER," +
-                    TableMySets.COLUMN_NAME_NUM_PARTS_INTEGER + " INTEGER," +
-                    TableMySets.COLUMN_NAME_SET_IMG_URL_STRING + " TEXT," +
-                    TableMySets.COLUMN_NAME_SET_URL_STRING + " TEXT," +
-                    TableMySets.COLUMN_NAME_LAST_MODIFIED_DT_STRING + " TEXT)";
+    public static final String SQL_CREATE_TABLE_MY_COLLECTION =
+            "CREATE TABLE " + TableMyCollection.TABLE_NAME + " (" +
+                    TableMyCollection._ID + " INTEGER PRIMARY KEY," +
+                    TableMyCollection.COLUMN_NAME_SET_NUM_STRING + " TEXT," +
+                    TableMyCollection.COLUMN_NAME_NAME_STRING + " TEXT," +
+                    TableMyCollection.COLUMN_NAME_YEAR_INTEGER + " INTEGER," +
+                    TableMyCollection.COLUMN_NAME_THEME_ID_INTEGER + " INTEGER," +
+                    TableMyCollection.COLUMN_NAME_NUM_PARTS_INTEGER + " INTEGER," +
+                    TableMyCollection.COLUMN_NAME_SET_IMG_URL_STRING + " TEXT," +
+                    TableMyCollection.COLUMN_NAME_SET_URL_STRING + " TEXT," +
+                    TableMyCollection.COLUMN_NAME_LAST_MODIFIED_DT_STRING + " TEXT)";
 
     public static final String SQL_DELETE_TABLE_MY_SETS =
-            "DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + TableMyCollection.TABLE_NAME;
 
     /* Inner class that defines the table contents */
     public static class TableEntry implements BaseColumns {

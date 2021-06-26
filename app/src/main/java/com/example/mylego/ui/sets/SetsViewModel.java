@@ -56,6 +56,7 @@ public class SetsViewModel extends AndroidViewModel {
             loadSetsImages();
         }
     }
+
     //=== PUBLIC METHODS ===========================================================================
     public ArrayList<BricksSingleSet> getSetsFromDb() {
         return this._setsFromDbAll;
