@@ -84,7 +84,7 @@ This project use technology below.
 - [![Android][android-shield]][android-url]
 - [![Java][java-shield]][java-url]
 - [![Retrofit][retrofit-shield]][retrofit-url]
-- [![SQLite][retrofit-shield]][sqlite-url]
+- [![SQLite][sqlite-shield]][sqlite-url]
 
 <!-- GETTING STARTED -->
 
